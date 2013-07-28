@@ -1,0 +1,12 @@
+{
+  "name": "eisenscript",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "sprintf": "~0.1.1",
+    "should": "~1.2.2",
+    "argv": "0.0.2",
+    "colors": "~0.6.1",
+    "chai": "~1.7.2"
+  }
+}
