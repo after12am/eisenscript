@@ -109,47 +109,47 @@ line
 ////////////////////////////////////////////////////
 
 maxdepth
-  : SET MAXDEPTH num { $$ = { type: 'SET', key: 'MAXDEPTH', value: $3 }; }
+  : SET MAXDEPTH num { $$ = { type: 'set', key: 'maxdepth', value: $3 }; }
   ;
 
 maxobjects
-  : SET MAXOBJECTS num { $$ = { type: 'SET', key: 'MAXOBJECTS', value: $3 }; }
+  : SET MAXOBJECTS num { $$ = { type: 'set', key: 'maxobjects', value: $3 }; }
   ;
 
 minsize
-  : SET MINSIZE num { $$ = { type: 'SET', key: 'MINSIZE', value: $3 }; }
+  : SET MINSIZE num { $$ = { type: 'set', key: 'minsize', value: $3 }; }
   ;
 
 maxsize
-  : SET MAXSIZE num { $$ = { type: 'SET', key: 'MAXSIZE', value: $3 }; }
+  : SET MAXSIZE num { $$ = { type: 'set', key: 'maxsize', value: $3 }; }
   ;
 
 seed
-  : SET SEED num     { $$ = { type: 'SET', key: 'SEED', value: $3 }; }
-  | SET SEED INITIAL { $$ = { type: 'SET', key: 'SEED', value: $3 }; }
+  : SET SEED num     { $$ = { type: 'set', key: 'seed', value: $3 }; }
+  | SET SEED INITIAL { $$ = { type: 'set', key: 'seed', value: $3 }; }
   ;
 
 background
-  : SET BACKGROUND COLOR3 { $$ = { type: 'SET', key: 'BACKGROUND', value: $3.toLowerCase() }; }
-  | SET BACKGROUND COLOR6 { $$ = { type: 'SET', key: 'BACKGROUND', value: $3.toLowerCase() }; }
-  | SET BACKGROUND STRING { $$ = { type: 'SET', key: 'BACKGROUND', value: $3.toLowerCase() }; }
-  | SET BACKGROUND RANDOM { $$ = { type: 'SET', key: 'BACKGROUND', value: $3.toLowerCase() }; }
+  : SET BACKGROUND COLOR3 { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
+  | SET BACKGROUND COLOR6 { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
+  | SET BACKGROUND STRING { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
+  | SET BACKGROUND RANDOM { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
   ;
 
 color
-  : SET COLOR RANDOM { $$ = { type: 'SET', key: 'COLOR', value: $3.toLowerCase() }; }
+  : SET COLOR RANDOM { $$ = { type: 'set', key: 'color', value: $3.toLowerCase() }; }
   ;
 
 colorpool
-  : SET COLORPOOL RANDOMHUE { $$ = { type: 'SET', key: 'COLORPOOL', value: $3.toLowerCase() }; }
-  | SET COLORPOOL RANDOMRGB { $$ = { type: 'SET', key: 'COLORPOOL', value: $3.toLowerCase() }; }
-  | SET COLORPOOL GREYSCALE { $$ = { type: 'SET', key: 'COLORPOOL', value: $3.toLowerCase() }; }
-  | SET COLORPOOL COLORLIST { $$ = { type: 'SET', key: 'COLORPOOL', value: $3.toLowerCase() }; }
-  | SET COLORPOOL IMAGE     { $$ = { type: 'SET', key: 'COLORPOOL', value: $3.toLowerCase() }; }
+  : SET COLORPOOL RANDOMHUE { $$ = { type: 'set', key: 'colorpool', value: $3.toLowerCase() }; }
+  | SET COLORPOOL RANDOMRGB { $$ = { type: 'set', key: 'colorpool', value: $3.toLowerCase() }; }
+  | SET COLORPOOL GREYSCALE { $$ = { type: 'set', key: 'colorpool', value: $3.toLowerCase() }; }
+  | SET COLORPOOL COLORLIST { $$ = { type: 'set', key: 'colorpool', value: $3.toLowerCase() }; }
+  | SET COLORPOOL IMAGE     { $$ = { type: 'set', key: 'colorpool', value: $3.toLowerCase() }; }
   ;
 
 define
-  : DEFINE STRING num { $$ = { type: 'DEFINE', varname: $2, value: $3 }; }
+  : DEFINE STRING num { $$ = { type: 'define', varname: $2, value: $3 }; }
   ;
 
 ////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ define
 ////////////////////////////////////////////////////
 
 rule
-  : RULE id modifiers '{' statements '}'  { $$ = { type: 'RULE', id: $2, params: $3, body: $5 }; }
+  : RULE id modifiers '{' statements '}'  { $$ = { type: 'rule', id: $2, params: $3, body: $5 }; }
   ;
 
 modifiers
@@ -166,9 +166,9 @@ modifiers
   ;
 
 modifier
-  : WEIGHT num                 { $$ = { type: 'MODIFIER', key: 'WEIGHT',   value: $2 }; }
-  | MAXDEPTH num               { $$ = { type: 'MODIFIER', key: 'MAXDEPTH', value: $2 }; }
-  | MAXDEPTH num '>' rulename  { $$ = { type: 'MODIFIER', key: 'MAXDEPTH', value: $2, alternate: $4}; }
+  : WEIGHT num                 { $$ = { type: 'modifier', key: 'weight',   value: $2 }; }
+  | MAXDEPTH num               { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
+  | MAXDEPTH num '>' rulename  { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
   ;
 
 statements
@@ -177,21 +177,25 @@ statements
   ;
 
 statement
-  : iterations id { $$ = { type: 'STATEMENT', id: $2, iteration: $1 }; }
+  : expressions id { $$ = { type: 'statement', id: $2, exprs: $1 }; }
   ;
 
-iterations
-  : iterations iteration { $$ = $1; $$.push($2); }
+expressions
+  : expressions expression { $$ = $1; $$.push($2); }
   | { $$ = []; }
   ;
 
-iteration
-  : '{' object '}'       { $$ = { type: 'OBJECT', iter:  1, properties: $2 }; }
-  | n '*' '{' object '}' { $$ = { type: 'OBJECT', iter: $1, properties: $4 }; }
+expression
+  : object       { $$ = { type: 'expr', left:  1, right: $1 }; }
+  | n '*' object { $$ = { type: 'expr', left: $1, right: $3 }; }
   ;
 
 object
-  : object property { type: 'PROPERTY', $$ = $1; $$.push($2); }
+  : '{' properties '}' { $$ = { type: 'object', properties: $2 }; }
+  ;
+
+properties
+  : properties property { type: 'property', $$ = $1; $$.push($2); }
   | { $$ = []; }
   ;
 
@@ -206,30 +210,30 @@ property
 ////////////////////////////////////////////////////
 
 geo
-  : XSHIFT num       { $$ = { type: 'PROPERTY', key: 'XSHIFT',  value: $2 }; }
-  | YSHIFT num       { $$ = { type: 'PROPERTY', key: 'YSHIFT',  value: $2 }; }
-  | ZSHIFT num       { $$ = { type: 'PROPERTY', key: 'ZSHIFT',  value: $2 }; }
-  | ROTATEX num      { $$ = { type: 'PROPERTY', key: 'ROTATEX', value: $2 }; }
-  | ROTATEY num      { $$ = { type: 'PROPERTY', key: 'ROTATEY', value: $2 }; }
-  | ROTATEZ num      { $$ = { type: 'PROPERTY', key: 'ROTATEZ', value: $2 }; }
-  | SIZE num         { $$ = { type: 'PROPERTY', key: 'SIZE',    value: [$2, $2, $2] }; }
-  | SIZE num num num { $$ = { type: 'PROPERTY', key: 'SIZE',    value: [$2, $3, $4] }; }
-  | MATRIX num num num num num num num num num { $$ = { type: 'PROPERTY', key: 'MATRIX', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
+  : XSHIFT num       { $$ = { type: 'property', key: 'xshift',  value: $2 }; }
+  | YSHIFT num       { $$ = { type: 'property', key: 'yshift',  value: $2 }; }
+  | ZSHIFT num       { $$ = { type: 'property', key: 'zshift',  value: $2 }; }
+  | ROTATEX num      { $$ = { type: 'property', key: 'rotatex', value: $2 }; }
+  | ROTATEY num      { $$ = { type: 'property', key: 'rotatey', value: $2 }; }
+  | ROTATEZ num      { $$ = { type: 'property', key: 'rotatez', value: $2 }; }
+  | SIZE num         { $$ = { type: 'property', key: 'size',    value: [$2, $2, $2] }; }
+  | SIZE num num num { $$ = { type: 'property', key: 'size',    value: [$2, $3, $4] }; }
+  | MATRIX num num num num num num num num num { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
   ;
 
 color
-  : HUE num          { $$ = { type: 'PROPERTY', key: 'HUE',   value: $2 }; }
-  | ALPHA num        { $$ = { type: 'PROPERTY', key: 'ALPHA', value: $2 }; }
-  | COLOR COLOR3     { $$ = { type: 'PROPERTY', key: 'COLOR', value: $2.toLowerCase() }; }
-  | COLOR COLOR6     { $$ = { type: 'PROPERTY', key: 'COLOR', value: $2.toLowerCase() }; }
-  | COLOR RANDOM     { $$ = { type: 'PROPERTY', key: 'COLOR', value: $2.toLowerCase() }; }
-  | COLOR STRING     { $$ = { type: 'PROPERTY', key: 'COLOR', value: $2.toLowerCase() }; }
-  | BLEND COLOR3 num { $$ = { type: 'PROPERTY', key: 'BLEND', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND COLOR6 num { $$ = { type: 'PROPERTY', key: 'BLEND', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND RANDOM num { $$ = { type: 'PROPERTY', key: 'BLEND', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND STRING num { $$ = { type: 'PROPERTY', key: 'BLEND', color: $2.toLowerCase(), strength: $3 }; }
-  | SATURATION num   { $$ = { type: 'PROPERTY', key: 'SATURATION', value: $2 }; }
-  | BRIGHTNESS num   { $$ = { type: 'PROPERTY', key: 'BRIGHTNESS', value: $2 }; }
+  : HUE num          { $$ = { type: 'property', key: 'hue',   value: $2 }; }
+  | ALPHA num        { $$ = { type: 'property', key: 'alpha', value: $2 }; }
+  | COLOR COLOR3     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR COLOR6     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR RANDOM     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR STRING     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | BLEND COLOR3 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND COLOR6 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND RANDOM num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND STRING num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | SATURATION num   { $$ = { type: 'property', key: 'saturation', value: $2 }; }
+  | BRIGHTNESS num   { $$ = { type: 'property', key: 'brightness', value: $2 }; }
   ;
 
 

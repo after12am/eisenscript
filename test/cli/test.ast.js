@@ -30,8 +30,9 @@ console.log('-----------------------------------------'.prompt);
 describe('set maxdepth 100', function() {
   var source = 'set maxdepth 100';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'MAXDEPTH');
+  dump(ast)
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'maxdepth');
   assert.ok(ast[0].value == 100);
 });
 
@@ -52,8 +53,8 @@ console.log('-----------------------------------------'.prompt);
 describe('set maxobjects 100', function() {
   var source = 'set maxobjects 100';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'MAXOBJECTS');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'maxobjects');
   assert.ok(ast[0].value == 100);
 });
 
@@ -74,8 +75,8 @@ console.log('-----------------------------------------'.prompt);
 describe('set minsize 10.1', function() {
   var source = 'set minsize 10.1';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'MINSIZE');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'minsize');
   assert.ok(ast[0].value == 10.1);
 });
 
@@ -106,8 +107,8 @@ console.log('-----------------------------------------'.prompt);
 describe('set maxsize 10.1', function() {
   var source = 'set maxsize 10.1';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'MAXSIZE');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'maxsize');
   assert.ok(ast[0].value == 10.1);
 });
 
@@ -138,8 +139,8 @@ console.log('-----------------------------------------'.prompt);
 describe('set seed 100', function() {
   var source = 'set seed 100';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'SEED');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'seed');
   assert.ok(ast[0].value == 100);
 });
 
@@ -166,32 +167,32 @@ console.log('-----------------------------------------'.prompt);
 describe('set background #ffffff', function() {
   var source = 'set background #ffffff';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'BACKGROUND');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'background');
   assert.ok(ast[0].value == '#ffffff');
 });
 
 describe('set background #fff', function() {
   var source = 'set background #fff';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'BACKGROUND');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'background');
   assert.ok(ast[0].value == '#fff');
 });
 
 describe('set background random', function() {
   var source = 'set background random';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'BACKGROUND');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'background');
   assert.ok(ast[0].value == 'random');
 });
 
 describe('set background red', function() {
   var source = 'set background red';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'BACKGROUND');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'background');
   assert.ok(ast[0].value == 'red');
 });
 
@@ -203,9 +204,9 @@ console.log('-----------------------------------------'.prompt);
 describe('rule R1 maxdepth 10 { box }', function() {
   var source = 'rule R1 maxdepth 10 { box }';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type === 'RULE');
+  assert.ok(ast[0].type === 'rule');
   assert.ok(ast[0].id === 'R1');
-  assert.ok(ast[0].params[0].key === 'MAXDEPTH');
+  assert.ok(ast[0].params[0].key === 'maxdepth');
   assert.ok(ast[0].params[0].value === 10);
   assert.ok(ast[0].body.length === 1);
 });
@@ -213,9 +214,9 @@ describe('rule R1 maxdepth 10 { box }', function() {
 describe('rule R1 md 10 { box }', function() {
   var source = 'rule R1 md 10 { box }';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type === 'RULE');
+  assert.ok(ast[0].type === 'rule');
   assert.ok(ast[0].id === 'R1');
-  assert.ok(ast[0].params[0].key === 'MAXDEPTH');
+  assert.ok(ast[0].params[0].key === 'maxdepth');
   assert.ok(ast[0].params[0].value === 10);
   assert.ok(ast[0].body.length === 1);
 });
@@ -265,9 +266,9 @@ console.log('-----------------------------------------'.prompt);
 describe('rule R1 weight 10.1 { box }', function() {
   var source = 'rule R1 weight 10.1 { box }';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type === 'RULE');
+  assert.ok(ast[0].type === 'rule');
   assert.ok(ast[0].id === 'R1');
-  assert.ok(ast[0].params[0].key === 'WEIGHT');
+  assert.ok(ast[0].params[0].key === 'weight');
   assert.ok(ast[0].params[0].value === 10.1);
   assert.ok(ast[0].body.length === 1);
 });
@@ -275,9 +276,9 @@ describe('rule R1 weight 10.1 { box }', function() {
 describe('rule R1 w 10.1 { box }', function() {
   var source = 'rule R1 w 10.1 { box }';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type === 'RULE');
+  assert.ok(ast[0].type === 'rule');
   assert.ok(ast[0].id === 'R1');
-  assert.ok(ast[0].params[0].key === 'WEIGHT');
+  assert.ok(ast[0].params[0].key === 'weight');
   assert.ok(ast[0].params[0].value === 10.1);
   assert.ok(ast[0].body.length === 1);
 });
@@ -308,11 +309,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ x 1.2 } box', function() {
   var source = '{ x 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'XSHIFT');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'xshift');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -323,11 +324,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ y 1.2 } box', function() {
   var source = '{ y 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'YSHIFT');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'yshift');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -338,11 +339,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ z 1.2 } box', function() {
   var source = '{ z 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ZSHIFT');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'zshift');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -353,11 +354,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ rx 1.2 } box', function() {
   var source = '{ rx 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ROTATEX');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'rotatex');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -368,11 +369,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ ry 1.2 } box', function() {
   var source = '{ ry 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ROTATEY');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'rotatey');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -383,11 +384,11 @@ console.log('-----------------------------------------'.prompt);
 describe('{ rz 1.2 } box', function() {
   var source = '{ rz 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ROTATEZ');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'rotatez');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -398,13 +399,13 @@ console.log('-----------------------------------------'.prompt);
 describe('{ s 1.2 } box', function() {
   var source = '{ s 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'SIZE');
-  assert.ok(ast[0].iteration[0].properties[0].value[0] === 1.2);
-  assert.ok(ast[0].iteration[0].properties[0].value[1] === 1.2);
-  assert.ok(ast[0].iteration[0].properties[0].value[2] === 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'size');
+  assert.ok(ast[0].exprs[0].right.properties[0].value[0] === 1.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[1] === 1.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[2] === 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -415,13 +416,13 @@ console.log('-----------------------------------------'.prompt);
 describe('{ s 2.1 2.2 2.3 } box', function() {
   var source = '{ s 2.1 2.2 2.3 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'SIZE');
-  assert.ok(ast[0].iteration[0].properties[0].value[0] === 2.1);
-  assert.ok(ast[0].iteration[0].properties[0].value[1] === 2.2);
-  assert.ok(ast[0].iteration[0].properties[0].value[2] === 2.3);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'size');
+  assert.ok(ast[0].exprs[0].right.properties[0].value[0] === 2.1);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[1] === 2.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[2] === 2.3);
   assert.ok(ast[0].computed);
 });
 
@@ -432,19 +433,19 @@ console.log('-----------------------------------------'.prompt);
 describe('{ s 2.1 2.2 2.3 } box', function() {
   var source = '{ m 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'MATRIX');
-  assert.ok(ast[0].iteration[0].properties[0].value[0] === 2.1);
-  assert.ok(ast[0].iteration[0].properties[0].value[1] === 2.2);
-  assert.ok(ast[0].iteration[0].properties[0].value[2] === 2.3);
-  assert.ok(ast[0].iteration[0].properties[0].value[3] === 2.4);
-  assert.ok(ast[0].iteration[0].properties[0].value[4] === 2.5);
-  assert.ok(ast[0].iteration[0].properties[0].value[5] === 2.6);
-  assert.ok(ast[0].iteration[0].properties[0].value[6] === 2.7);
-  assert.ok(ast[0].iteration[0].properties[0].value[7] === 2.8);
-  assert.ok(ast[0].iteration[0].properties[0].value[8] === 2.9);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'matrix');
+  assert.ok(ast[0].exprs[0].right.properties[0].value[0] === 2.1);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[1] === 2.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[2] === 2.3);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[3] === 2.4);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[4] === 2.5);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[5] === 2.6);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[6] === 2.7);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[7] === 2.8);
+  assert.ok(ast[0].exprs[0].right.properties[0].value[8] === 2.9);
   assert.ok(ast[0].computed);
 });
 
@@ -456,22 +457,22 @@ console.log('-----------------------------------------'.prompt);
 describe('{ h 1.2 } box', function() {
   var source = '{ h 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'HUE');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'hue');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
 describe('{ hue 1.2 } box', function() {
   var source = '{ hue 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'HUE');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'hue');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -482,22 +483,22 @@ console.log('-----------------------------------------'.prompt);
 describe('{ sat 1.2 } box', function() {
   var source = '{ sat 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'SATURATION');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'saturation');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
 describe('{ saturation 1.2 } box', function() {
   var source = '{ saturation 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'SATURATION');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'saturation');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -508,22 +509,22 @@ console.log('-----------------------------------------'.prompt);
 describe('{ b 1.2 } box', function() {
   var source = '{ b 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BRIGHTNESS');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'brightness');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
 describe('{ brightness 1.2 } box', function() {
   var source = '{ brightness 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BRIGHTNESS');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'brightness');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -534,22 +535,22 @@ console.log('-----------------------------------------'.prompt);
 describe('{ a 1.2 } box', function() {
   var source = '{ a 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ALPHA');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'alpha');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
 describe('{ alpha 1.2 } box', function() {
   var source = '{ alpha 1.2 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'ALPHA');
-  assert.ok(ast[0].iteration[0].properties[0].value == 1.2);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'alpha');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -560,44 +561,44 @@ console.log('-----------------------------------------'.prompt);
 describe('{ color #fff } box', function() {
   var source = '{ color #fff } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'COLOR');
-  assert.ok(ast[0].iteration[0].properties[0].value == '#fff');
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'color');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == '#fff');
   assert.ok(ast[0].computed);
 });
 
 describe('{ color #ffffff } box', function() {
   var source = '{ color #ffffff } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'COLOR');
-  assert.ok(ast[0].iteration[0].properties[0].value == '#ffffff');
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'color');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == '#ffffff');
   assert.ok(ast[0].computed);
 });
 
 describe('{ color red } box', function() {
   var source = '{ color red } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'COLOR');
-  assert.ok(ast[0].iteration[0].properties[0].value == 'red');
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'color');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 'red');
   assert.ok(ast[0].computed);
 });
 
 describe('{ color random } box', function() {
   var source = '{ color random } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'COLOR');
-  assert.ok(ast[0].iteration[0].properties[0].value == 'random');
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'color');
+  assert.ok(ast[0].exprs[0].right.properties[0].value == 'random');
   assert.ok(ast[0].computed);
 });
 
@@ -608,48 +609,48 @@ console.log('-----------------------------------------'.prompt);
 describe('{ blend #fff 0.5 } box', function() {
   var source = '{ blend #fff 0.5 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BLEND');
-  assert.ok(ast[0].iteration[0].properties[0].color == '#fff');
-  assert.ok(ast[0].iteration[0].properties[0].strength == 0.5);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'blend');
+  assert.ok(ast[0].exprs[0].right.properties[0].color == '#fff');
+  assert.ok(ast[0].exprs[0].right.properties[0].strength == 0.5);
   assert.ok(ast[0].computed);
 });
 
 describe('{ blend #ffffff 0.5 } box', function() {
   var source = '{ blend #ffffff 0.5 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BLEND');
-  assert.ok(ast[0].iteration[0].properties[0].color == '#ffffff');
-  assert.ok(ast[0].iteration[0].properties[0].strength == 0.5);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'blend');
+  assert.ok(ast[0].exprs[0].right.properties[0].color == '#ffffff');
+  assert.ok(ast[0].exprs[0].right.properties[0].strength == 0.5);
   assert.ok(ast[0].computed);
 });
 
 describe('{ blend red 0.5 } box', function() {
   var source = '{ blend red 0.5 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BLEND');
-  assert.ok(ast[0].iteration[0].properties[0].color == 'red');
-  assert.ok(ast[0].iteration[0].properties[0].strength == 0.5);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'blend');
+  assert.ok(ast[0].exprs[0].right.properties[0].color == 'red');
+  assert.ok(ast[0].exprs[0].right.properties[0].strength == 0.5);
   assert.ok(ast[0].computed);
 });
 
 describe('{ blend random 0.5 } box', function() {
   var source = '{ blend random 0.5 } box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration[0].iter == 1);
-  assert.ok(ast[0].iteration[0].properties[0].key == 'BLEND');
-  assert.ok(ast[0].iteration[0].properties[0].color == 'random');
-  assert.ok(ast[0].iteration[0].properties[0].strength == 0.5);
+  assert.ok(ast[0].exprs[0].left == 1);
+  assert.ok(ast[0].exprs[0].right.properties[0].key == 'blend');
+  assert.ok(ast[0].exprs[0].right.properties[0].color == 'random');
+  assert.ok(ast[0].exprs[0].right.properties[0].strength == 0.5);
   assert.ok(ast[0].computed);
 });
 
@@ -660,8 +661,8 @@ console.log('-----------------------------------------'.prompt);
 describe('{ set color random', function() {
   var source = 'set color random';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLOR');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'color');
   assert.ok(ast[0].value == 'random');
 });
 
@@ -672,40 +673,40 @@ console.log('-----------------------------------------'.prompt);
 describe('{ set colorpool randomhue', function() {
   var source = 'set colorpool randomhue';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLORPOOL');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'colorpool');
   assert.ok(ast[0].value == 'randomhue');
 });
 
 describe('{ set colorpool randomhue', function() {
   var source = 'set colorpool randomhue';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLORPOOL');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'colorpool');
   assert.ok(ast[0].value == 'randomhue');
 });
 
 describe('{ set colorpool randomhue', function() {
   var source = 'set colorpool greyscale';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLORPOOL');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'colorpool');
   assert.ok(ast[0].value == 'greyscale');
 });
 
 describe('{ set colorpool image:filename.png', function() {
   var source = 'set colorpool image:filename.png';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLORPOOL');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'colorpool');
   assert.ok(ast[0].value == 'image:filename.png');
 });
 
 describe('{ set colorpool list:orange,white,grey', function() {
   var source = 'set colorpool list:orange,white,grey';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'SET');
-  assert.ok(ast[0].key == 'COLORPOOL');
+  assert.ok(ast[0].type == 'set');
+  assert.ok(ast[0].key == 'colorpool');
   assert.ok(ast[0].value == 'list:orange,white,grey');
 });
 
@@ -717,9 +718,9 @@ console.log('-----------------------------------------'.prompt);
 describe('box', function() {
   var source = 'box';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'box');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -730,9 +731,9 @@ console.log('-----------------------------------------'.prompt);
 describe('grid', function() {
   var source = 'grid';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'grid');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -743,9 +744,9 @@ console.log('-----------------------------------------'.prompt);
 describe('sphere', function() {
   var source = 'sphere';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'sphere');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -756,9 +757,9 @@ console.log('-----------------------------------------'.prompt);
 describe('line', function() {
   var source = 'line';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'line');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -769,9 +770,9 @@ console.log('-----------------------------------------'.prompt);
 describe('point', function() {
   var source = 'point';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'point');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -782,9 +783,9 @@ console.log('-----------------------------------------'.prompt);
 describe('triangle', function() {
   var source = 'triangle';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'triangle');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -795,9 +796,9 @@ console.log('-----------------------------------------'.prompt);
 describe('mesh', function() {
   var source = 'mesh';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'mesh');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -808,9 +809,9 @@ console.log('-----------------------------------------'.prompt);
 describe('cylinder', function() {
   var source = 'cylinder';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'cylinder');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -821,9 +822,9 @@ console.log('-----------------------------------------'.prompt);
 describe('tube', function() {
   var source = 'tube';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'STATEMENT');
+  assert.ok(ast[0].type == 'statement');
   assert.ok(ast[0].id == 'tube');
-  assert.ok(ast[0].iteration.length == 0);
+  assert.ok(ast[0].exprs.length == 0);
   assert.ok(ast[0].computed == true);
 });
 
@@ -835,7 +836,7 @@ console.log('-----------------------------------------'.prompt);
 describe('#define varname 1.2', function() {
   var source = '#define varname 1.2';
   var ast = parser.parse(source);
-  assert.ok(ast[0].type == 'DEFINE');
+  assert.ok(ast[0].type == 'define');
   assert.ok(ast[0].varname == 'varname');
   assert.ok(ast[0].value == 1.2);
 });
