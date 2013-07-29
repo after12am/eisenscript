@@ -1,6 +1,7 @@
-var Interpreter = function(code, option) {
+var Interpreter = function(context, option) {
   // intermediate code
-  this.code = code;
+  this.context = context;
+  this.option = option;
   // rendering engine
   this.renderer = new Renderer(option);
 }
