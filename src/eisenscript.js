@@ -1,27 +1,21 @@
-/*
-  compile option
-*/
-var _option = {
-  renderer: 'threejs'
+var eisenscript = {
+  option: {
+    renderer: 'threejs',
+    stageSize: {
+      width: 400,
+      height: 400
+    }
+  }
 }
 
-/*
-  rewrite ast and create intermediate code
-*/
-exports.compile = function(source, option) {
-  var option = exports._.extend(option || {}, _option);
-  var code, context, error;
+exports.compile = function(option) {
+  var option = exports._.extend(option || {}, eisenscript.option);
+  var ast, error;
   try {
-    code = parser.parse(source);
+    ast = parser.parse(option.code);
   } catch (e) {
-    error = e.message;
+    return e.message;
   }
-  context = new Context(code, option);
-  return {
-    code: code || null,
-    error: error || null,
-    run: new Interpreter(context, {
-      renderer: option.renderer
-    })
-  }
+  new Interpreter(ast, option).run();
+  return exports;
 }
