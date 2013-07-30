@@ -15,3 +15,12 @@ var Modifier = {
   Weight: 'weight',
   Background: 'background'
 }
+
+var Type = {
+  Background: 'background',
+  Primitive: 'primitive'
+}
+
+var Primitive = [
+  'box'
+];

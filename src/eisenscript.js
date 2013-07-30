@@ -10,12 +10,18 @@ var eisenscript = {
 
 exports.compile = function(option) {
   var option = exports._.extend(option || {}, eisenscript.option);
-  var ast, error;
+  var error, context = {};
   try {
-    ast = parser.parse(option.code);
+    context.ast = parser.parse(option.code);
   } catch (e) {
-    return e.message;
+    return {
+      error_message: e.message
+    };
   }
-  new Interpreter(ast, option).run();
-  return exports;
+  // create intermediate code from ast
+  context = new Interpreter(context).run();
+  // rendering...
+  context.renderer = new Renderer(context, option);
+  context.renderer.render();
+  return context;
 }
