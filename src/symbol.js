@@ -6,7 +6,7 @@ var Symbol = {
   Modifier: 'modifier'
 }
 
-var Modifier = {
+var Condition = {
   Maxdepth: 'maxdepth',
   Maxobjects: 'maxobjects',
   Minsize: 'minsize',
@@ -18,7 +18,15 @@ var Modifier = {
 
 var Type = {
   Background: 'background',
-  Primitive: 'primitive'
+  Primitive: 'primitive',
+  Rule: 'rule',
+  Property: 'property'
+}
+
+var Property = {
+  Xshift: 'xshift',
+  Yshift: 'yshift',
+  Zshift: 'zshift'
 }
 
 var Primitive = [

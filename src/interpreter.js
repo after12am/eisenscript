@@ -1,43 +1,60 @@
 var Interpreter = function(context) {
   this.context = context;
+  this.define = [];
+  this.rules = {};
+  this.computed = [];
   this.maxdepth = 100;
   this.maxobjects = 1000;
   this.minsize = .2;
   this.maxsize = 1.0;
-  this.seed = 1; // integer or initial
+  this.seed = 1;
+  this.matrices = [];
+  this.currMatrix = new THREE.Matrix4();
+}
+
+Interpreter.prototype.pushMatrix = function() {
+  this.matrices.push(this.currMatrix.clone());
+}
+
+Interpreter.prototype.popMatrix = function() {
+  if (this.matrices.length > 0) this.currMatrix = this.matrices.pop();
 }
 
 // execute eisenscript
-Interpreter.prototype.run = function() {
+Interpreter.prototype.generate = function() {
   var that = this;
+  
+  // initialize parameter
+  this.currMatrix.identity();
+  
   // extends for stacking intermediate product
-  this.context = exports._.extend(this.context, { objects: [] }, { products: {
-    define: [],
-    rules: {},
-    computed: []
-  }});
+  this.context = exports._.extend(this.context, {
+    objects: []
+  });
+  
   // rewriting
   this.context.ast.forEach(function(statement) {
     switch (statement.type) {
-      case Symbol.Define: that.context.products.define.push(statement); break;
-      case Symbol.Set: that.context.products.define.push(statement); break;
-      case Symbol.Statement: if (statement.computed) that.context.products.computed.push(statement); break;
-      case Symbol.Rule: that.rewrite(that.context.products.rules, statement); break;
+      case Symbol.Define: that.define.push(statement); break;
+      case Symbol.Set: that.define.push(statement); break;
+      case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
+      case Symbol.Rule: that.rewrite(that.rules, statement); break;
       default: throw 'Unexpected Statement Error';
     }
   });
-  // scanning and create intermediate code
+  
+  // creating intermediate code...
   // promise
-  this.context.products.define.forEach(function(statement) {
+  this.define.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Set:
         switch (statement.key) {
-          case Modifier.Maxdepth: that.maxdepth = statement.value; break;
-          case Modifier.Maxobjects: that.maxobjects = statement.value; break;
-          case Modifier.Minsize: that.minsize = statement.value; break;
-          case Modifier.Maxsize: that.maxsize = statement.value; break;
-          case Modifier.Seed: that.seed = statement.value; break;
-          case Modifier.Background: that.context.objects.push({ type: Type.Background, color: statement.value }); break;
+          case Condition.Maxdepth: that.maxdepth = statement.value; break;
+          case Condition.Maxobjects: that.maxobjects = statement.value; break;
+          case Condition.Minsize: that.minsize = statement.value; break;
+          case Condition.Maxsize: that.maxsize = statement.value; break;
+          case Condition.Seed: that.seed = statement.value; break;
+          case Condition.Background: that.generateBackground(statement); break;
         }
         break;
       case Symbol.Define:
@@ -45,51 +62,87 @@ Interpreter.prototype.run = function() {
         break;
     }
   });
+  
   // execute main
-  this.executeStatements(this.context.products.computed);
+  this.parseStatements(this.computed);
+  
+  // return the context that has objects property as code
   return this.context;
 }
 
 // rewrite subtree of rules
 Interpreter.prototype.rewrite = function(rules, rule) {
-  // defined the property if not defined
-  if (!rules[rule.id]) rules[rule.id] = [];
-  // in order to facilitate the scrutiny
   rule.params.forEach(function(param) {
     if (param.type === Symbol.Modifier) {
       switch (param.key) {
-        case Modifier.Weight: rule.weight = param.value; break;
-        case Modifier.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
+        case Condition.Weight: rule.weight = param.value; break;
+        case Condition.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
         default: throw 'Unexpected Modifier Error';
       }
     }
   });
-  // rule.params is no more need
-  delete rule.params;
-  // push for randomly rule select
+  if (!rules[rule.id]) rules[rule.id] = [];
   rules[rule.id].push(rule);
   return rules;
 }
 
 // execute statements
-Interpreter.prototype.executeStatements = function(statements) {
-  statements.forEach(exports._.bind(this.executeStatement, this));
-}
-
-// execute a statement
-Interpreter.prototype.executeStatement = function(statement) {
-  console.log(statement)
-  if (Primitive.indexOf(statement.id) !== -1) {
-    this.context.objects.push({
-      type: Type.Primitive,
-      name: statement.id,
-      attr: []
-    })
-    return;
+Interpreter.prototype.parseStatements = function(statements) {
+  var i = 0, len = statements.length;
+  while (i < len) {
+    this.parseStatement(statements[i], 0);
+    i++;
   }
 }
 
+// execute a statement
+Interpreter.prototype.parseStatement = function(statement, index) {
+  var expr = statement.exprs[index];
+  if (expr) {
+    this.pushMatrix();
+    for (var i = 0; i < expr.left; i++) {
+      this.parseTransformStatement(expr.right);
+      this.parseStatement(statement, index + 1);
+    }
+    this.popMatrix();
+    return;
+  }
+  // end of the nested transformation loops
+  this.generatePrimitive(statement);
+}
+
+Interpreter.prototype.parseTransformStatement = function(transform) {
+  var i = 0, len = transform.properties.length;
+  while (i < len) {
+    this.parseTransform(transform.properties[i]);
+    i++;
+  }
+}
+
+Interpreter.prototype.parseTransform = function(property) {
+  switch (property.key) {
+    case Property.Xshift: this.currMatrix.translate({ x:property.value, y:0, z:0 }); break;
+    case Property.Yshift: this.currMatrix.translate({ x:0, y:property.value, z:0 }); break;
+    case Property.Zshift: this.currMatrix.translate({ x:0, y:0, z:property.value }); break;
+  }
+}
+
+Interpreter.prototype.generatePrimitive = function(statement) {
+  this.context.objects.push({
+    type: Type.Primitive,
+    name: statement.id,
+    matrix: this.currMatrix.clone()
+  });
+}
+
+Interpreter.prototype.generateBackground = function(statement) {
+  this.context.objects.push({
+    type: Type.Background,
+    color: statement.value
+  });
+}
+
 // randomly choose one of rules according to their weights
-Interpreter.prototype.sampling = function(func_name) {
+Interpreter.prototype.sampling = function(rule_name) {
   
 }

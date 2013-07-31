@@ -19,7 +19,7 @@ exports.compile = function(option) {
     };
   }
   // create intermediate code from ast
-  context = new Interpreter(context).run();
+  context = new Interpreter(context).generate();
   // rendering...
   context.renderer = new Renderer(context, option);
   context.renderer.render();
