@@ -38,8 +38,11 @@ Interpreter.prototype.generate = function() {
       case Symbol.Define: that.define.push(statement); break;
       case Symbol.Set: that.define.push(statement); break;
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
-      case Symbol.Rule: that.rewrite(that.rules, statement); break;
-      default: throw 'Unexpected Statement Error';
+      case Symbol.Rule:
+        var rule = that.rewrite(statement); break;
+        if (!that.rules[rule.id]) that.rules[rule.id] = [];
+        that.rules[rule.id].push(rule);
+        break;
     }
   });
   
@@ -71,19 +74,16 @@ Interpreter.prototype.generate = function() {
 }
 
 // rewrite subtree of rules
-Interpreter.prototype.rewrite = function(rules, rule) {
+Interpreter.prototype.rewrite = function(rule) {
   rule.params.forEach(function(param) {
     if (param.type === Symbol.Modifier) {
       switch (param.key) {
         case Condition.Weight: rule.weight = param.value; break;
         case Condition.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
-        default: throw 'Unexpected Modifier Error';
       }
     }
   });
-  if (!rules[rule.id]) rules[rule.id] = [];
-  rules[rule.id].push(rule);
-  return rules;
+  return rule;
 }
 
 // execute statements
@@ -107,7 +107,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.popMatrix();
     return;
   }
-  // end of the nested transformation loops
+  // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
 }
 
@@ -120,10 +120,16 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 }
 
 Interpreter.prototype.parseTransform = function(property) {
-  switch (property.key) {
-    case Property.Xshift: this.currMatrix.translate({ x:property.value, y:0, z:0 }); break;
-    case Property.Yshift: this.currMatrix.translate({ x:0, y:property.value, z:0 }); break;
-    case Property.Zshift: this.currMatrix.translate({ x:0, y:0, z:property.value }); break;
+  var k = property.key, v = property.value;
+  switch (k) {
+    case Property.XShift: this.currMatrix.translate({ x:v, y:0, z:0 }); break;
+    case Property.YShift: this.currMatrix.translate({ x:0, y:v, z:0 }); break;
+    case Property.ZShift: this.currMatrix.translate({ x:0, y:0, z:v }); break;
+    case Property.RotateX: this.currMatrix.rotateByAxis({ x:1, y:0, z:0 }, degToRad(v)); break;
+    case Property.RotateY: this.currMatrix.rotateByAxis({ x:0, y:1, z:0 }, degToRad(v)); break;
+    case Property.RotateZ: this.currMatrix.rotateByAxis({ x:0, y:0, z:1 }, degToRad(v)); break;
+    case Property.Size: this.currMatrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
+    case Property.Matrix: /* not implemented */ break;
   }
 }
 

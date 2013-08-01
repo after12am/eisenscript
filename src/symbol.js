@@ -24,9 +24,14 @@ var Type = {
 }
 
 var Property = {
-  Xshift: 'xshift',
-  Yshift: 'yshift',
-  Zshift: 'zshift'
+  XShift: 'xshift',
+  YShift: 'yshift',
+  ZShift: 'zshift',
+  RotateX: 'rotatex',
+  RotateY: 'rotatey',
+  RotateZ: 'rotatez',
+  Size: 'size',
+  Matrix: 'matrix'
 }
 
 var Primitive = [
