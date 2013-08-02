@@ -10,14 +10,44 @@ var Interpreter = function(context) {
   this.seed = 1;
   this.matrices = [];
   this.currMatrix = new THREE.Matrix4();
+  this.hexStack = [];
+  this.currHex = Color('#ff0000');
+  this.hsvStack = [];
+  this.currHsv = Color({hue: 0, saturation: 1, value: 1});
+  this.alphaStack = [];
+  this.currAlpha = 1;
 }
 
-Interpreter.prototype.pushMatrix = function() {
+Interpreter.prototype.pushMarix = function() {
   this.matrices.push(this.currMatrix.clone());
 }
 
-Interpreter.prototype.popMatrix = function() {
+Interpreter.prototype.popMarix = function() {
   if (this.matrices.length > 0) this.currMatrix = this.matrices.pop();
+}
+
+Interpreter.prototype.pushHex = function() {
+  this.hexStack.push(this.currHex);
+}
+
+Interpreter.prototype.popHex = function() {
+  if (this.hexStack.length > 0) this.currHex = this.hexStack.pop();
+}
+
+Interpreter.prototype.pushHsv = function() {
+  this.hsvStack.push(exports._.extend({}, this.currHsv));
+}
+
+Interpreter.prototype.popHsv = function() {
+  if (this.hsvStack.length > 0) this.currHsv = this.hsvStack.pop();
+}
+
+Interpreter.prototype.pushAlpha = function() {
+  this.alphaStack.push(this.currAlpha);
+}
+
+Interpreter.prototype.popAlpha = function() {
+  if (this.alphaStack.length > 0) this.currAlpha = this.alphaStack.pop();
 }
 
 // execute eisenscript
@@ -99,12 +129,18 @@ Interpreter.prototype.parseStatements = function(statements) {
 Interpreter.prototype.parseStatement = function(statement, index) {
   var expr = statement.exprs[index];
   if (expr) {
-    this.pushMatrix();
+    this.pushMarix();
+    this.pushHex();
+    this.pushHsv();
+    this.pushAlpha();
     for (var i = 0; i < expr.left; i++) {
       this.parseTransformStatement(expr.right);
       this.parseStatement(statement, index + 1);
     }
-    this.popMatrix();
+    this.popAlpha();
+    this.popHsv();
+    this.popHex();
+    this.popMarix();
     return;
   }
   // achieve the end of nested transformation loops
@@ -122,14 +158,48 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 Interpreter.prototype.parseTransform = function(property) {
   var k = property.key, v = property.value;
   switch (k) {
-    case Property.XShift: this.currMatrix.translate({ x:v, y:0, z:0 }); break;
-    case Property.YShift: this.currMatrix.translate({ x:0, y:v, z:0 }); break;
-    case Property.ZShift: this.currMatrix.translate({ x:0, y:0, z:v }); break;
-    case Property.RotateX: this.currMatrix.rotateByAxis({ x:1, y:0, z:0 }, degToRad(v)); break;
-    case Property.RotateY: this.currMatrix.rotateByAxis({ x:0, y:1, z:0 }, degToRad(v)); break;
-    case Property.RotateZ: this.currMatrix.rotateByAxis({ x:0, y:0, z:1 }, degToRad(v)); break;
-    case Property.Size: this.currMatrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
-    case Property.Matrix: /* not implemented */ break;
+    case Property.XShift:
+      this.currMatrix.translate({x:v, y:0, z:0});
+      break;
+    case Property.YShift:
+      this.currMatrix.translate({x:0, y:v, z:0});
+      break;
+    case Property.ZShift:
+      this.currMatrix.translate({x:0, y:0, z:v});
+      break;
+    case Property.RotateX:
+      this.currMatrix.rotateX(degToRad(v));
+      break;
+    case Property.RotateY:
+      this.currMatrix.rotateY(degToRad(v));
+      break;
+    case Property.RotateZ:
+      this.currMatrix.rotateZ(degToRad(v));
+      break;
+    case Property.Size:
+      this.currMatrix.scale({x:v[0], y:v[1], z:v[2]});
+      break;
+    case Property.Matrix:
+      this.currMatrix.set(v[0],v[1],v[2],0,v[3],v[4],v[5],0,v[6],v[7],v[8],0);
+      break;
+    case Property.Color:
+      this.currHex = Color(v);
+      break;
+    case Property.Hue:
+      this.currHsv.hue += v % 360;
+      break;
+    case Property.Saturation:
+      this.currHsv.saturation = clamp(this.currHsv.saturation * v, 0, 1);
+      break;
+    case Property.Brightness:
+      this.currHsv.value = clamp(this.currHsv.value * v, 0, 1);;
+      break;
+    case Property.Blend:
+      /* not implemented */
+      break;
+    case Property.Alpha:
+      this.currAlpha *= v;
+      break;
   }
 }
 
@@ -137,7 +207,9 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   this.context.objects.push({
     type: Type.Primitive,
     name: statement.id,
-    matrix: this.currMatrix.clone()
+    matrix: this.currMatrix.clone(),
+    color: this.currHex.blend(this.currHsv, 1).toCSS(),
+    opacity: this.currAlpha
   });
 }
 

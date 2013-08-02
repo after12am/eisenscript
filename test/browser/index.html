@@ -4,25 +4,20 @@
 <meta charset="UTF-8">
 <title>eisenscript</title>
 <style type="text/css">
-canvas {
-  width: 400px;
-  height: 400px;
-  border: 1px solid #000;
+body {
+	font-family: Monospace;
+	background-color: #202020;
+	margin: 0px;
+	overflow: hidden;
 }
 </style>
 </head>
 <body>
-<div id="canvas"></div>
 <script type="text/eisenscript" id="eisenscript">
-set maxdepth 100
-box
-3 * { x 1.2 } box
-rule r2 md 100 > r2 w 2 {
-  { s 0.9 0.1 1.1 hue 10 } box
-}
+10 * { x 1 color #f00 h 0 } 3 * { y 2 sat 0.4 } box
 </script>
 <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
-<script type="text/javascript" src="bower_components/threejs/build/three.js"></script>
+<script type="text/javascript" src="scripts/three.min.js"></script>
 <script type="text/javascript" src="scripts/dump.js"></script>
 <script type="text/javascript" src="scripts/script.js"></script>
 <script type="text/javascript" src="scripts/eisenscript.js"></script>

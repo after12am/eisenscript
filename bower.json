@@ -2,7 +2,6 @@
   "name": "eisenscript",
   "version": "0.0.0",
   "dependencies": {
-    "threejs": "*"
   },
   "devDependencies": {
     "jquery": "~1.9.1"

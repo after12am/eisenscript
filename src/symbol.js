@@ -31,7 +31,13 @@ var Property = {
   RotateY: 'rotatey',
   RotateZ: 'rotatez',
   Size: 'size',
-  Matrix: 'matrix'
+  Matrix: 'matrix',
+  Color: 'color',
+  Hue: 'hue',
+  Saturation: 'saturation',
+  Brightness: 'brightness',
+  Blend: 'blend',
+  Alpha: 'alpha'
 }
 
 var Primitive = [
