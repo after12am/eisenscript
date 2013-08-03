@@ -4,18 +4,20 @@ var Interpreter = function(context) {
   this.rules = {};
   this.computed = [];
   this.maxdepth = 100;
+  this.depth = 0;
   this.maxobjects = 1000;
   this.minsize = .2;
   this.maxsize = 1.0;
-  this.seed = 1;
+  this.seed = 'initial'; // integer or 'initial'
   this.matrices = [];
   this.currMatrix = new THREE.Matrix4();
   this.hexStack = [];
   this.currHex = Color('#ff0000');
   this.hsvStack = [];
-  this.currHsv = Color({hue: 0, saturation: 1, value: 1});
+  this.currHsv = exports._.extend(Color({hue: 0, saturation: 1, value: 1}), { computed: false });
   this.alphaStack = [];
   this.currAlpha = 1;
+  this.mt = new MersenneTwister();
 }
 
 Interpreter.prototype.pushMarix = function() {
@@ -53,9 +55,6 @@ Interpreter.prototype.popAlpha = function() {
 // execute eisenscript
 Interpreter.prototype.generate = function() {
   var that = this;
-  
-  // initialize parameter
-  this.currMatrix.identity();
   
   // extends for stacking intermediate product
   this.context = exports._.extend(this.context, {
@@ -96,6 +95,10 @@ Interpreter.prototype.generate = function() {
     }
   });
   
+  // initialize parameter
+  this.currMatrix.identity();
+  this.mt.setSeed(this.seed === 'initial' ? randInt(0, 65535) : this.seed);
+  
   // execute main
   this.parseStatements(this.computed);
   
@@ -127,6 +130,7 @@ Interpreter.prototype.parseStatements = function(statements) {
 
 // execute a statement
 Interpreter.prototype.parseStatement = function(statement, index) {
+  
   var expr = statement.exprs[index];
   if (expr) {
     this.pushMarix();
@@ -143,6 +147,13 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.popMarix();
     return;
   }
+  
+  if (Primitive.indexOf(statement.id) === -1) {
+    var rule = this.sampling(statement.id);
+    if (rule) this.parseStatements(rule.body);
+    return;
+  }
+  
   // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
 }
@@ -186,12 +197,15 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currHex = Color(v);
       break;
     case Property.Hue:
+      this.currHsv.computed = true;
       this.currHsv.hue += v % 360;
       break;
     case Property.Saturation:
+      this.currHsv.computed = true;
       this.currHsv.saturation = clamp(this.currHsv.saturation * v, 0, 1);
       break;
     case Property.Brightness:
+      this.currHsv.computed = true;
       this.currHsv.value = clamp(this.currHsv.value * v, 0, 1);;
       break;
     case Property.Blend:
@@ -208,7 +222,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     type: Type.Primitive,
     name: statement.id,
     matrix: this.currMatrix.clone(),
-    color: this.currHex.blend(this.currHsv, 1).toCSS(),
+    color: this.currHsv.computed ? this.currHex.blend(this.currHsv, 1).toCSS() : this.currHex.toCSS(),
     opacity: this.currAlpha
   });
 }
@@ -221,6 +235,44 @@ Interpreter.prototype.generateBackground = function(statement) {
 }
 
 // randomly choose one of rules according to their weights
-Interpreter.prototype.sampling = function(rule_name) {
+Interpreter.prototype.sampling = function(name, retry) {
+  // have to alert a warning
+  if (!this.rules[name]) return;
   
+  retry = retry || 0;
+  
+  var sum = 0;
+  this.rules[name].forEach(function(rule) {
+    rule.weight = rule.weight || 1;
+    sum += rule.weight;
+  });
+  
+  var rand = this.mt.next() * sum;
+  var expected;
+  
+  for (var i = 0; i < this.rules[name].length; i++) {
+    var rule = this.rules[name][i];
+    if (rule.weight - rand < 0) {
+      rand -= rule.weight
+      continue;
+    }
+    expected = rule;
+    break;
+  }
+  
+  if (!expected && retry < 3) {
+    return this.sampling(name, ++retry);
+  }
+  
+  expected.depth = (expected.depth || 0) + 1;
+  if (expected.maxdepth) {
+    if (expected.maxdepth < expected.depth) {
+      if (expected.alternate) {
+        return this.sampling(expected.alternate);
+      }
+      // terminated
+      return;
+    }
+  }
+  return expected;
 }
