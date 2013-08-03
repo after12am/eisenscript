@@ -15,6 +15,8 @@ var Interpreter = function(context) {
   this.currHex = Color('#ff0000');
   this.hsvStack = [];
   this.currHsv = exports._.extend(Color({hue: 0, saturation: 1, value: 1}), { computed: false });
+  this.blendStack = [];
+  this.currBlend = { color: null, strength: 0, computed: false };
   this.alphaStack = [];
   this.currAlpha = 1;
   this.mt = new MersenneTwister();
@@ -37,11 +39,19 @@ Interpreter.prototype.popHex = function() {
 }
 
 Interpreter.prototype.pushHsv = function() {
-  this.hsvStack.push(exports._.extend({}, this.currHsv));
+  this.hsvStack.push(this.currHsv.clone());
 }
 
 Interpreter.prototype.popHsv = function() {
   if (this.hsvStack.length > 0) this.currHsv = this.hsvStack.pop();
+}
+
+Interpreter.prototype.pushBlend = function() {
+  this.blendStack.push(this.currBlend);
+}
+
+Interpreter.prototype.popBlend = function() {
+  if (this.blendStack.length > 0) this.currBlend = this.blendStack.pop();
 }
 
 Interpreter.prototype.pushAlpha = function() {
@@ -130,30 +140,31 @@ Interpreter.prototype.parseStatements = function(statements) {
 
 // execute a statement
 Interpreter.prototype.parseStatement = function(statement, index) {
-  
+  // parse transformation expression
   var expr = statement.exprs[index];
   if (expr) {
     this.pushMarix();
     this.pushHex();
     this.pushHsv();
+    this.pushBlend();
     this.pushAlpha();
     for (var i = 0; i < expr.left; i++) {
       this.parseTransformStatement(expr.right);
       this.parseStatement(statement, index + 1);
     }
     this.popAlpha();
+    this.popBlend();
     this.popHsv();
     this.popHex();
     this.popMarix();
     return;
   }
-  
+  // if not primitive, call rule and parse next transformation loops
   if (Primitive.indexOf(statement.id) === -1) {
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
     return;
   }
-  
   // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
 }
@@ -209,7 +220,11 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currHsv.value = clamp(this.currHsv.value * v, 0, 1);;
       break;
     case Property.Blend:
-      /* not implemented */
+      this.currBlend = {
+        color: property.color,
+        strength: this.currBlend.strength + clamp(property.strength, 0, 1),
+        computed: true
+      }
       break;
     case Property.Alpha:
       this.currAlpha *= v;
@@ -218,6 +233,13 @@ Interpreter.prototype.parseTransform = function(property) {
 }
 
 Interpreter.prototype.generatePrimitive = function(statement) {
+  // blend the current color with the specified color
+  if (this.currBlend.computed) {
+    this.currHex = this.currHex.toHSV();
+    var blend = Color(this.currBlend.color).toHSV();
+    this.currHex.hue += (blend.hue - this.currHex.hue) * this.currBlend.strength / 6;
+    this.currHex.hue %= 360;
+  }
   this.context.objects.push({
     type: Type.Primitive,
     name: statement.id,
