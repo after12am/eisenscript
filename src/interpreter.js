@@ -10,15 +10,11 @@ var Interpreter = function(context) {
   this.minsize = .2;
   this.maxsize = 1.0;
   this.seed = 'initial'; // integer or 'initial'
-  this.matrices = [];
+  this.stack = [];
   this.currMatrix = new THREE.Matrix4();
-  this.hexStack = [];
   this.currHex = Color('#ff0000');
-  this.hsvStack = [];
   this.currHsv = exports._.extend(Color({hue: 0, saturation: 1, value: 1}), { computed: false });
-  this.blendStack = [];
   this.currBlend = { color: null, strength: 0, computed: false };
-  this.alphaStack = [];
   this.currAlpha = 1;
   this.mt = new MersenneTwister();
 }
@@ -29,44 +25,25 @@ Interpreter.prototype.terminated = function() {
   return false;
 }
 
-Interpreter.prototype.pushMarix = function() {
-  this.matrices.push(this.currMatrix.clone());
+Interpreter.prototype.pushState = function() {
+  this.stack.push({
+    matrix: this.currMatrix.clone(),
+    hex: this.currHex.clone(),
+    hsv: this.currHsv.clone(),
+    blend: exports._.extend({}, this.currBlend),
+    alpha: this.currAlpha
+  });
 }
 
-Interpreter.prototype.popMarix = function() {
-  if (this.matrices.length > 0) this.currMatrix = this.matrices.pop();
-}
-
-Interpreter.prototype.pushHex = function() {
-  this.hexStack.push(this.currHex);
-}
-
-Interpreter.prototype.popHex = function() {
-  if (this.hexStack.length > 0) this.currHex = this.hexStack.pop();
-}
-
-Interpreter.prototype.pushHsv = function() {
-  this.hsvStack.push(this.currHsv.clone());
-}
-
-Interpreter.prototype.popHsv = function() {
-  if (this.hsvStack.length > 0) this.currHsv = this.hsvStack.pop();
-}
-
-Interpreter.prototype.pushBlend = function() {
-  this.blendStack.push(this.currBlend);
-}
-
-Interpreter.prototype.popBlend = function() {
-  if (this.blendStack.length > 0) this.currBlend = this.blendStack.pop();
-}
-
-Interpreter.prototype.pushAlpha = function() {
-  this.alphaStack.push(this.currAlpha);
-}
-
-Interpreter.prototype.popAlpha = function() {
-  if (this.alphaStack.length > 0) this.currAlpha = this.alphaStack.pop();
+Interpreter.prototype.popState = function() {
+  if (this.stack.length > 0) {
+    var state = this.stack.pop();
+    this.currMatrix = state.matrix
+    this.currHex = state.hex;
+    this.currHsv = state.hsv;
+    this.currBlend = state.blend;
+    this.currAlpha = state.alpha;
+  }
 }
 
 // execute eisenscript
@@ -152,22 +129,14 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   var expr = statement.exprs[index];
   if (expr) {
     this.depth++;
-    this.pushMarix();
-    this.pushHex();
-    this.pushHsv();
-    this.pushBlend();
-    this.pushAlpha();
+    this.pushState();
     for (var i = 0; i < expr.left; i++) {
       if (this.terminated()) break;
       this.parseTransformStatement(expr.right);
       // if statement.exprs[index + 1] is undefined, it would break the transformation loops.
       this.parseStatement(statement, index + 1);
     }
-    this.popAlpha();
-    this.popBlend();
-    this.popHsv();
-    this.popHex();
-    this.popMarix();
+    this.popState();
     this.depth--;
     return;
   }
@@ -193,13 +162,13 @@ Interpreter.prototype.parseTransform = function(property) {
   var k = property.key, v = property.value;
   switch (k) {
     case Property.XShift:
-      this.currMatrix.translate({x:v, y:0, z:0});
+      this.currMatrix.translate({ x:v, y:0, z:0 });
       break;
     case Property.YShift:
-      this.currMatrix.translate({x:0, y:v, z:0});
+      this.currMatrix.translate({ x:0, y:v, z:0 });
       break;
     case Property.ZShift:
-      this.currMatrix.translate({x:0, y:0, z:v});
+      this.currMatrix.translate({ x:0, y:0, z:v });
       break;
     case Property.RotateX:
       this.currMatrix.rotateX(degToRad(v));
@@ -211,10 +180,10 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currMatrix.rotateZ(degToRad(v));
       break;
     case Property.Size:
-      this.currMatrix.scale({x:v[0], y:v[1], z:v[2]});
+      this.currMatrix.scale({ x:v[0], y:v[1], z:v[2] });
       break;
     case Property.Matrix:
-      this.currMatrix.set(v[0],v[1],v[2],0,v[3],v[4],v[5],0,v[6],v[7],v[8],0);
+      this.currMatrix.set(v[0], v[1], v[2], 0, v[3], v[4], v[5], 0, v[6], v[7], v[8], 0);
       break;
     case Property.Color:
       this.currHex = Color(v);
