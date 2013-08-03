@@ -69,7 +69,7 @@ Interpreter.prototype.generate = function() {
       case Symbol.Set: that.define.push(statement); break;
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
       case Symbol.Rule:
-        var rule = that.rewrite(statement); break;
+        var rule = that.rewrite(statement);
         if (!that.rules[rule.id]) that.rules[rule.id] = [];
         that.rules[rule.id].push(rule);
         break;
