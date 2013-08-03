@@ -36,14 +36,13 @@ Interpreter.prototype.pushState = function() {
 }
 
 Interpreter.prototype.popState = function() {
-  if (this.stack.length > 0) {
-    var state = this.stack.pop();
-    this.currMatrix = state.matrix
-    this.currHex = state.hex;
-    this.currHsv = state.hsv;
-    this.currBlend = state.blend;
-    this.currAlpha = state.alpha;
-  }
+  if (this.stack.length === 0) return;
+  var state = this.stack.pop();
+  this.currMatrix = state.matrix
+  this.currHex = state.hex;
+  this.currHsv = state.hsv;
+  this.currBlend = state.blend;
+  this.currAlpha = state.alpha;
 }
 
 // execute eisenscript
@@ -224,6 +223,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     this.currHex.hue %= 360;
   }
   
+  // create primitive object
   this.context.objects.push({
     type: Type.Primitive,
     name: statement.id,
@@ -234,6 +234,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 }
 
 Interpreter.prototype.generateBackground = function(statement) {
+  // create background object
   this.context.objects.push({
     type: Type.Background,
     color: statement.value
