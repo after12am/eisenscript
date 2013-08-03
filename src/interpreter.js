@@ -220,11 +220,9 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currHsv.value = clamp(this.currHsv.value * v, 0, 1);;
       break;
     case Property.Blend:
-      this.currBlend = {
-        color: property.color,
-        strength: this.currBlend.strength + clamp(property.strength, 0, 1),
-        computed: true
-      }
+      this.currBlend.computed = true;
+      this.currBlend.color = property.color;
+      this.currBlend.strength = this.currBlend.strength + clamp(property.strength, 0, 1);
       break;
     case Property.Alpha:
       this.currAlpha *= v;
