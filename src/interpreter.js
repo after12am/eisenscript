@@ -13,18 +13,20 @@ var Interpreter = function(context) {
   this.stack = [];
   this.currMatrix = new THREE.Matrix4();
   this.currHex = Color('#ff0000');
-  this.currHsv = exports._.extend(Color({hue: 0, saturation: 1, value: 1}), { computed: false });
+  this.currHsv = exports._.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
   this.currBlend = { color: null, strength: 0, computed: false };
   this.currAlpha = 1;
   this.mt = new MersenneTwister();
 }
 
+// termination criteria
 Interpreter.prototype.terminated = function() {
   if (this.objectnum > this.maxobjects) return true;
   if (this.depth >= this.maxdepth) return true;
   return false;
 }
 
+// stack current transformation state
 Interpreter.prototype.pushState = function() {
   this.stack.push({
     matrix: this.currMatrix.clone(),
@@ -35,6 +37,7 @@ Interpreter.prototype.pushState = function() {
   });
 }
 
+// pull the parent transformation state
 Interpreter.prototype.popState = function() {
   if (this.stack.length === 0) return;
   var state = this.stack.pop();
@@ -47,14 +50,13 @@ Interpreter.prototype.popState = function() {
 
 // execute eisenscript
 Interpreter.prototype.generate = function() {
-  var that = this;
-  
   // extends for stacking intermediate product
   this.context = exports._.extend(this.context, {
     objects: []
   });
   
   // rewriting
+  var that = this;
   this.context.ast.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Define: that.define.push(statement); break;
@@ -210,6 +212,7 @@ Interpreter.prototype.parseTransform = function(property) {
   }
 }
 
+// create primitive object and stack it as intermediate code for renderer
 Interpreter.prototype.generatePrimitive = function(statement) {
   // if achieved maxobjects
   this.objectnum++;
@@ -223,7 +226,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     this.currHex.hue %= 360;
   }
   
-  // create primitive object
+  // primitive object
   this.context.objects.push({
     type: Type.Primitive,
     name: statement.id,
@@ -233,27 +236,30 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   });
 }
 
+// create background object code and stack it as intermediate code for renderer
 Interpreter.prototype.generateBackground = function(statement) {
-  // create background object
   this.context.objects.push({
     type: Type.Background,
     color: statement.value
   });
 }
 
-// randomly choose one of rules according to their weights
+// randomly choose one of the rules according to their weights
 Interpreter.prototype.sampling = function(name, retry) {
   if (!this.rules[name]) {
+    // it is better to be reported with profiler or logger
     console.warn('eisenscript: undefined rule');
     return;
   }
   
+  // sum weights of each rules
   var sum = 0;
   this.rules[name].forEach(function(rule) {
     rule.weight = rule.weight || 1;
     sum += rule.weight;
   });
   
+  // choosing...
   var rand = this.mt.next() * sum;
   var expected;
   for (var i = 0; i < this.rules[name].length; i++) {
@@ -266,10 +272,11 @@ Interpreter.prototype.sampling = function(name, retry) {
     break;
   }
   
-  // if achieve max retry count
+  // if rule could not be selected, interpreter tries to choose until 3 times
   if (!expected) {
     retry = retry || 0;
     if (retry < 3) return this.sampling(name, ++retry);
+    // if achieve max retry count
     return;
   }
   
