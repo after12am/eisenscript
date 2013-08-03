@@ -11,7 +11,7 @@ var Interpreter = function(context) {
   this.maxsize = 1.0;
   this.seed = 'initial'; // integer or 'initial'
   this.stack = [];
-  this.currMatrix = new THREE.Matrix4();
+  this.currMatrix = new THREE.Matrix4().identity();
   this.currHex = Color('#ff0000');
   this.currHsv = exports._.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
   this.currBlend = { color: null, strength: 0, computed: false };
@@ -55,7 +55,7 @@ Interpreter.prototype.generate = function() {
     objects: []
   });
   
-  // rewriting
+  // rewriting ast and pull the defines
   var that = this;
   this.context.ast.forEach(function(statement) {
     switch (statement.type) {
@@ -90,8 +90,7 @@ Interpreter.prototype.generate = function() {
     }
   });
   
-  // initialize parameter
-  this.currMatrix.identity();
+  // initial value is randomised chosen integer
   this.mt.setSeed(this.seed === 'initial' ? randInt(0, 65535) : this.seed);
   
   // execute main
@@ -101,7 +100,7 @@ Interpreter.prototype.generate = function() {
   return this.context;
 }
 
-// rewrite subtree of rules
+// rewrite subtree related to rules
 Interpreter.prototype.rewrite = function(rule) {
   rule.params.forEach(function(param) {
     if (param.type === Symbol.Modifier) {
