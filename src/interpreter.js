@@ -6,6 +6,7 @@ var Interpreter = function(context) {
   this.maxdepth = 100;
   this.depth = 0;
   this.maxobjects = 1000;
+  this.objectnum = 0;
   this.minsize = .2;
   this.maxsize = 1.0;
   this.seed = 'initial'; // integer or 'initial'
@@ -20,6 +21,12 @@ var Interpreter = function(context) {
   this.alphaStack = [];
   this.currAlpha = 1;
   this.mt = new MersenneTwister();
+}
+
+Interpreter.prototype.terminated = function() {
+  if (this.objectnum > this.maxobjects) return true;
+  if (this.depth >= this.maxdepth) return true;
+  return false;
 }
 
 Interpreter.prototype.pushMarix = function() {
@@ -133,6 +140,7 @@ Interpreter.prototype.rewrite = function(rule) {
 Interpreter.prototype.parseStatements = function(statements) {
   var i = 0, len = statements.length;
   while (i < len) {
+    if (this.terminated()) break;
     this.parseStatement(statements[i], 0);
     i++;
   }
@@ -143,13 +151,16 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   // parse transformation expression
   var expr = statement.exprs[index];
   if (expr) {
+    this.depth++;
     this.pushMarix();
     this.pushHex();
     this.pushHsv();
     this.pushBlend();
     this.pushAlpha();
     for (var i = 0; i < expr.left; i++) {
+      if (this.terminated()) break;
       this.parseTransformStatement(expr.right);
+      // if statement.exprs[index + 1] is undefined, it would break the transformation loops.
       this.parseStatement(statement, index + 1);
     }
     this.popAlpha();
@@ -157,6 +168,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.popHsv();
     this.popHex();
     this.popMarix();
+    this.depth--;
     return;
   }
   // if not primitive, call rule and parse next transformation loops
@@ -231,6 +243,10 @@ Interpreter.prototype.parseTransform = function(property) {
 }
 
 Interpreter.prototype.generatePrimitive = function(statement) {
+  // if achieved maxobjects
+  this.objectnum++;
+  if (this.terminated()) return;
+  
   // blend the current color with the specified color
   if (this.currBlend.computed) {
     this.currHex = this.currHex.toHSV();
@@ -238,6 +254,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     this.currHex.hue += (blend.hue - this.currHex.hue) * this.currBlend.strength / 6;
     this.currHex.hue %= 360;
   }
+  
   this.context.objects.push({
     type: Type.Primitive,
     name: statement.id,
