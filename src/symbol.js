@@ -41,5 +41,13 @@ var Property = {
 }
 
 var Primitive = [
-  'box'
+  'box',
+  'grid',
+  'sphere',
+  'line',
+  'point',
+  'triangle',
+  'mesh',
+  'cylinder',
+  'tube'
 ];
