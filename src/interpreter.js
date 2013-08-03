@@ -236,10 +236,10 @@ Interpreter.prototype.generateBackground = function(statement) {
 
 // randomly choose one of rules according to their weights
 Interpreter.prototype.sampling = function(name, retry) {
-  // have to alert a warning
-  if (!this.rules[name]) return;
-  
-  retry = retry || 0;
+  if (!this.rules[name]) {
+    console.warn('eisenscript: undefined rule');
+    return;
+  }
   
   var sum = 0;
   this.rules[name].forEach(function(rule) {
@@ -249,7 +249,6 @@ Interpreter.prototype.sampling = function(name, retry) {
   
   var rand = this.mt.next() * sum;
   var expected;
-  
   for (var i = 0; i < this.rules[name].length; i++) {
     var rule = this.rules[name][i];
     if (rule.weight - rand < 0) {
@@ -260,19 +259,20 @@ Interpreter.prototype.sampling = function(name, retry) {
     break;
   }
   
-  if (!expected && retry < 3) {
-    return this.sampling(name, ++retry);
+  // if achieve max retry count
+  if (!expected) {
+    retry = retry || 0;
+    if (retry < 3) return this.sampling(name, ++retry);
+    return;
   }
   
+  // if achieved maxdepth
   expected.depth = (expected.depth || 0) + 1;
-  if (expected.maxdepth) {
-    if (expected.maxdepth < expected.depth) {
-      if (expected.alternate) {
-        return this.sampling(expected.alternate);
-      }
-      // terminated
-      return;
-    }
+  if (expected.maxdepth && expected.maxdepth < expected.depth) {
+    if (expected.alternate) return this.sampling(expected.alternate);
+    return;
   }
+  
+  // the rule randomly chosen
   return expected;
 }
