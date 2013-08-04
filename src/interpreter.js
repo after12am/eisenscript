@@ -1,5 +1,6 @@
-var Interpreter = function(context) {
-  this.context = context;
+var Interpreter = function(ast) {
+  this.ast = ast;
+  this.objects = [];
   this.define = [];
   this.rules = {};
   this.computed = [];
@@ -50,14 +51,9 @@ Interpreter.prototype.popState = function() {
 
 // execute eisenscript
 Interpreter.prototype.generate = function() {
-  // extends for stacking intermediate product
-  this.context = exports._.extend(this.context, {
-    objects: []
-  });
-  
   // rewriting ast and pull the defines
   var that = this;
-  this.context.ast.forEach(function(statement) {
+  this.ast.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Define: that.define.push(statement); break;
       case Symbol.Set: that.define.push(statement); break;
@@ -96,8 +92,8 @@ Interpreter.prototype.generate = function() {
   // execute main
   this.parseStatements(this.computed);
   
-  // return the context that has objects property as code
-  return this.context;
+  // return the intermediate code
+  return this.objects;
 }
 
 // rewrite subtree related to rules
@@ -226,7 +222,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   }
   
   // primitive object
-  this.context.objects.push({
+  this.objects.push({
     type: Type.Primitive,
     name: statement.id,
     matrix: this.currMatrix.clone(),
@@ -237,7 +233,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 
 // create background object code and stack it as intermediate code for renderer
 Interpreter.prototype.generateBackground = function(statement) {
-  this.context.objects.push({
+  this.objects.push({
     type: Type.Background,
     color: statement.value
   });

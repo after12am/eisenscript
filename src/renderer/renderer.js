@@ -1,7 +1,6 @@
-var Renderer = function(context, option) {
-  option = option || {};
-  switch (option.renderer) {
-    case 'threejs':
-    default: return new ThreeRenderer(context, option);
-  }
+exports.Renderer = function() {
+  // if possible, use renderer based on WebGL
+  if (Detector.webgl) return new WebGLRenderer();
+  // if could not use webgl, return renderer based on Canvas
+  return new CanvasRenderer();
 }

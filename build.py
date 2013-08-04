@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-module = 'eisenscript'
+module = 'es'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
 input_order = [
