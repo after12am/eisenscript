@@ -256,19 +256,19 @@ Interpreter.prototype.sampling = function(name, retry) {
   
   // choosing...
   var rand = this.mt.next() * sum;
-  var expected;
+  var chosen;
   for (var i = 0; i < this.rules[name].length; i++) {
     var rule = this.rules[name][i];
     if (rule.weight - rand < 0) {
       rand -= rule.weight
       continue;
     }
-    expected = rule;
+    chosen = rule;
     break;
   }
   
   // if rule could not be selected, interpreter tries to choose until 3 times
-  if (!expected) {
+  if (!chosen) {
     retry = retry || 0;
     if (retry < 3) return this.sampling(name, ++retry);
     // if achieve max retry count
@@ -276,12 +276,12 @@ Interpreter.prototype.sampling = function(name, retry) {
   }
   
   // if achieved maxdepth
-  expected.depth = (expected.depth || 0) + 1;
-  if (expected.maxdepth && expected.maxdepth < expected.depth) {
-    if (expected.alternate) return this.sampling(expected.alternate);
+  chosen.depth = (chosen.depth || 0) + 1;
+  if (chosen.maxdepth && chosen.maxdepth < chosen.depth) {
+    if (chosen.alternate) return this.sampling(chosen.alternate);
     return;
   }
   
   // the rule randomly chosen
-  return expected;
+  return chosen;
 }
