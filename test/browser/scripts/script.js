@@ -10,4 +10,11 @@ $(function() {
     code: $('#eisenscript').text(),
     renderer: renderer,
   });
+  
+  function animate() {
+    requestAnimationFrame( animate );
+    renderer.render();
+  }
+  
+  animate();
 })
