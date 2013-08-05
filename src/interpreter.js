@@ -14,7 +14,7 @@ var Interpreter = function(ast) {
   this.stack = [];
   this.currMatrix = new THREE.Matrix4().identity();
   this.currHex = Color('#ff0000');
-  this.currHsv = exports._.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
+  this.currHsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
   this.currBlend = { color: null, strength: 0, computed: false };
   this.currAlpha = 1;
   this.mt = new MersenneTwister();
@@ -33,7 +33,7 @@ Interpreter.prototype.pushState = function() {
     matrix: this.currMatrix.clone(),
     hex: this.currHex.clone(),
     hsv: this.currHsv.clone(),
-    blend: exports._.extend({}, this.currBlend),
+    blend: _.extend({}, this.currBlend),
     alpha: this.currAlpha
   });
 }
