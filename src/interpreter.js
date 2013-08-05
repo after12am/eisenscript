@@ -146,6 +146,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   this.generatePrimitive(statement);
 }
 
+// break down transformation set
 Interpreter.prototype.parseTransformStatement = function(transform) {
   var i = 0, len = transform.properties.length;
   while (i < len) {
@@ -154,6 +155,7 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
   }
 }
 
+// parse transformation property
 Interpreter.prototype.parseTransform = function(property) {
   var k = property.key, v = property.value;
   switch (k) {
