@@ -1,20 +1,33 @@
+var container, renderer, prod;
+
+function animate() {
+  //requestAnimationFrame( animate );
+  renderer.render();
+}
+
 $(function() {
   
-  var container = document.createElement('div');
-  var renderer = new es.Renderer();
+  // compiling...
+  var s = +new Date();
+  prod = es.compile({
+    code: $('#eisenscript').text()
+  });
+  console.log('compile time:', (+new Date() - s) + 'ms');
   
+  // rendering...
+  var s = +new Date();
+  renderer = new es.TestRenderer({
+    objects: prod.objects,
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+  console.log('render time:', (+new Date() - s) + 'ms');
+  
+  // appending to body...
+  container = document.createElement('div');
   document.body.appendChild(container);
   container.appendChild(renderer.domElement);
   
-  var product = es.compile({
-    code: $('#eisenscript').text(),
-    renderer: renderer,
-  });
-  
-  function animate() {
-    requestAnimationFrame( animate );
-    renderer.render();
-  }
-  
+  // animating...
   animate();
-})
+});
