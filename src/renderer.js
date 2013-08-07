@@ -29,16 +29,14 @@ exports.TestRenderer = function(objects, option) {
 
 exports.TestRenderer.prototype.initialize = function() {
   // build intermediate code
-  if (this.objects) {
-    var v = this.objects;
-    for (var i = 0; i < v.length; i++) {
-      switch (v[i].type) {
-        case Type.Background: this.clearColor(v[i].color); break;
-        case Type.Primitive: this.add(v[i]); break;
-      }
+  var v = this.objects;
+  if (!v) return;
+  for (var i = 0; i < v.length; i++) {
+    switch (v[i].type) {
+      case Type.Background: this.clearColor(v[i].color); break;
+      case Type.Primitive: this.add(v[i]); break;
     }
   }
-  return this;
 };
 
 // repaint background with specific color
@@ -121,4 +119,5 @@ exports.TestRenderer.prototype.render = function() {
 // save image rendered on stage
 exports.TestRenderer.prototype.saveImage = function() {
   window.open(this.renderer.domElement.toDataURL("image/png"));
+  return this;
 };
