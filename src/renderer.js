@@ -42,8 +42,8 @@ exports.TestRenderer.prototype.initialize = function() {
 };
 
 // repaint background with specific color
-exports.TestRenderer.prototype.clearColor = function(hex, alpha) {
-  this.renderer.setClearColor(new THREE.Color(hex), alpha || 1);
+exports.TestRenderer.prototype.clearColor = function(hex) {
+  this.renderer.setClearColor(new THREE.Color(hex), 1);
   return this;
 };
 
