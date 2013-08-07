@@ -9,9 +9,7 @@ $(function() {
   
   // compiling...
   var s = +new Date();
-  prod = es.compile({
-    code: $('#eisenscript').text()
-  });
+  prod = es.compile($('#eisenscript').text());
   console.log('compile time:', (+new Date() - s) + 'ms');
   
   // rendering...

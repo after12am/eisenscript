@@ -1,8 +1,8 @@
-exports.compile = function(option) {
+exports.compile = function(code) {
   var ast, objects;
   // parse code, that is text string, and generate ast
   try {
-    ast = parser.parse(option.code);
+    ast = parser.parse(code);
   } catch (e) {
     return {
       error: e.message
