@@ -3,34 +3,28 @@ exports.TestRenderer = function(option) {
   this.widthidth = option.width;
   this.height = option.height;
   
-  this.fov = 75;
-  this.near = 1;
-  this.far = 1000;
   this.size = 1;
   this.segments = 40;
   this.rings = 32;
-  this.lon = 45;
-  this.lonstep = .5;
   
-  this.lat = 45;
-  this.phi = 0;
-  this.theta = 0;
-  this.d = 30;
+  
   
   this.materialType = 'basic';
   this.applyShadow = false;
   this.flipSided = false;
   this.space = null;
   this.cubes = [];
-  this.cameraTarget = new THREE.Vector3( 0, 0, 0 );
   this.renderTime = 0;
   
   this.group = new THREE.Object3D();
   this.scene = new THREE.Scene();
-  this.camera = new THREE.PerspectiveCamera( this.fov, this.widthidth / this.height, this.near, this.far );
-  this.camera.target = this.cameraTarget;
   
-  this.scene.add( this.camera );
+  // camera
+  this.camera = new THREE.PerspectiveCamera(75, this.widthidth / this.height, 1, 1000);
+  this.camera.target = new THREE.Vector3(0, 0, 0);
+  this.resetCamera();
+  
+  this.scene.add(this.camera);
   this.scene.add( this.group );
   
   this.cubeGeometry = new THREE.CubeGeometry( this.size, this.size, this.size );
@@ -144,28 +138,27 @@ exports.TestRenderer.prototype.update = function() {
   this.camera.position.y = this.d * Math.cos( this.phi );
   this.camera.position.z = this.d * Math.sin( this.phi ) * Math.sin( this.theta );
   this.camera.lookAt( this.camera.target );
-  //this.camera.projectionMatrix = THREE.Matrix4.makePerspective( this.fov, this.widthidth / this.height, 1, 3000 );
   
 }
 
 exports.TestRenderer.prototype.resetCamera = function() {
+  // set default value
+  this.lon = this.lon || 45;
+  this.lonstep = this.lonstep || .5;
+  this.lat = this.lat || 45;
+  this.phi = this.phi || 0;
+  this.theta = this.theta || 0;
+  this.d = this.d || 30;
   
-  this.lon = 45;
-  this.lonstep = .5;
-  this.lat = 45;
-  this.phi = 0;
-  this.theta = 0;
-  this.d = 10;
-  
-  this.lat = Math.max( - 85, Math.min( 85, this.lat ) );
-  this.phi = ( 90 - this.lat ) * Math.PI / 180;
+  // camera rotates around origin that is point(0, 0, 0)
+  this.lat = Math.max(-85, Math.min(85, this.lat));
+  this.phi = (90 - this.lat) * Math.PI / 180;
   this.theta = this.lon * Math.PI / 180;
   
-  this.camera.position.x = this.d * Math.sin( this.phi ) * Math.cos( this.theta );
-  this.camera.position.y = this.d * Math.cos( this.phi );
-  this.camera.position.z = this.d * Math.sin( this.phi ) * Math.sin( this.theta );
-  this.camera.lookAt( this.camera.target );
-  //this.camera.projectionMatrix = THREE.Matrix4.makePerspective( this.fov, this.widthidth / this.height, 1, 3000 );
+  this.camera.position.x = this.d * Math.sin(this.phi) * Math.cos(this.theta);
+  this.camera.position.y = this.d * Math.cos(this.phi);
+  this.camera.position.z = this.d * Math.sin(this.phi) * Math.sin(this.theta);
+  this.camera.lookAt(this.camera.target);
 };
 
 exports.TestRenderer.prototype.clear = function() {
