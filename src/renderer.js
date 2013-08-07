@@ -36,14 +36,6 @@ exports.TestRenderer = function(option) {
   this.cubeGeometry = new THREE.CubeGeometry( this.size, this.size, this.size );
   this.sphereGeometry = new THREE.SphereGeometry( this.size / 2, this.segments, this.rings );
   
-  this.light1 = new THREE.SpotLight( 0xff170f, 1 );//Math.random() * 0xffffff, 2 );
-  this.light1.position.set( 0, 500, 2000 );
-  this.scene.add( this.light1 );
-  
-  this.light2 = new THREE.SpotLight( 0xffcf0f, 1 );//Math.random() * 0xffffff, 2 );
-  this.light2.position.set( 0, -400, -1800 );
-  this.scene.add( this.light2 );
-  
   this.scene.add( this.space = new THREE.Mesh(
     new THREE.SphereGeometry( 1000, this.segments, this.rings ), 
     new THREE.MeshLambertMaterial( { color: 0xffffff } ) 
@@ -140,9 +132,6 @@ exports.TestRenderer.prototype.updateRenderSize = function(w, h) {
 
 exports.TestRenderer.prototype.update = function() {
   
-  this.light1.castShadow = this.applyShadow;
-  this.light2.castShadow = this.applyShadow;
-  
   this.space.flipSided = this.flipSided;
   this.space.receiveShadow = this.applyShadow;
   
@@ -157,15 +146,6 @@ exports.TestRenderer.prototype.update = function() {
   this.camera.lookAt( this.camera.target );
   //this.camera.projectionMatrix = THREE.Matrix4.makePerspective( this.fov, this.widthidth / this.height, 1, 3000 );
   
-  //if (this.isAnimate) {
-    var dt = new Date();
-    var dl = 400;
-    var t = .0003 * dt.getTime();
-    this.light1.position.set( this.camera.position.x, this.camera.position.y + 50, this.camera.position.z );
-    
-    var t = .00025 * dt.getTime();
-    this.light2.position.set( dl * Math.sin( t ) * Math.cos( t ), dl * Math.sin( t ), dl * Math.cos( t ) );
-  //}
 }
 
 exports.TestRenderer.prototype.resetCamera = function() {
