@@ -12,7 +12,6 @@ exports.TestRenderer = function(option) {
   this.materialType = 'basic';
   this.applyShadow = false;
   this.flipSided = false;
-  this.space = null;
   this.cubes = [];
   this.renderTime = 0;
   
@@ -29,12 +28,7 @@ exports.TestRenderer = function(option) {
   
   this.cubeGeometry = new THREE.CubeGeometry( this.size, this.size, this.size );
   this.sphereGeometry = new THREE.SphereGeometry( this.size / 2, this.segments, this.rings );
-  
-  this.scene.add( this.space = new THREE.Mesh(
-    new THREE.SphereGeometry( 1000, this.segments, this.rings ), 
-    new THREE.MeshLambertMaterial( { color: 0xffffff } ) 
-  ));
-  
+    
   this.renderer = new THREE.WebGLRenderer( { antialias: true });
   this.domElement = this.renderer.domElement;
   
@@ -126,8 +120,6 @@ exports.TestRenderer.prototype.updateRenderSize = function(w, h) {
 
 exports.TestRenderer.prototype.update = function() {
   
-  this.space.flipSided = this.flipSided;
-  this.space.receiveShadow = this.applyShadow;
   
   this.lon += this.lonstep;
   this.lat = Math.max( - 85, Math.min( 85, this.lat ) );
