@@ -1,36 +1,44 @@
 exports.TestRenderer = function(objects, option) {
+  this.objects = objects;
   this.width = option.width || window.innerWidth;
   this.height = option.height || window.innerHeight;
-  
-  // set three.js renderer
-  this.renderer = new THREE.WebGLRenderer({ antialias: true });
-  this.domElement = this.renderer.domElement;
   this.scene = new THREE.Scene();
+  this.group = new THREE.Object3D()
   
-  // group puts together the objects
-  this.scene.add(this.group = new THREE.Object3D());
-  
-  // set camera
+  // camera
   this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 1, 1000);
   this.camera.target = new THREE.Vector3(0, 0, 0);
   this.resetCamera().updateCamera();
-  this.scene.add(this.camera);
   
-  // define geometry in advance
+  // geometry
   this.geometry = {
     cube: new THREE.CubeGeometry(1, 1, 1),
     sphere: new THREE.SphereGeometry(.5, 40, 32)
   }
   
+  // add to scene
+  this.scene.add(this.camera);
+  this.scene.add(this.group);
+  
+  // renderer
+  this.renderer = new THREE.WebGLRenderer({ antialias: true });
+  this.domElement = this.renderer.domElement;
+  
+  this.initialize();
+};
+
+exports.TestRenderer.prototype.initialize = function() {
   // build intermediate code
-  if (objects) {
-    for (var i = 0; i < objects.length; i++) {
-      switch (objects[i].type) {
-        case Type.Background: this.clearColor(objects[i].color); break;
-        case Type.Primitive: this.add(objects[i]); break;
+  if (this.objects) {
+    var v = this.objects;
+    for (var i = 0; i < v.length; i++) {
+      switch (v[i].type) {
+        case Type.Background: this.clearColor(v[i].color); break;
+        case Type.Primitive: this.add(v[i]); break;
       }
     }
   }
+  return this;
 };
 
 // repaint background with specific color
@@ -41,8 +49,7 @@ exports.TestRenderer.prototype.clearColor = function(hex, alpha) {
 
 // add any primitive to stage
 exports.TestRenderer.prototype.add = function(primitive) {
-  var mat = new THREE.MeshBasicMaterial(primitive);
-  var mesh;
+  var mesh, mat = new THREE.MeshBasicMaterial(primitive);
   switch (primitive.name) {
     case 'box': mesh = new THREE.Mesh(this.geometry.cube, mat); break;
     case 'sphere': mesh = new THREE.Mesh(this.geometry.sphere, mat); break;
@@ -52,8 +59,6 @@ exports.TestRenderer.prototype.add = function(primitive) {
       break;
   }
   // define additional setting
-  mesh.castShadow = false;
-  mesh.receiveShadow = false;
   mesh.applyMatrix(primitive.matrix);
   this.group.add(mesh);
   return this;
@@ -83,6 +88,14 @@ exports.TestRenderer.prototype.updateCamera = function() {
   return this;
 }
 
+// garbage collection
+exports.TestRenderer.prototype.clear = function() {
+  var cubes = this.group.children;
+  for (var i = 0; i < cubes.length; i++) this.group.remove(cubes[i]);
+  this.renderer.render(this.scene, this.camera);
+  return this;
+};
+
 // if want to resize the stage size
 exports.TestRenderer.prototype.resize = function(width, height) {
   this.width = width;
@@ -97,14 +110,6 @@ exports.TestRenderer.prototype.update = function() {
   return this;
 }
 
-exports.TestRenderer.prototype.clear = function() {
-  // garbage collection
-  var cubes = this.group.children;
-  for (var i = 0; i < cubes.length; i++) this.group.remove(cubes[i]);
-  this.renderer.render(this.scene, this.camera);
-  return this;
-};
-
 exports.TestRenderer.prototype.render = function() {
   this.update();
   this.renderer.sortObjects = false;
@@ -113,6 +118,7 @@ exports.TestRenderer.prototype.render = function() {
   return this;
 }
 
+// save image rendered on stage
 exports.TestRenderer.prototype.saveImage = function() {
   window.open(this.renderer.domElement.toDataURL("image/png"));
 };
