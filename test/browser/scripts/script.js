@@ -16,11 +16,10 @@ $(function() {
   
   // rendering...
   var s = +new Date();
-  renderer = new es.TestRenderer({
-    objects: prod.objects,
+  renderer = new es.TestRenderer(prod.objects, {
     width: window.innerWidth,
     height: window.innerHeight
-  });
+  }).render();
   console.log('render time:', (+new Date() - s) + 'ms');
   
   // appending to body...
