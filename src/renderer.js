@@ -38,6 +38,7 @@ exports.TestRenderer.prototype.build = function(objects) {
       }
     }
   }
+  return this;
 };
 
 // repaint background with specific color
