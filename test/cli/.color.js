@@ -1,5 +1,4 @@
-var colors = require('colors');
-colors.setTheme({
+require('colors').setTheme({
   silly: 'rainbow',
   input: 'grey',
   verbose: 'cyan',
