@@ -1,3 +1,4 @@
+// module generate object code from ast
 var Interpreter = function(ast) {
   this.ast = ast;
   this.objects = [];
@@ -59,7 +60,7 @@ Interpreter.prototype.generate = function() {
       case Symbol.Set: that.define.push(statement); break;
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
       case Symbol.Rule:
-        var rule = that.rewrite(statement);
+        var rule = that.rewriteRule(statement);
         if (!that.rules[rule.id]) that.rules[rule.id] = [];
         that.rules[rule.id].push(rule);
         break;
@@ -96,8 +97,8 @@ Interpreter.prototype.generate = function() {
   return this.objects;
 }
 
-// rewrite subtree related to rules
-Interpreter.prototype.rewrite = function(rule) {
+// rewrite subtree related to rule statement
+Interpreter.prototype.rewriteRule = function(rule) {
   rule.params.forEach(function(param) {
     if (param.type === Symbol.Modifier) {
       switch (param.key) {
