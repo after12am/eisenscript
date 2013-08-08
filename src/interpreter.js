@@ -52,18 +52,20 @@ Interpreter.prototype.popState = function() {
 
 // execute eisenscript
 Interpreter.prototype.generate = function() {
-  // rewriting ast and pull the defines
+  // rewriting ast
   var that = this;
+  this.ast.forEach(function(statement) {
+    switch (statement.type) {
+      case Symbol.Rule: that.rewriteRule(statement); break;
+    }
+  });
+  
+  // pull the defines
   this.ast.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Define: that.define.push(statement); break;
       case Symbol.Set: that.define.push(statement); break;
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
-      case Symbol.Rule:
-        var rule = that.rewriteRule(statement);
-        if (!that.rules[rule.id]) that.rules[rule.id] = [];
-        that.rules[rule.id].push(rule);
-        break;
     }
   });
   
@@ -91,8 +93,10 @@ Interpreter.prototype.generate = function() {
   
   // pull the statement of system environment
   this.define.forEach(function(statement) {
-    if (statement.type === Symbol.Set) {
-      if (statement.key === Condition.Background) that.generateBackground(statement);
+    switch (statement.type) {
+      case Symbol.Set:
+        if (statement.key === Condition.Background) that.generateBackground(statement);
+        break;
     }
   });
   
@@ -113,7 +117,8 @@ Interpreter.prototype.rewriteRule = function(rule) {
       }
     }
   });
-  return rule;
+  if (!this.rules[rule.id]) this.rules[rule.id] = [];
+  this.rules[rule.id].push(rule);
 }
 
 // execute statements
