@@ -78,7 +78,6 @@ Interpreter.prototype.generate = function() {
           case Condition.Minsize: that.minsize = statement.value; break;
           case Condition.Maxsize: that.maxsize = statement.value; break;
           case Condition.Seed: that.seed = statement.value; break;
-          case Condition.Background: that.generateBackground(statement); break;
         }
         break;
       case Symbol.Define:
@@ -89,6 +88,13 @@ Interpreter.prototype.generate = function() {
   
   // initial value is randomised chosen integer
   this.mt.setSeed(this.seed === 'initial' ? randInt(0, 65535) : this.seed);
+  
+  // pull the statement of system environment
+  this.define.forEach(function(statement) {
+    if (statement.type === Symbol.Set) {
+      if (statement.key === Condition.Background) that.generateBackground(statement);
+    }
+  });
   
   // execute main
   this.parseStatements(this.computed);
