@@ -55,7 +55,7 @@ exports.TestRenderer.prototype.add = function(params) {
     case 'sphere': geometry = this.geometry.sphere; break;
     case 'grid': params.wireframe = true; geometry = this.geometry.cube; break;
   }
-  // define additional setting
+  // define primitive
   var mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial(params));
   mesh.applyMatrix(params.matrix);
   this.group.add(mesh);
