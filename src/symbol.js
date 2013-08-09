@@ -40,14 +40,14 @@ var Property = {
   Alpha: 'alpha'
 }
 
-var Primitive = [
-  'box',
-  'grid',
-  'sphere',
-  'line',
-  'point',
-  'triangle',
-  'mesh',
-  'cylinder',
-  'tube'
-];
+var Primitive = {
+  Box: 'box',
+  Grid: 'grid',
+  Sphere: 'sphere',
+  // Line: 'line',
+  // Point: 'point',
+  // Triangle: 'triangle',
+  // Mesh: 'mesh',
+  // Cylinder: 'cylinder',
+  // Tube: 'tube'
+};

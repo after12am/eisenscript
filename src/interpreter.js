@@ -149,7 +149,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     return;
   }
   // if not primitive, call rule and parse next transformation loops
-  if (Primitive.indexOf(statement.id) === -1) {
+  if (_.values(Primitive).indexOf(statement.id) === -1) {
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
     return;

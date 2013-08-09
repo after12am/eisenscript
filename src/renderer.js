@@ -49,16 +49,14 @@ exports.TestRenderer.prototype.clearColor = function(hex) {
 
 // add any primitive to stage
 exports.TestRenderer.prototype.add = function(params) {
-  var mesh, mat = new THREE.MeshBasicMaterial(params);
+  var geometry;
   switch (params.name) {
-    case 'box': mesh = new THREE.Mesh(this.geometry.cube, mat); break;
-    case 'sphere': mesh = new THREE.Mesh(this.geometry.sphere, mat); break;
-    case 'grid':
-      params.wireframe = true;
-      mesh = new THREE.Mesh(this.geometry.cube, mat);
-      break;
+    case 'box': geometry = this.geometry.cube; break;
+    case 'sphere': geometry = this.geometry.sphere; break;
+    case 'grid': params.wireframe = true; geometry = this.geometry.cube; break;
   }
   // define additional setting
+  var mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial(params));
   mesh.applyMatrix(params.matrix);
   this.group.add(mesh);
   return this;
