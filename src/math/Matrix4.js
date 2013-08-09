@@ -10,8 +10,8 @@
  * @author bhouston / http://exocortex.com
  */
 
-
-THREE.Matrix4 = function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
+// have to change THREE namespace
+var Matrix4 = function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
 
   var te = this.elements = new Float32Array( 16 );
 
@@ -25,7 +25,7 @@ THREE.Matrix4 = function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33
 
 };
 
-THREE.extend( THREE.Matrix4.prototype, {
+Matrix4.prototype = {
 
   set: function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
 
@@ -1072,7 +1072,5 @@ THREE.extend( THREE.Matrix4.prototype, {
       te[3], te[7], te[11], te[15]
 
     );
-
   }
-
-} );
+}
