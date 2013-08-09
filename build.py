@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+version = '1.0.0'
 module = 'es'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
@@ -10,10 +11,9 @@ input_order = [
 import re, os, sys, time, tempfile
 
 header = '''/*
- * eisenscript.js
+ * eisenscript v%s
  * https://github.com/after12am/eisenscript
- *
- * Copyright 2013 Satoshi Okami
+ * (c)2013 Satoshi Okami
  * Released under the MIT license
  */
 '''
@@ -52,7 +52,7 @@ def build():
     data = 'var %s = (function() {\nvar exports = {};\n\n' % module + compile(sources()) + '\nreturn exports;\n})();\n'
     if 'release' in sys.argv:
         data = release(data)
-    open(output_path, 'w').write(data)
+    open(output_path, 'w').write(header % version + data)
     print 'built %s (%u lines)' % (output_path, len(data.split('\n')))
 
 def stat():

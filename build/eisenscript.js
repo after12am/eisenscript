@@ -1,3 +1,9 @@
+/*
+ * eisenscript v1.0.0
+ * https://github.com/after12am/eisenscript
+ * (c)2013 Satoshi Okami
+ * Released under the MIT license
+ */
 var es=function(){var R,S,T,U,V,W,X,Y,Z,$,aa,ba,ca,da,O,P,Q,ea,fa,ga,ha,ia,ja,ka,la,L,ma,na;function z(b){0==arguments.length&&(b=(new Date).getTime());this._mt=Array(624);this.setSeed(b)}var u={};if("undefined"==typeof A)var A={};A.brehaut||(A.brehaut={});(function(){function b(a,b){for(var a=a.toString(),c=[],d=0,h=Math.max(b-a.length,0);d<h;d++)c.push("0");c.push(a);return c.join("")}function a(a){return a.slice(0,1).toUpperCase()+a.slice(1)}function c(a){return a.replace(/^\s+|\s+$/g,"")}function d(a){return function(){var b=
 this.clone();a.apply(b,arguments);return b}}function h(b,c){function d(a){return function(){return a.apply(this[j](),arguments)}}function h(){}function e(){return new h}var f=m(o),i=[],j="to"+a(b),k;for(k in c)if(c.hasOwnProperty(k)){f[k]=c[k];var l=f[k];if(k.slice(0,1)!="_")if(!(k in o)&&"function"==typeof l)o[k]=d(l);else if("function"!=typeof l){i.push(k);var l="get"+a(k),n="set"+a(k);o[l]=d(f[l]=function(a){return function(){return this[a]}}(k));o[n]=d(f[n]=function(a){return function(b){var c=
 this.clone();c[a]=b;return c}}(k))}}h.prototype=f;q[b]=e;f.clone=function(){for(var a=e(),b=0,c=i.length;b<c;b++){var d=i[b];a[d]=this[d]}return a};o[j]=function(){return e()};r.push(f);return f}function i(a){return o.fromObject(a)}var e={aliceblue:"#F0F8FF",antiquewhite:"#FAEBD7",aqua:"#00FFFF",aquamarine:"#7FFFD4",azure:"#F0FFFF",beige:"#F5F5DC",bisque:"#FFE4C4",black:"#000000",blanchedalmond:"#FFEBCD",blue:"#0000FF",blueviolet:"#8A2BE2",brown:"#A52A2A",burlywood:"#DEB887",cadetblue:"#5F9EA0",chartreuse:"#7FFF00",
