@@ -119,7 +119,6 @@ exports.TestRenderer.prototype.update = function() {
 
 // rendering the scene
 exports.TestRenderer.prototype.render = function() {
-  this.update();
   this.renderer.sortObjects = false;
   this.renderer.setSize(this.width, this.height);
   this.renderer.render(this.scene, this.camera);

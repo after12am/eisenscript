@@ -2,6 +2,7 @@ var container, renderer, prod;
 
 function animate() {
   //requestAnimationFrame( animate );
+  renderer.update();
   renderer.render();
 }
 
