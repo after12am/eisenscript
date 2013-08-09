@@ -43,7 +43,7 @@ var Property = {
 var Primitive = {
   Box: 'box',
   Grid: 'grid',
-  Sphere: 'sphere',
+  Sphere: 'sphere'//,
   // Line: 'line',
   // Point: 'point',
   // Triangle: 'triangle',
