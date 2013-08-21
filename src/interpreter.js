@@ -193,7 +193,14 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currMatrix.scale({ x:v[0], y:v[1], z:v[2] });
       break;
     case Property.Matrix:
-      this.currMatrix.set(v[0], v[1], v[2], 0, v[3], v[4], v[5], 0, v[6], v[7], v[8], 0);
+      // make 3x3 rotation matrix to 4x4 matrix
+      // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
+      this.currMatrix.set(
+        v[0], v[1], v[2], 0, 
+        v[3], v[4], v[5], 0, 
+        v[6], v[7], v[8], 0,
+           0,    0,    0, 1
+      );
       break;
     case Property.Color:
       var hex = v;
