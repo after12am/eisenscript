@@ -65,7 +65,7 @@ exports.TestRenderer.prototype.add = function(params) {
 // remove all objects from stage
 exports.TestRenderer.prototype.removeAll = function() {
   var boxes = this.group.children;
-  for (var i = 0; i < boxes.length; i++) this.group.remove(boxes[i]);
+  for (var i = boxes.length - 1; i >= 0; i--) this.group.remove(boxes[i]);
 }
 
 // back to initial state
