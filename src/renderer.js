@@ -55,6 +55,9 @@ exports.TestRenderer.prototype.add = function(params) {
     case 'sphere': geometry = this.geometry.sphere; break;
     case 'grid': params.wireframe = true; geometry = this.geometry.cube; break;
   }
+  // set transparent for working opacity.
+  // see http://stackoverflow.com/questions/14609508/cant-change-opacity-anymore-when-upgrading-from-three-js-r52-to-r55
+  params.transparent = true;
   // define primitive
   var mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial(params));
   mesh.applyMatrix(params.matrix);
