@@ -24,6 +24,7 @@ exports.TestRenderer = function(objects, option) {
   this.renderer = new THREE.WebGLRenderer({ antialias: true });
   this.domElement = this.renderer.domElement;
   
+  this.resize(this.width, this.height);
   this.build(objects);
 };
 
@@ -107,6 +108,8 @@ exports.TestRenderer.prototype.clear = function() {
 exports.TestRenderer.prototype.resize = function(width, height) {
   this.width = width;
   this.height = height;
+  this.camera.aspect = width / height;
+  this.renderer.setSize(width, height);
   return this;
 };
 
@@ -121,7 +124,6 @@ exports.TestRenderer.prototype.update = function() {
 // rendering the scene
 exports.TestRenderer.prototype.render = function() {
   this.renderer.sortObjects = false;
-  this.renderer.setSize(this.width, this.height);
   this.renderer.render(this.scene, this.camera);
   return this;
 }
