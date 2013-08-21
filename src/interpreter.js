@@ -196,7 +196,9 @@ Interpreter.prototype.parseTransform = function(property) {
       this.currMatrix.set(v[0], v[1], v[2], 0, v[3], v[4], v[5], 0, v[6], v[7], v[8], 0);
       break;
     case Property.Color:
-      this.currHex = Color(v);
+      var hex = v;
+      if (hex === 'random') hex = sprintf('#%06s', Math.floor(this.mt.next() * 0xFFFFFF).toString(16));
+      this.currHex = Color(hex);
       break;
     case Property.Hue:
       this.currHsv.computed = true;
