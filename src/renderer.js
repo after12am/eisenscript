@@ -25,12 +25,11 @@ exports.TestRenderer = function(objects, option) {
   this.domElement = this.renderer.domElement;
   
   this.resize(this.width, this.height);
-  this.build(objects);
 };
 
 // interpret object code and refresh stage objects
 exports.TestRenderer.prototype.build = function(objects) {
-  this.removeAll();
+  if (objects.constructor === Object) objects = [objects];
   if (objects.constructor === Array) {
     for (var i = 0; i < objects.length; i++) {
       switch (objects[i].type) {
