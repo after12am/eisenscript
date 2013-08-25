@@ -49,7 +49,7 @@ def release(data):
     return compress(data)
 
 def build():
-    data = 'var %s = (function() {\nvar exports = {};\n\n' % module + compile(sources()) + '\nreturn exports;\n})();\n'
+    data = 'var %s = (function() {\nvar exports = {};\nexports.version=\'%s\'\n\n' % (module, version) + compile(sources()) + '\nreturn exports;\n})();\n'
     if 'release' in sys.argv:
         data = release(data)
     open(output_path, 'w').write(header % version + data)
