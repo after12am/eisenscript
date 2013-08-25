@@ -9,8 +9,6 @@ function animate() {
   
   // renderer.update();
   renderer.render();
-  
-  setTimeout(animate, 1000 / 30);
 }
 
 $(function() {
