@@ -10,12 +10,12 @@ $(function() {
   
   // compiling...
   var s = +new Date();
-  prod = es.compile($('#eisenscript').text());
+  prod = EISEN.compile($('#eisenscript').text());
   console.log('compile time:', (+new Date() - s) + 'ms');
   
   // rendering...
   var s = +new Date();
-  renderer = new es.TestRenderer(prod.objects, {
+  renderer = new EISEN.TestRenderer(prod.objects, {
     width: window.innerWidth,
     height: window.innerHeight
   }).render();

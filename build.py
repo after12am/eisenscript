@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 version = '1.0.1'
-module = 'es'
+module = 'EISEN'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
 input_order = [
