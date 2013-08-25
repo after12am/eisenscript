@@ -11,8 +11,5 @@ exports.compile = function(code) {
     };
   }
   // return package of intermediate products
-  return {
-    ast: ast,
-    objects: objects
-  }
+  return objects
 }
