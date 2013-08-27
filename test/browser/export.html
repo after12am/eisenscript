@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Export Test</title>
+<meta charset="utf-8">
+<style>
+body {
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.file {
+  color: #fff;
+}
+</style>
+</head>
+<body>
+<a class="file obj" href="#" download="data.obj">obj file</a>
+<script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+<script type="text/javascript" src="scripts/three.min.js"></script>
+<script type="text/javascript" src="scripts/eisenscript.js"></script>
+<script>
+
+  var camera, scene, renderer;
+  var mesh;
+
+  init();
+  animate();
+
+  function init() {
+    
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.z = 400;
+
+    scene = new THREE.Scene();
+
+    var geometry = new THREE.CubeGeometry( 200, 200, 200 );
+
+    
+    var material = new THREE.MeshBasicMaterial( {  } );
+
+    mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
+
+    //
+
+    window.addEventListener( 'resize', onWindowResize, false );
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+
+  function animate() {
+    requestAnimationFrame( animate );
+
+    mesh.rotation.x += 0.005;
+    mesh.rotation.y += 0.01;
+
+    renderer.render( scene, camera );
+  }
+
+  $('.obj').click(function() {
+    var content = EISEN.export([mesh]);
+    var blob = new Blob([content]);
+    var url = window.URL || window.webkitURL;
+    var blobURL = url.createObjectURL(blob);
+    $(this).attr('href', blobURL);
+  })
+</script>
+</body>
+</html>

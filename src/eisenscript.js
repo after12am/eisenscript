@@ -1,5 +1,5 @@
 exports.export = function(meshes) {
-  new OBJExporter().export(meshes);
+  return new OBJExporter().export(meshes);
 }
 
 exports.compile = function(code) {
