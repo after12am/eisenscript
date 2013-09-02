@@ -250,7 +250,8 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     name: statement.id,
     matrix: this.currMatrix.clone(),
     color: this.currHsv.computed ? this.currHex.blend(this.currHsv, 1).toCSS() : this.currHex.toCSS(),
-    opacity: this.currAlpha
+    opacity: this.currAlpha,
+    depth: this.depth
   });
 }
 
