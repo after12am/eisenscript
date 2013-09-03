@@ -45,6 +45,47 @@ Interpreter.prototype.popState = function() {
   if (this.stack.length > 0) this.curr = this.stack.pop();
 }
 
+// make 3x3 rotation matrix to 4x4 matrix
+// test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
+Interpreter.prototype.makeRotate = function(v) {
+  this.curr.matrix.set(
+    v[0], v[1], v[2], 0, 
+    v[3], v[4], v[5], 0, 
+    v[6], v[7], v[8], 0,
+       0,    0,    0, 1
+  );
+}
+
+Interpreter.prototype.random16 = function() {
+  return Math.floor(this.mt.next() * 0xFFFFFF).toString(16);
+}
+
+Interpreter.prototype.setColor = function(color) {
+  if (color === 'random') color = sprintf('#%06s', this.random16());
+  this.curr.hex = Color(color);
+}
+
+Interpreter.prototype.setHue = function(v) {
+  this.curr.hsv.computed = true;
+  this.curr.hsv.hue += v % 360;
+}
+
+Interpreter.prototype.setSaturation = function(v) {
+  this.curr.hsv.computed = true;
+  this.curr.hsv.saturation = clamp(this.curr.hsv.saturation * v, 0, 1);
+}
+
+Interpreter.prototype.setBrightness = function(v) {
+  this.curr.hsv.computed = true;
+  this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);;
+}
+
+Interpreter.prototype.setBlend = function(color, strength) {
+  this.curr.blend.computed = true;
+  this.curr.blend.color = color;
+  this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1);
+}
+
 // execute eisenscript
 Interpreter.prototype.generate = function() {
   // rewriting ast
@@ -164,64 +205,22 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 
 // parse transformation property
 Interpreter.prototype.parseTransform = function(property) {
-  var k = property.key, v = property.value;
-  switch (k) {
-    case Property.XShift:
-      this.curr.matrix.translate({ x:v, y:0, z:0 });
-      break;
-    case Property.YShift:
-      this.curr.matrix.translate({ x:0, y:v, z:0 });
-      break;
-    case Property.ZShift:
-      this.curr.matrix.translate({ x:0, y:0, z:v });
-      break;
-    case Property.RotateX:
-      this.curr.matrix.rotateX(degToRad(v));
-      break;
-    case Property.RotateY:
-      this.curr.matrix.rotateY(degToRad(v));
-      break;
-    case Property.RotateZ:
-      this.curr.matrix.rotateZ(degToRad(v));
-      break;
-    case Property.Size:
-      this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] });
-      break;
-    case Property.Matrix:
-      // make 3x3 rotation matrix to 4x4 matrix
-      // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
-      this.curr.matrix.set(
-        v[0], v[1], v[2], 0, 
-        v[3], v[4], v[5], 0, 
-        v[6], v[7], v[8], 0,
-           0,    0,    0, 1
-      );
-      break;
-    case Property.Color:
-      var hex = v;
-      if (hex === 'random') hex = sprintf('#%06s', Math.floor(this.mt.next() * 0xFFFFFF).toString(16));
-      this.curr.hex = Color(hex);
-      break;
-    case Property.Hue:
-      this.curr.hsv.computed = true;
-      this.curr.hsv.hue += v % 360;
-      break;
-    case Property.Saturation:
-      this.curr.hsv.computed = true;
-      this.curr.hsv.saturation = clamp(this.curr.hsv.saturation * v, 0, 1);
-      break;
-    case Property.Brightness:
-      this.curr.hsv.computed = true;
-      this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);;
-      break;
-    case Property.Blend:
-      this.curr.blend.computed = true;
-      this.curr.blend.color = property.color;
-      this.curr.blend.strength = this.curr.blend.strength + clamp(property.strength, 0, 1);
-      break;
-    case Property.Alpha:
-      this.curr.alpha *= v;
-      break;
+  var v = property.value;
+  switch (property.key) {
+    case Property.XShift: this.curr.matrix.translate({ x:v, y:0, z:0 }); break;
+    case Property.YShift: this.curr.matrix.translate({ x:0, y:v, z:0 }); break;
+    case Property.ZShift: this.curr.matrix.translate({ x:0, y:0, z:v }); break;
+    case Property.RotateX: this.curr.matrix.rotateX(degToRad(v)); break;
+    case Property.RotateY: this.curr.matrix.rotateY(degToRad(v)); break;
+    case Property.RotateZ: this.curr.matrix.rotateZ(degToRad(v)); break;
+    case Property.Size: this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
+    case Property.Matrix: this.makeRotate(v); break;
+    case Property.Color: this.setColor(v); break;
+    case Property.Hue: this.setHue(v); break;
+    case Property.Saturation: this.setSaturation(v); break;
+    case Property.Brightness: this.setBrightness(v); break;
+    case Property.Blend: this.setBlend(property.color, property.strength); break;
+    case Property.Alpha: this.curr.alpha *= v; break;
   }
 }
 
