@@ -31,6 +31,7 @@ Interpreter.prototype.terminated = function() {
 
 // stack current transformation state
 Interpreter.prototype.pushState = function() {
+  this.depth++;
   this.stack.push({
     matrix: this.curr.matrix.clone(),
     hex: this.curr.hex.clone(),
@@ -42,7 +43,10 @@ Interpreter.prototype.pushState = function() {
 
 // pull the parent transformation state
 Interpreter.prototype.popState = function() {
-  if (this.stack.length > 0) this.curr = this.stack.pop();
+  if (this.stack.length > 0) {
+    this.curr = this.stack.pop();
+    this.depth--;
+  }
 }
 
 // make 3x3 rotation matrix to 4x4 matrix
@@ -172,7 +176,6 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   // parse transformation expression
   var expr = statement.exprs[index];
   if (expr) {
-    this.depth++;
     this.pushState();
     for (var i = 0; i < expr.left; i++) {
       if (this.terminated()) break;
@@ -181,7 +184,6 @@ Interpreter.prototype.parseStatement = function(statement, index) {
       this.parseStatement(statement, index + 1);
     }
     this.popState();
-    this.depth--;
     return;
   }
   // if not primitive, call rule and parse next transformation loops
