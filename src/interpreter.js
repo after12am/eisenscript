@@ -13,11 +13,12 @@ var Interpreter = function(ast) {
   this.maxsize = 1.0;
   this.seed = 'initial'; // integer or 'initial'
   this.stack = [];
-  this.currMatrix = new Matrix4();
-  this.currHex = Color('#ff0000');
-  this.currHsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
-  this.currBlend = { color: null, strength: 0, computed: false };
-  this.currAlpha = 1;
+  this.curr = {};
+  this.curr.matrix = new Matrix4();
+  this.curr.hex = Color('#ff0000');
+  this.curr.hsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
+  this.curr.blend = { color: null, strength: 0, computed: false };
+  this.curr.alpha = 1;
   this.mt = new MersenneTwister();
 }
 
@@ -31,23 +32,17 @@ Interpreter.prototype.terminated = function() {
 // stack current transformation state
 Interpreter.prototype.pushState = function() {
   this.stack.push({
-    matrix: this.currMatrix.clone(),
-    hex: this.currHex.clone(),
-    hsv: this.currHsv.clone(),
-    blend: _.extend({}, this.currBlend),
-    alpha: this.currAlpha
+    matrix: this.curr.matrix.clone(),
+    hex: this.curr.hex.clone(),
+    hsv: this.curr.hsv.clone(),
+    blend: _.extend({}, this.curr.blend),
+    alpha: this.curr.alpha
   });
 }
 
 // pull the parent transformation state
 Interpreter.prototype.popState = function() {
-  if (this.stack.length === 0) return;
-  var state = this.stack.pop();
-  this.currMatrix = state.matrix
-  this.currHex = state.hex;
-  this.currHsv = state.hsv;
-  this.currBlend = state.blend;
-  this.currAlpha = state.alpha;
+  if (this.stack.length > 0) this.curr = this.stack.pop();
 }
 
 // execute eisenscript
@@ -172,30 +167,30 @@ Interpreter.prototype.parseTransform = function(property) {
   var k = property.key, v = property.value;
   switch (k) {
     case Property.XShift:
-      this.currMatrix.translate({ x:v, y:0, z:0 });
+      this.curr.matrix.translate({ x:v, y:0, z:0 });
       break;
     case Property.YShift:
-      this.currMatrix.translate({ x:0, y:v, z:0 });
+      this.curr.matrix.translate({ x:0, y:v, z:0 });
       break;
     case Property.ZShift:
-      this.currMatrix.translate({ x:0, y:0, z:v });
+      this.curr.matrix.translate({ x:0, y:0, z:v });
       break;
     case Property.RotateX:
-      this.currMatrix.rotateX(degToRad(v));
+      this.curr.matrix.rotateX(degToRad(v));
       break;
     case Property.RotateY:
-      this.currMatrix.rotateY(degToRad(v));
+      this.curr.matrix.rotateY(degToRad(v));
       break;
     case Property.RotateZ:
-      this.currMatrix.rotateZ(degToRad(v));
+      this.curr.matrix.rotateZ(degToRad(v));
       break;
     case Property.Size:
-      this.currMatrix.scale({ x:v[0], y:v[1], z:v[2] });
+      this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] });
       break;
     case Property.Matrix:
       // make 3x3 rotation matrix to 4x4 matrix
       // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
-      this.currMatrix.set(
+      this.curr.matrix.set(
         v[0], v[1], v[2], 0, 
         v[3], v[4], v[5], 0, 
         v[6], v[7], v[8], 0,
@@ -205,27 +200,27 @@ Interpreter.prototype.parseTransform = function(property) {
     case Property.Color:
       var hex = v;
       if (hex === 'random') hex = sprintf('#%06s', Math.floor(this.mt.next() * 0xFFFFFF).toString(16));
-      this.currHex = Color(hex);
+      this.curr.hex = Color(hex);
       break;
     case Property.Hue:
-      this.currHsv.computed = true;
-      this.currHsv.hue += v % 360;
+      this.curr.hsv.computed = true;
+      this.curr.hsv.hue += v % 360;
       break;
     case Property.Saturation:
-      this.currHsv.computed = true;
-      this.currHsv.saturation = clamp(this.currHsv.saturation * v, 0, 1);
+      this.curr.hsv.computed = true;
+      this.curr.hsv.saturation = clamp(this.curr.hsv.saturation * v, 0, 1);
       break;
     case Property.Brightness:
-      this.currHsv.computed = true;
-      this.currHsv.value = clamp(this.currHsv.value * v, 0, 1);;
+      this.curr.hsv.computed = true;
+      this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);;
       break;
     case Property.Blend:
-      this.currBlend.computed = true;
-      this.currBlend.color = property.color;
-      this.currBlend.strength = this.currBlend.strength + clamp(property.strength, 0, 1);
+      this.curr.blend.computed = true;
+      this.curr.blend.color = property.color;
+      this.curr.blend.strength = this.curr.blend.strength + clamp(property.strength, 0, 1);
       break;
     case Property.Alpha:
-      this.currAlpha *= v;
+      this.curr.alpha *= v;
       break;
   }
 }
@@ -237,20 +232,20 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   if (this.terminated()) return;
   
   // blend the current color with the specified color
-  if (this.currBlend.computed) {
-    this.currHex = this.currHex.toHSV();
-    var blend = Color(this.currBlend.color).toHSV();
-    this.currHex.hue += (blend.hue - this.currHex.hue) * this.currBlend.strength / 6;
-    this.currHex.hue %= 360;
+  if (this.curr.blend.computed) {
+    this.curr.hex = this.curr.hex.toHSV();
+    var blend = Color(this.curr.blend.color).toHSV();
+    this.curr.hex.hue += (blend.hue - this.curr.hex.hue) * this.curr.blend.strength / 6;
+    this.curr.hex.hue %= 360;
   }
   
   // primitive object
   this.objects.push({
     type: Type.Primitive,
     name: statement.id,
-    matrix: this.currMatrix.clone(),
-    color: this.currHsv.computed ? this.currHex.blend(this.currHsv, 1).toCSS() : this.currHex.toCSS(),
-    opacity: this.currAlpha,
+    matrix: this.curr.matrix.clone(),
+    color: this.curr.hsv.computed ? this.curr.hex.blend(this.curr.hsv, 1).toCSS() : this.curr.hex.toCSS(),
+    opacity: this.curr.alpha,
     depth: this.depth
   });
 }
