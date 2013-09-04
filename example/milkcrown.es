@@ -1,3 +1,6 @@
+/*
+  @author satoshi okami
+*/
 set maxobjects 2000
 
 1 * { z 4 y -3 } 72 * { x 0.3 ry 5 } R1
