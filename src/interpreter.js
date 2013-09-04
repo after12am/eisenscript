@@ -1,5 +1,6 @@
 // module generate object code from ast
 var Interpreter = function(ast) {
+  this.name = 'Interpreter';
   this.ast = ast;
   this.objects = [];
   this.define = [];
@@ -81,7 +82,7 @@ Interpreter.prototype.setSaturation = function(v) {
 
 Interpreter.prototype.setBrightness = function(v) {
   this.curr.hsv.computed = true;
-  this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);;
+  this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);
 }
 
 Interpreter.prototype.setBlend = function(color, strength) {
@@ -123,7 +124,7 @@ Interpreter.prototype.generate = function() {
         }
         break;
       case Symbol.Define:
-        // not implemented
+        // not implemented, but I don't think the definition statement is need.
         break;
     }
   });
@@ -262,9 +263,10 @@ Interpreter.prototype.generateBackground = function(statement) {
 // randomly choose one of the rules according to their weights
 Interpreter.prototype.sampling = function(name, retry) {
   if (!this.rules[name]) {
-    // it is better to be reported with profiler or logger
-    console.warn('eisenscript: undefined rule');
-    return;
+    throw new Error(
+      sprintf("ReferenceError: '%s' is not defined. As reported by eisenscript interpreter.", name),
+      sprintf("%s.js", this.name)
+    );
   }
   
   // sum weights of each rules
