@@ -6,7 +6,7 @@ exports.TestRenderer = function(option) {
   this.group = new THREE.Object3D()
   
   // camera
-  this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 1, 1000);
+  this.camera = new THREE.PerspectiveCamera(15, this.width / this.height, 1, 2000);
   this.camera.target = new THREE.Vector3(0, 0, 0);
   this.resetCamera().updateCamera();
   
@@ -78,7 +78,7 @@ exports.TestRenderer.prototype.resetCamera = function() {
   this.lat = this.lat || 45;
   this.phi = this.phi || 0;
   this.theta = this.theta || 0;
-  this.d = this.d || 30;
+  this.d = this.d || 100;
   return this;
 };
 
@@ -108,6 +108,7 @@ exports.TestRenderer.prototype.resize = function(width, height) {
   this.width = width;
   this.height = height;
   this.camera.aspect = width / height;
+  this.camera.updateProjectionMatrix();
   this.renderer.setSize(width, height);
   return this;
 };
