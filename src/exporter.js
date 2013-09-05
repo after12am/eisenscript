@@ -76,5 +76,6 @@ OBJExporter.prototype.exportMesh = function(mesh, i) {
 }
 
 OBJExporter.prototype.exportObject = function(object, i) {
-  // not implemented
+  // no need to implement because eisenscript.js does not support object loading
+  console.warn("not implemented");
 }
