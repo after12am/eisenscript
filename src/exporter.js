@@ -6,9 +6,7 @@ var OBJExporter = function() {
 
 OBJExporter.prototype.export = function(meshes) {
   this.buff = sprintf(this.header);
-  for (var i = 0; i < meshes.length; i++) {
-    this.exportMesh(meshes[i], i);
-  }
+  for (var i = 0; i < meshes.length; i++) this.exportMesh(meshes[i], i);
   return this.buff;
 }
 
