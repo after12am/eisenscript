@@ -1,7 +1,3 @@
-exports.export = function(meshes) {
-  return new OBJExporter().export(meshes);
-}
-
 exports.compile = function(code) {
   var ast, objects;
   try {

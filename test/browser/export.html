@@ -69,7 +69,8 @@ body {
   }
 
   $('.obj').click(function() {
-    var content = EISEN.export([mesh]);
+    var exporter = new EISEN.OBJExporter()
+    var content = exporter.exports([mesh]);
     var blob = new Blob([content]);
     var url = window.URL || window.webkitURL;
     var blobURL = url.createObjectURL(blob);
