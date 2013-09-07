@@ -60,13 +60,9 @@ $(function() {
     return;
   }
   
-  //console.log(objects);
-  
   // rendering...
   var s = +new Date();
-  renderer = new EISEN.TestRenderer({
-    width: window.innerWidth,
-    height: window.innerHeight,
+  renderer = new EISEN.TestRenderer(window.innerWidth, window.innerHeight, {
     materialType: window.navigator.userAgent.match('Chrome') ? 'normal' : 'lambert'
   })
   
