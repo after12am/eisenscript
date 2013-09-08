@@ -1,7 +1,6 @@
 // module generate object code from ast
-var Interpreter = function(ast) {
+var Interpreter = function() {
   this.name = 'Interpreter';
-  this.ast = ast;
   this.objects = [];
   this.define = [];
   this.rules = {};
@@ -92,17 +91,17 @@ Interpreter.prototype.setBlend = function(color, strength) {
 }
 
 // execute eisenscript
-Interpreter.prototype.generate = function() {
+Interpreter.prototype.generate = function(ast) {
   // rewriting ast
   var that = this;
-  this.ast.forEach(function(statement) {
+  ast.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Rule: that.rewriteRule(statement); break;
     }
   });
   
   // pull the defines
-  this.ast.forEach(function(statement) {
+  ast.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Define: that.define.push(statement); break;
       case Symbol.Set: that.define.push(statement); break;
