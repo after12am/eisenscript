@@ -144,7 +144,14 @@ Interpreter.prototype.generate = function(ast) {
   this.parseStatements(this.computed);
   
   // return the intermediate code
-  return this.objects;
+  return {
+    maxdepth: this.maxdepth,
+    maxobjects: this.maxobjects,
+    minsize: this.minsize,
+    maxsize: this.maxsize,
+    seed: this.seed,
+    objects: this.objects
+  }
 }
 
 // rewrite subtree related to rule statement

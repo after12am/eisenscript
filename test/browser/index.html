@@ -56,6 +56,7 @@ $(function() {
   var objectcode;
   try {
     objectCode = compiler.compile($('#eisenscript').text());
+    console.log(objectCode);
   } catch (e) {
     console.error(e.message);
     return;
@@ -70,7 +71,7 @@ $(function() {
   })
   
   
-  objectCode.forEach(function(object) {
+  objectCode.objects.forEach(function(object) {
     switch (object.type) {
       case 'background': renderer.clearColor(object.color); break;
       case 'primitive': renderer.addPrimitive(object); break;
