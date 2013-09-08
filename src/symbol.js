@@ -3,27 +3,14 @@ var Symbol = {
   Set: 'set',
   Statement: 'statement',
   Rule: 'rule',
-  Modifier: 'modifier'
-}
-
-var Condition = {
+  Modifier: 'modifier',
   Maxdepth: 'maxdepth',
   Maxobjects: 'maxobjects',
   Minsize: 'minsize',
   Maxsize: 'maxsize',
   Seed: 'seed',
   Weight: 'weight',
-  Background: 'background'
-}
-
-var Type = {
   Background: 'background',
-  Primitive: 'primitive',
-  Rule: 'rule',
-  Property: 'property'
-}
-
-var Property = {
   XShift: 'xshift',
   YShift: 'yshift',
   ZShift: 'zshift',
@@ -39,15 +26,3 @@ var Property = {
   Blend: 'blend',
   Alpha: 'alpha'
 }
-
-var Primitive = {
-  Box: 'box',
-  Grid: 'grid',
-  Sphere: 'sphere'//,
-  // Line: 'line',
-  // Point: 'point',
-  // Triangle: 'triangle',
-  // Mesh: 'mesh',
-  // Cylinder: 'cylinder',
-  // Tube: 'tube'
-};

@@ -115,11 +115,11 @@ Interpreter.prototype.generate = function(ast) {
     switch (statement.type) {
       case Symbol.Set:
         switch (statement.key) {
-          case Condition.Maxdepth: that.maxdepth = statement.value; break;
-          case Condition.Maxobjects: that.maxobjects = statement.value; break;
-          case Condition.Minsize: that.minsize = statement.value; break;
-          case Condition.Maxsize: that.maxsize = statement.value; break;
-          case Condition.Seed: that.seed = statement.value; break;
+          case Symbol.Maxdepth: that.maxdepth = statement.value; break;
+          case Symbol.Maxobjects: that.maxobjects = statement.value; break;
+          case Symbol.Minsize: that.minsize = statement.value; break;
+          case Symbol.Maxsize: that.maxsize = statement.value; break;
+          case Symbol.Seed: that.seed = statement.value; break;
         }
         break;
       case Symbol.Define:
@@ -135,7 +135,7 @@ Interpreter.prototype.generate = function(ast) {
   this.define.forEach(function(statement) {
     switch (statement.type) {
       case Symbol.Set:
-        if (statement.key === Condition.Background) that.generateBackground(statement);
+        if (statement.key === Symbol.Background) that.generateBackground(statement);
         break;
     }
   });
@@ -152,8 +152,8 @@ Interpreter.prototype.rewriteRule = function(rule) {
   rule.params.forEach(function(param) {
     if (param.type === Symbol.Modifier) {
       switch (param.key) {
-        case Condition.Weight: rule.weight = param.value; break;
-        case Condition.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
+        case Symbol.Weight: rule.weight = param.value; break;
+        case Symbol.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
       }
     }
   });
@@ -209,20 +209,20 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 Interpreter.prototype.parseTransform = function(property) {
   var v = property.value;
   switch (property.key) {
-    case Property.XShift: this.curr.matrix.translate({ x:v, y:0, z:0 }); break;
-    case Property.YShift: this.curr.matrix.translate({ x:0, y:v, z:0 }); break;
-    case Property.ZShift: this.curr.matrix.translate({ x:0, y:0, z:v }); break;
-    case Property.RotateX: this.curr.matrix.rotateX(degToRad(v)); break;
-    case Property.RotateY: this.curr.matrix.rotateY(degToRad(v)); break;
-    case Property.RotateZ: this.curr.matrix.rotateZ(degToRad(v)); break;
-    case Property.Size: this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
-    case Property.Matrix: this.makeRotate(v); break;
-    case Property.Color: this.setColor(v); break;
-    case Property.Hue: this.setHue(v); break;
-    case Property.Saturation: this.setSaturation(v); break;
-    case Property.Brightness: this.setBrightness(v); break;
-    case Property.Blend: this.setBlend(property.color, property.strength); break;
-    case Property.Alpha: this.curr.alpha *= v; break;
+    case Symbol.XShift: this.curr.matrix.translate({ x:v, y:0, z:0 }); break;
+    case Symbol.YShift: this.curr.matrix.translate({ x:0, y:v, z:0 }); break;
+    case Symbol.ZShift: this.curr.matrix.translate({ x:0, y:0, z:v }); break;
+    case Symbol.RotateX: this.curr.matrix.rotateX(degToRad(v)); break;
+    case Symbol.RotateY: this.curr.matrix.rotateY(degToRad(v)); break;
+    case Symbol.RotateZ: this.curr.matrix.rotateZ(degToRad(v)); break;
+    case Symbol.Size: this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
+    case Symbol.Matrix: this.makeRotate(v); break;
+    case Symbol.Color: this.setColor(v); break;
+    case Symbol.Hue: this.setHue(v); break;
+    case Symbol.Saturation: this.setSaturation(v); break;
+    case Symbol.Brightness: this.setBrightness(v); break;
+    case Symbol.Blend: this.setBlend(property.color, property.strength); break;
+    case Symbol.Alpha: this.curr.alpha *= v; break;
   }
 }
 
