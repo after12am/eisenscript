@@ -52,13 +52,16 @@ $(function() {
   
   // compiling...
   var s = +new Date();
-  objects = EISEN.compile($('#eisenscript').text());
-  console.log('compile time:', (+new Date() - s) + 'ms');
-  
-  if (objects.error) {
-    console.error(objects.error);
+  var compiler = new EISEN.Compiler();
+  var objectcode;
+  try {
+    objectCode = compiler.compile($('#eisenscript').text());
+  } catch (e) {
+    console.error(e.message);
     return;
   }
+  
+  console.log('compile time:', (+new Date() - s) + 'ms');
   
   // rendering...
   var s = +new Date();
@@ -67,7 +70,7 @@ $(function() {
   })
   
   
-  objects.forEach(function(object) {
+  objectCode.forEach(function(object) {
     switch (object.type) {
       case 'background': renderer.clearColor(object.color); break;
       case 'primitive': renderer.addPrimitive(object); break;
