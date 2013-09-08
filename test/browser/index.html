@@ -63,11 +63,16 @@ $(function() {
   // rendering...
   var s = +new Date();
   renderer = new EISEN.TestRenderer(window.innerWidth, window.innerHeight, {
-    materialType: window.navigator.userAgent.match('Chrome') ? 'normal' : 'lambert'
+    materialType: window.navigator.userAgent.match('Chrome') ? 'basic' : 'lambert'
   })
   
-  // if rendering all objects at a time
-  renderer.build(objects);
+  
+  objects.forEach(function(object) {
+    switch (object.type) {
+      case 'background': renderer.clearColor(object.color); break;
+      case 'primitive': renderer.addPrimitive(object); break;
+    }
+  });
   
   console.log('render time:', (+new Date() - s) + 'ms');
   
