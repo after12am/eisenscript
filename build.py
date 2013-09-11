@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version = '1.0.1'
+version = '1.1.1'
 module = 'EISEN'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
