@@ -78,3 +78,13 @@ exports.OBJExporter.prototype.exportObject = function(object, i) {
   // no need to implement because eisenscript.js does not support object loading
   console.warn("not implemented");
 }
+
+/*
+exports.STLExporter = function() {
+  this.buff = '';
+}
+
+exports.STLExporter.prototype.exports = function(meshes) {
+  
+}
+*/
