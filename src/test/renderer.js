@@ -117,13 +117,18 @@ exports.TestRenderer.prototype.render = function() {
   return this;
 }
 
-// save image rendered on stage with png format
-exports.TestRenderer.prototype.save = function(format) {
+exports.TestRenderer.prototype.toDataURL = function(format) {
+  var dom = this.renderer.domElement;
   switch (format) {
     case 'jpg':
-    case 'jpeg': window.open(this.renderer.domElement.toDataURL("image/jpeg")); break;
-    case 'gif': window.open(this.renderer.domElement.toDataURL("image/gif")); break;
-    default: window.open(this.renderer.domElement.toDataURL("image/png")); break;
+    case 'jpeg': return dom.toDataURL("image/jpeg");
+    case 'gif': return dom.toDataURL("image/gif");
+    default: return dom.toDataURL("image/png");
   }
+}
+
+// save image rendered on stage with png format
+exports.TestRenderer.prototype.save = function(format) {
+  window.open(this.toDataURL(format));
   return this;
 };
