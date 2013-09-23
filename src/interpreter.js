@@ -301,7 +301,7 @@ Interpreter.prototype.parseTransform = function(property) {
 Interpreter.prototype.generatePrimitive = function(statement) {
   // if achieved maxobjects
   this.objectnum++;
-  if (this.terminated()) return this;
+  if (this.terminated()) return;
   
   // blend the current color with the specified color
   if (this.curr.blend.computed) {
@@ -320,7 +320,6 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     opacity: this.curr.alpha,
     depth: this.depth
   });
-  return this;
 }
 
 // create background object code and stack it as intermediate code for renderer
@@ -329,7 +328,6 @@ Interpreter.prototype.generateBackground = function(statement) {
     type: Type.Background,
     color: statement.value
   });
-  return this;
 }
 
 // randomly choose one of the rules according to their weights
