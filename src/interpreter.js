@@ -49,6 +49,34 @@ Interpreter.prototype.popState = function() {
   }
 }
 
+Interpreter.prototype.translateX = function(v) {
+  this.curr.matrix.translate({ x:v, y:0, z:0 });
+}
+
+Interpreter.prototype.translateY = function(v) {
+  this.curr.matrix.translate({ x:0, y:v, z:0 });
+}
+
+Interpreter.prototype.translateZ = function(v) {
+  this.curr.matrix.translate({ x:0, y:0, z:v });
+}
+
+Interpreter.prototype.rotateX = function(v) {
+  this.curr.matrix.rotateX(degToRad(v));
+}
+
+Interpreter.prototype.rotateY = function(v) {
+  this.curr.matrix.rotateY(degToRad(v));
+}
+
+Interpreter.prototype.rotateZ = function(v) {
+  this.curr.matrix.rotateZ(degToRad(v));
+}
+
+Interpreter.prototype.scale = function(x, y, z) {
+  this.curr.matrix.scale({ x:x, y:y, z:z });
+}
+
 // make 3x3 rotation matrix to 4x4 matrix
 // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
 Interpreter.prototype.makeRotate = function(v) {
@@ -216,13 +244,13 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 Interpreter.prototype.parseTransform = function(property) {
   var v = property.value;
   switch (property.key) {
-    case Symbol.XShift: this.curr.matrix.translate({ x:v, y:0, z:0 }); break;
-    case Symbol.YShift: this.curr.matrix.translate({ x:0, y:v, z:0 }); break;
-    case Symbol.ZShift: this.curr.matrix.translate({ x:0, y:0, z:v }); break;
-    case Symbol.RotateX: this.curr.matrix.rotateX(degToRad(v)); break;
-    case Symbol.RotateY: this.curr.matrix.rotateY(degToRad(v)); break;
-    case Symbol.RotateZ: this.curr.matrix.rotateZ(degToRad(v)); break;
-    case Symbol.Size: this.curr.matrix.scale({ x:v[0], y:v[1], z:v[2] }); break;
+    case Symbol.XShift: this.translateX(v); break;
+    case Symbol.YShift: this.translateY(v); break;
+    case Symbol.ZShift: this.translateZ(v); break;
+    case Symbol.RotateX: this.rotateX(v); break;
+    case Symbol.RotateY: this.rotateY(v); break;
+    case Symbol.RotateZ: this.rotateZ(v); break;
+    case Symbol.Size: this.scale(v.x, v.y, v.z); break;
     case Symbol.Matrix: this.makeRotate(v); break;
     case Symbol.Color: this.setColor(v); break;
     case Symbol.Hue: this.setHue(v); break;

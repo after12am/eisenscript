@@ -216,8 +216,8 @@ geo
   | ROTATEX num      { $$ = { type: 'property', key: 'rotatex', value: $2 }; }
   | ROTATEY num      { $$ = { type: 'property', key: 'rotatey', value: $2 }; }
   | ROTATEZ num      { $$ = { type: 'property', key: 'rotatez', value: $2 }; }
-  | SIZE num         { $$ = { type: 'property', key: 'size',    value: [$2, $2, $2] }; }
-  | SIZE num num num { $$ = { type: 'property', key: 'size',    value: [$2, $3, $4] }; }
+  | SIZE num         { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 } }; }
+  | SIZE num num num { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 } }; }
   | MATRIX num num num num num num num num num { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
   ;
 
