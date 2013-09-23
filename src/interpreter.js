@@ -39,6 +39,7 @@ Interpreter.prototype.pushState = function() {
     blend: _.extend({}, this.curr.blend),
     alpha: this.curr.alpha
   });
+  return this;
 }
 
 // pull the parent transformation state
@@ -47,34 +48,58 @@ Interpreter.prototype.popState = function() {
     this.curr = this.stack.pop();
     this.depth--;
   }
+  return this;
 }
 
 Interpreter.prototype.translateX = function(v) {
-  this.curr.matrix.translate({ x:v, y:0, z:0 });
+  this.curr.matrix.translate({
+    x: v,
+    y: 0,
+    z: 0
+  });
+  return this;
 }
 
 Interpreter.prototype.translateY = function(v) {
-  this.curr.matrix.translate({ x:0, y:v, z:0 });
+  this.curr.matrix.translate({
+    x: 0,
+    y: v,
+    z: 0
+  });
+  return this;
 }
 
 Interpreter.prototype.translateZ = function(v) {
-  this.curr.matrix.translate({ x:0, y:0, z:v });
+  this.curr.matrix.translate({
+    x: 0,
+    y: 0,
+    z: v
+  });
+  return this;
 }
 
 Interpreter.prototype.rotateX = function(v) {
   this.curr.matrix.rotateX(degToRad(v));
+  return this;
 }
 
 Interpreter.prototype.rotateY = function(v) {
   this.curr.matrix.rotateY(degToRad(v));
+  return this;
 }
 
 Interpreter.prototype.rotateZ = function(v) {
   this.curr.matrix.rotateZ(degToRad(v));
+  return this;
 }
 
 Interpreter.prototype.scale = function(x, y, z) {
-  this.curr.matrix.scale({ x:x, y:y, z:z });
+  this.curr.matrix.scale({
+    x: x,
+    y: y,
+    z: z
+  });
+  return this;
 }
 
 // make 3x3 rotation matrix to 4x4 matrix
@@ -86,6 +111,7 @@ Interpreter.prototype.makeRotate = function(v) {
     v[6], v[7], v[8], 0,
        0,    0,    0, 1
   );
+  return this;
 }
 
 Interpreter.prototype.random16 = function() {
@@ -95,27 +121,32 @@ Interpreter.prototype.random16 = function() {
 Interpreter.prototype.setColor = function(color) {
   if (color === 'random') color = sprintf('#%06s', this.random16());
   this.curr.hex = Color(color);
+  return this;
 }
 
 Interpreter.prototype.setHue = function(v) {
   this.curr.hsv.computed = true;
   this.curr.hsv.hue += v % 360;
+  return this;
 }
 
 Interpreter.prototype.setSaturation = function(v) {
   this.curr.hsv.computed = true;
   this.curr.hsv.saturation = clamp(this.curr.hsv.saturation * v, 0, 1);
+  return this;
 }
 
 Interpreter.prototype.setBrightness = function(v) {
   this.curr.hsv.computed = true;
   this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);
+  return this;
 }
 
 Interpreter.prototype.setBlend = function(color, strength) {
   this.curr.blend.computed = true;
   this.curr.blend.color = color;
   this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1);
+  return this;
 }
 
 // execute eisenscript
@@ -194,6 +225,7 @@ Interpreter.prototype.rewriteRule = function(rule) {
   });
   if (!this.rules[rule.id]) this.rules[rule.id] = [];
   this.rules[rule.id].push(rule);
+  return this;
 }
 
 // execute statements
@@ -204,6 +236,7 @@ Interpreter.prototype.parseStatements = function(statements) {
     this.parseStatement(statements[i], 0);
     i++;
   }
+  return this;
 }
 
 // execute a statement
@@ -219,16 +252,17 @@ Interpreter.prototype.parseStatement = function(statement, index) {
       this.parseStatement(statement, index + 1);
     }
     this.popState();
-    return;
+    return this;
   }
   // if not primitive, call rule and parse next transformation loops
   if (_.values(Primitive).indexOf(statement.id) === -1) {
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
-    return;
+    return this;
   }
   // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
+  return this;
 }
 
 // break down transformation set
@@ -238,6 +272,7 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
     this.parseTransform(transform.properties[i]);
     i++;
   }
+  return this;
 }
 
 // parse transformation property
@@ -259,13 +294,14 @@ Interpreter.prototype.parseTransform = function(property) {
     case Symbol.Blend: this.setBlend(property.color, property.strength); break;
     case Symbol.Alpha: this.curr.alpha *= v; break;
   }
+  return this;
 }
 
 // create primitive object and stack it as intermediate code for renderer
 Interpreter.prototype.generatePrimitive = function(statement) {
   // if achieved maxobjects
   this.objectnum++;
-  if (this.terminated()) return;
+  if (this.terminated()) return this;
   
   // blend the current color with the specified color
   if (this.curr.blend.computed) {
@@ -284,6 +320,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     opacity: this.curr.alpha,
     depth: this.depth
   });
+  return this;
 }
 
 // create background object code and stack it as intermediate code for renderer
@@ -292,6 +329,7 @@ Interpreter.prototype.generateBackground = function(statement) {
     type: Type.Background,
     color: statement.value
   });
+  return this;
 }
 
 // randomly choose one of the rules according to their weights
@@ -328,14 +366,14 @@ Interpreter.prototype.sampling = function(name, retry) {
     retry = retry || 0;
     if (retry < 3) return this.sampling(name, ++retry);
     // if achieve max retry count
-    return;
+    return false;
   }
   
   // if achieved maxdepth
   chosen.depth = (chosen.depth || 0) + 1;
   if (chosen.maxdepth && chosen.maxdepth < chosen.depth) {
     if (chosen.alternate) return this.sampling(chosen.alternate);
-    return;
+    return false;
   }
   
   // the rule randomly chosen
