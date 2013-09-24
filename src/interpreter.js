@@ -98,11 +98,15 @@ Interpreter.prototype.makeRotate = function(v) {
 
 Interpreter.prototype.random16 = function() {
   var hex = this.mt.next() * 0xffffff;
-  return sprintf('#%06s', Math.floor(hex).toString(16));
+  return Math.floor(hex).toString(16);
+}
+
+Interpreter.prototype.randomColor = function() {
+  return sprintf('#%06s', this.random16());
 }
 
 Interpreter.prototype.setColor = function(color) {
-  if (color === 'random') color = this.random16();
+  if (color === 'random') color = this.randomColor();
   this.curr.hex = Color(color);
   return this;
 }
