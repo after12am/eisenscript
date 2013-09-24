@@ -97,8 +97,8 @@ Interpreter.prototype.makeRotate = function(v) {
 }
 
 Interpreter.prototype.random16 = function() {
-  var hex = this.mt.next() * 0xffffff;
-  return Math.floor(hex).toString(16);
+  var rand = this.mt.next() * 0xffffff;
+  return Math.floor(rand).toString(16);
 }
 
 Interpreter.prototype.randomColor = function() {
