@@ -51,45 +51,27 @@ Interpreter.prototype.popState = function() {
   return this;
 }
 
-Interpreter.prototype.translateX = function(v) {
+Interpreter.prototype.translate = function(x, y, z) {
   this.curr.matrix.translate({
-    x: v,
-    y: 0,
-    z: 0
+    x: x,
+    y: y,
+    z: z
   });
   return this;
 }
 
-Interpreter.prototype.translateY = function(v) {
-  this.curr.matrix.translate({
-    x: 0,
-    y: v,
-    z: 0
-  });
+Interpreter.prototype.rotateX = function(angle) {
+  this.curr.matrix.rotateX(angle);
   return this;
 }
 
-Interpreter.prototype.translateZ = function(v) {
-  this.curr.matrix.translate({
-    x: 0,
-    y: 0,
-    z: v
-  });
+Interpreter.prototype.rotateY = function(angle) {
+  this.curr.matrix.rotateY(angle);
   return this;
 }
 
-Interpreter.prototype.rotateX = function(v) {
-  this.curr.matrix.rotateX(degToRad(v));
-  return this;
-}
-
-Interpreter.prototype.rotateY = function(v) {
-  this.curr.matrix.rotateY(degToRad(v));
-  return this;
-}
-
-Interpreter.prototype.rotateZ = function(v) {
-  this.curr.matrix.rotateZ(degToRad(v));
+Interpreter.prototype.rotateZ = function(angle) {
+  this.curr.matrix.rotateZ(angle);
   return this;
 }
 
@@ -115,11 +97,12 @@ Interpreter.prototype.makeRotate = function(v) {
 }
 
 Interpreter.prototype.random16 = function() {
-  return Math.floor(this.mt.next() * 0xFFFFFF).toString(16);
+  var hex = this.mt.next() * 0xffffff;
+  return sprintf('#%06s', Math.floor(hex).toString(16));
 }
 
 Interpreter.prototype.setColor = function(color) {
-  if (color === 'random') color = sprintf('#%06s', this.random16());
+  if (color === 'random') color = this.random16();
   this.curr.hex = Color(color);
   return this;
 }
@@ -254,12 +237,14 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.popState();
     return this;
   }
+  
   // if not primitive, call rule and parse next transformation loops
   if (_.values(Primitive).indexOf(statement.id) === -1) {
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
     return this;
   }
+  
   // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
   return this;
@@ -279,12 +264,12 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 Interpreter.prototype.parseTransform = function(property) {
   var v = property.value;
   switch (property.key) {
-    case Symbol.XShift: this.translateX(v); break;
-    case Symbol.YShift: this.translateY(v); break;
-    case Symbol.ZShift: this.translateZ(v); break;
-    case Symbol.RotateX: this.rotateX(v); break;
-    case Symbol.RotateY: this.rotateY(v); break;
-    case Symbol.RotateZ: this.rotateZ(v); break;
+    case Symbol.XShift: this.translate(v, 0, 0); break;
+    case Symbol.YShift: this.translate(0, v, 0); break;
+    case Symbol.ZShift: this.translate(0, 0, v); break;
+    case Symbol.RotateX: this.rotateX(degToRad(v)); break;
+    case Symbol.RotateY: this.rotateY(degToRad(v)); break;
+    case Symbol.RotateZ: this.rotateZ(degToRad(v)); break;
     case Symbol.Size: this.scale(v.x, v.y, v.z); break;
     case Symbol.Matrix: this.makeRotate(v); break;
     case Symbol.Color: this.setColor(v); break;

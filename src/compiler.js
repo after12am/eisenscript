@@ -1,8 +1,12 @@
 exports.Compiler = function() {
-  
+  this.interpreter;
 }
 
 exports.Compiler.prototype.compile = function(source) {
-  var ast = parser.parse(source);
-  return new Interpreter().generate(ast);
+  this.interpreter = new Interpreter();
+  return this.interpreter.generate(this.parse(source));
+}
+
+exports.Compiler.prototype.parse = function(source) {
+  return parser.parse(source);
 }
