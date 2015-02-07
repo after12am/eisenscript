@@ -13,3 +13,7 @@ If you want to create ”generative art” intuitively, this powerful language w
 
 This is a javascript implementation for generating in real time in your browser. 
 Original implementation is included in Structure Synth authored by Mikael Hvidtfeldt.
+
+## License
+
+Copyright (c) 2013-2015 Satoshi Okami, Inc. See the LICENSE file for license rights and limitations (MIT).
