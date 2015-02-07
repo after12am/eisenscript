@@ -1,5 +1,5 @@
-eisenscript v1.1.1
-==================
+eisenscript
+===========
 
 EisenScript is a programming language designed by Mikael Hvidtfeldt for generating 3d structures. 
 This language shows you that even a simple system has a big possibility to generate surprising 
