@@ -7,7 +7,7 @@ and complex structures, and then brings a big amazing to you. A set of those str
 get has often been called ”generative art” for having both organic and mechanical in itself. 
 If you want to create ”generative art” intuitively, this powerful language will be your best friend.
 
-<img src="http://after12am.github.io/eisenscript/image.png" width="100%" />
+<img src="http://after12am.github.io/eisenscript/shreenshot.png"/>
 
 ## Notes
 
