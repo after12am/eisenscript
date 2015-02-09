@@ -1,5 +1,5 @@
 exports.Compiler = function() {
-  this.interpreter;
+  this.interpreter = undefined;
 }
 
 exports.Compiler.prototype.compile = function(source) {
