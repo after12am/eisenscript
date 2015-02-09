@@ -102,7 +102,7 @@ Interpreter.prototype.random16 = function() {
 }
 
 Interpreter.prototype.randomColor = function() {
-  return sprintf('#%06s', this.random16());
+  return sprintf('#%s', this.random16());
 }
 
 Interpreter.prototype.setColor = function(color) {
