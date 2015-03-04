@@ -403,9 +403,9 @@ describe('{ s 1.2 } box', function() {
   assert.ok(ast[0].id == 'box');
   assert.ok(ast[0].exprs[0].left == 1);
   assert.ok(ast[0].exprs[0].right.properties[0].key == 'size');
-  assert.ok(ast[0].exprs[0].right.properties[0].value[0] === 1.2);
-  assert.ok(ast[0].exprs[0].right.properties[0].value[1] === 1.2);
-  assert.ok(ast[0].exprs[0].right.properties[0].value[2] === 1.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.x === 1.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.y === 1.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.z === 1.2);
   assert.ok(ast[0].computed);
 });
 
@@ -420,9 +420,9 @@ describe('{ s 2.1 2.2 2.3 } box', function() {
   assert.ok(ast[0].id == 'box');
   assert.ok(ast[0].exprs[0].left == 1);
   assert.ok(ast[0].exprs[0].right.properties[0].key == 'size');
-  assert.ok(ast[0].exprs[0].right.properties[0].value[0] === 2.1);
-  assert.ok(ast[0].exprs[0].right.properties[0].value[1] === 2.2);
-  assert.ok(ast[0].exprs[0].right.properties[0].value[2] === 2.3);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.x === 2.1);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.y === 2.2);
+  assert.ok(ast[0].exprs[0].right.properties[0].value.z === 2.3);
   assert.ok(ast[0].computed);
 });
 
