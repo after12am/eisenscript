@@ -9,6 +9,8 @@ test:
     - nvm alias default 0.12.0
     - node test/cli/test.ast.js
     - nvm alias default 0.11.0
+    - echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
+    - source ~/.bashrc
     - node test/cli/test.ast.js
     - nvm alias default 0.10.0
     - node test/cli/test.ast.js
