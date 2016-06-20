@@ -15,4 +15,4 @@ Original implementation is included in Structure Synth authored by Mikael Hvidtf
 
 ## License
 
-Copyright (c) 2013-2016 Satoshi Okami. See the LICENSE file for license rights and limitations (MIT).
+© 2013-2016, Satoshi Okami. Released under the MIT License.
