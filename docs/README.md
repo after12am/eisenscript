@@ -6,9 +6,11 @@
   * [Rule modifiers](reference/rule-modifiers.md)
   * [Geometrical transformations](reference/geometrical-transformations.md)
   * [Color transformations](reference/color-transformations.md)
-  * [Matrix transformations](reference/color-transformations.md)
-  * [Drawing Primitives](reference/drawing-primitives.md)
+  * [Matrix transformations](reference/matrix-transformations.md)
+  * [Primitives](reference/drawing-primitives.md)
   <!-- * [Preprocessor commands](reference/preprocessor-commands.md) -->
+* Learning
+  * under construction
 * Examples
   * [alien](examples/alien.md)
   * [alphabet](examples/alphabet.md)

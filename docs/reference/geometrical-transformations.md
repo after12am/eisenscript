@@ -1,12 +1,10 @@
-# Transformations
-
-A transformation is any function f mapping a set X to itself, i.e. f:X→X. Examples include linear transformations and affine transformations, rotations, reflections and translations.
+# Geometrical transformations
 
 ## Translation
 
 A translation moves every point by a fixed distance in the same direction.
 
-### x [float]
+#### x [float]
 
 X axis translation. The float argument is the offset measured in units of the local coordinate system.
 
@@ -15,7 +13,7 @@ X axis translation. The float argument is the offset measured in units of the lo
 { x 2 } box
 ```
 
-### y [float]
+#### y [float]
 
 Y axis translation. The float argument is the offset measured in units of the local coordinate system.
 
@@ -24,7 +22,7 @@ Y axis translation. The float argument is the offset measured in units of the lo
 { y 2 } box
 ```
 
-### z [float]
+#### z [float]
 
 Z axis translation. The float argument is the offset measured in units of the local coordinate system.
 
@@ -37,7 +35,7 @@ Z axis translation. The float argument is the offset measured in units of the lo
 
 A rotation is a transformation that is performed by "spinning" the object around a fixed point.
 
-### rx [float]
+#### rx [float]
 
 Rotation about the x axis. The 'float' argument is the angle specified in degrees. The rotation axis is centered at the unit cube in the local coordinate system: that is the rotation axis contains the line segment from (0, 0.5, 0.5) -> (1, 0.5, 0.5).
 
@@ -46,7 +44,7 @@ Rotation about the x axis. The 'float' argument is the angle specified in degree
 { rx 45 } box
 ```
 
-### ry [float]
+#### ry [float]
 
 Rotation about the y axis. The 'float' argument is the angle specified in degrees. The rotation axis is centered at the unit cube in the local coordinate system: that is the rotation axis contains the line segment from (0, 0.5, 0.5) -> (1, 0.5, 0.5).
 
@@ -55,7 +53,7 @@ Rotation about the y axis. The 'float' argument is the angle specified in degree
 { ry 45 } box
 ```
 
-### rz [float]
+#### rz [float]
 
 Rotation about the z axis. The 'float' argument is the angle specified in degrees. The rotation axis is centered at the unit cube in the local coordinate system: that is the rotation axis contains the line segment from (0, 0.5, 0.5) -> (1, 0.5, 0.5).
 
@@ -68,7 +66,7 @@ Rotation about the z axis. The 'float' argument is the angle specified in degree
 
 A scaling is a linear transformation that enlarges or diminishes object.
 
-### s [float]
+#### s [float]
 
 Resizes the local coordinate system. Notice that the center for the resize is located at the center of the unit cube in the local system (at (0.5,0.5,0.5)
 
@@ -77,7 +75,7 @@ Resizes the local coordinate system. Notice that the center for the resize is lo
 { s 10 } box
 ```
 
-### s [float] [float] [float]
+#### s [float] [float] [float]
 
 Resizes the local coordinate system. As above but with separate scale for each dimension.
 
