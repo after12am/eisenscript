@@ -1,12 +1,14 @@
 # Table of Contents
 
 * [EisenScript](headline.md)
-
 * Reference
   * [Termination criteria](reference/termination-criteria.md)
   * [Rule modifiers](reference/rule-modifiers.md)
-  * [Transformations](reference/transformations.md)
-  * [Color space transformations](reference/color-space-transformations.md)
+  * [Geometrical transformations](reference/geometrical-transformations.md)
+  * [Color transformations](reference/color-transformations.md)
+  * [Matrix transformations](reference/color-transformations.md)
+  * [Drawing Primitives](reference/drawing-primitives.md)
+  <!-- * [Preprocessor commands](reference/preprocessor-commands.md) -->
 * Examples
   * [alien](examples/alien.md)
   * [alphabet](examples/alphabet.md)

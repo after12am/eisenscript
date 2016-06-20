@@ -1,0 +1,11 @@
+# Matrix transformations
+
+## Matrix
+
+### m [f1] ... [f9]
+
+Applies the specified 3x3 rotation matrix to the transformation matrix for the current state. About the argument order: [f1],[f2],[f3] defines the first row of the matrix.
+
+```
+{ m 1 0 0 0 .53 -.85 0 .85 .53 } box
+```
