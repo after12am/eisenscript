@@ -26,24 +26,6 @@ Multiples the 'float' value with the brightness color parameter for the current 
 1 * { s .5 } 10 * { x 1 b 0.95 } 10 * { y 1 b 0.95 } 10 * { z 1 b 0.95 } box
 ```
 
-#### blend [color] [strength]
-
-Blends the current color with the specified color. A strength of 1.0 will weight the current and new color evenly. Colors are mixed in HSV color space. Hue's will wrap around. Saturation and Value are clamped to [0,1]. Notice that since the mixing is performed in HSV space, the result may seems counterintuitive. For instance blending a red color into a blue color, may have intermediate green steps (since you are change the hue - so you will move around on the HSV color circle).
-
-```
-10 * { x 1 color #f00 } 10 * { y 1 blend #0f0 .04 } 10 * { z 1 blend #0f0 .04 } box
-```
-
-## Transparant
-
-#### a / alpha [float]
-
-Multiplies the 'float' value with the alpha color parameter for the current state. Alpha is measured from 0 to 1 and is clamped to this interval. An alpha value of zero is completely transparant, and an alpha value of one is completely opaque.
-
-```
-1 * { s .5 } 10 * { x 1 a 0.8 } 10 * { y 1 a 0.8 } 10 * { z 1 a 0.8 } box
-```
-
 ## RGB color space
 
 #### color [color]
@@ -57,12 +39,30 @@ This commands sets the color to an absolut color (most other transformations are
 10 * { z 1 color #00f } box
 ```
 
-#### set color random
+#### blend [color] [strength]
+
+Blends the current color with the specified color. A strength of 1.0 will weight the current and new color evenly. Colors are mixed in HSV color space. Hue's will wrap around. Saturation and Value are clamped to [0,1]. Notice that since the mixing is performed in HSV space, the result may seems counterintuitive. For instance blending a red color into a blue color, may have intermediate green steps (since you are change the hue - so you will move around on the HSV color circle).
+
+```
+10 * { x 1 color #f00 } 10 * { y 1 blend #0f0 .04 } 10 * { z 1 blend #0f0 .04 } box
+```
+
+#### random
 
 Chooses a random color (using the current colorpool<!-- - see below -->).
 
 ```
 10 * { x 1 color random } 10 * { y 1 color random } 10 * { z 1 color random } box
+```
+
+## Transparant
+
+#### a / alpha [float]
+
+Multiplies the 'float' value with the alpha color parameter for the current state. Alpha is measured from 0 to 1 and is clamped to this interval. An alpha value of zero is completely transparant, and an alpha value of one is completely opaque.
+
+```
+1 * { s .5 } 10 * { x 1 a 0.8 } 10 * { y 1 a 0.8 } 10 * { z 1 a 0.8 } box
 ```
 
 

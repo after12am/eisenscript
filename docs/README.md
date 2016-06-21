@@ -7,7 +7,7 @@
   * [Geometrical transformations](reference/geometrical-transformations.md)
   * [Color transformations](reference/color-transformations.md)
   * [Matrix transformations](reference/matrix-transformations.md)
-  * [Primitives](reference/drawing-primitives.md)
+  * [Primitives](reference/primitives.md)
   <!-- * [Preprocessor commands](reference/preprocessor-commands.md) -->
 * Learning
   * under construction

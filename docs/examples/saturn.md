@@ -1,7 +1,4 @@
 ```
-/*
-  @author satoshi okami
-*/
 { s 3 } saturn
 
 rule saturn {

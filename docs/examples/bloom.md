@@ -1,7 +1,4 @@
 ```
-/*
-  @author satoshi okami
-*/
 { rx -90 s 4 } sakura
 
 rule sakura {
