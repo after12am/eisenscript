@@ -2,7 +2,7 @@
 
 ## box
 
-solid box
+solid box.
 
 ```
 { x 1 } box
@@ -10,7 +10,7 @@ solid box
 
 ## grid
 
-wireframe box
+wireframe box.
 
 ```
 { x 1 } grid
@@ -18,7 +18,7 @@ wireframe box
 
 ## sphere
 
-the round thingy (as of now this primitive has some issues - e.g. ellipsoids are not working.)
+the round thingy (as of now this primitive has some issues - e.g. ellipsoids are not working.).
 
 ```
 { x 1 } sphere

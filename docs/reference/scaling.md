@@ -1,6 +1,6 @@
 # Scaling
 
-A scaling is a linear transformation that enlarges or diminishes object.
+A scaling is a linear transformation that enlarges or diminishes primitive.
 
 ## s [float]
 

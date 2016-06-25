@@ -5,13 +5,13 @@
   * [translation](reference/translation.md)
   * [rotation](reference/rotation.md)
   * [scaling](reference/scaling.md)
-  * [matrix](reference/matrix-transformations.md)
-  * [color](reference/color_transformations.md)
+  * [matrix](reference/matrix.md)
+  * [color](reference/color.md)
   * [transparant](reference/transparant.md)
   * [primitives](reference/primitives.md)
   * [rule modifiers](reference/rule-modifiers.md)
   * [termination criteria](reference/termination-criteria.md)
-  * [preprocessor commands](reference/preprocessor-commands.md)
+  * [preprocessor](reference/preprocessor-commands.md)
 * Learning
   * pipeline processing
 * Examples

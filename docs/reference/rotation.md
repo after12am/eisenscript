@@ -1,6 +1,6 @@
 # Rotation
 
-A rotation is a transformation that is performed by "spinning" the object around a fixed point.
+A rotation is a transformation that is performed by "spinning" the primitive around a fixed point.
 
 ## rx [float]
 
