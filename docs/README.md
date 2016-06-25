@@ -2,15 +2,18 @@
 
 * [EisenScript](headline.md)
 * Reference
-  * [Termination criteria](reference/termination-criteria.md)
-  * [Rule modifiers](reference/rule-modifiers.md)
-  * [Geometrical transformations](reference/geometrical-transformations.md)
-  * [Color transformations](reference/color-transformations.md)
-  * [Matrix transformations](reference/matrix-transformations.md)
-  * [Primitives](reference/primitives.md)
-  * [Preprocessor commands](reference/preprocessor-commands.md)
+  * [translation](reference/translation.md)
+  * [rotation](reference/rotation.md)
+  * [scaling](reference/scaling.md)
+  * [matrix](reference/matrix-transformations.md)
+  * [color](reference/color_transformations.md)
+  * [transparant](reference/transparant.md)
+  * [primitives](reference/primitives.md)
+  * [rule modifiers](reference/rule-modifiers.md)
+  * [termination criteria](reference/termination-criteria.md)
+  * [preprocessor commands](reference/preprocessor-commands.md)
 * Learning
-  * under construction
+  * pipeline processing
 * Examples
   * [alien](examples/alien.md)
   * [alphabet](examples/alphabet.md)
