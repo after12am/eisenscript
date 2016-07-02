@@ -16,7 +16,7 @@ body {
 </head>
 <body>
 <a class="file obj" href="#" download="data.obj">obj file</a>
-<script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/three.min.js"></script>
 <script type="text/javascript" src="scripts/eisenscript.js"></script>
 <script>
@@ -28,7 +28,7 @@ body {
   animate();
 
   function init() {
-    
+
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
@@ -41,7 +41,7 @@ body {
 
     var geometry = new THREE.CubeGeometry( 200, 200, 200 );
 
-    
+
     var material = new THREE.MeshBasicMaterial( {  } );
 
     mesh = new THREE.Mesh( geometry, material );
