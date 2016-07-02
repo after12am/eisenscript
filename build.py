@@ -13,7 +13,7 @@ import re, os, sys, time, tempfile
 header = '''/*
  * eisenscript v%s
  * https://github.com/after12am/eisenscript
- * (c)2013 Satoshi Okami
+ * (c)2013-2016 Satoshi Okami
  * Released under the MIT license
  */
 '''
