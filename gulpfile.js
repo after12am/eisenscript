@@ -86,9 +86,10 @@ gulp.task('serve', ['styles', 'scripts', 'images', 'fonts'], () => {
   });
 
   gulp.watch([
-    'app/*.html',
+    'app/**/*.html',
     'app/images/**/*',
-    '.tmp/fonts/**/*'
+    '.tmp/fonts/**/*',
+    'src/**/*.js' // detect souce change event of eisenscript.js
   ]).on('change', reload);
 
   gulp.watch('app/styles/**/*.css', ['styles']);
