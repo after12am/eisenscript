@@ -6,7 +6,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "argv": "0.0.2",
     "chai": "~1.7.2",
     "colors": "~0.6.1",
     "docpress": "^0.6.12",
