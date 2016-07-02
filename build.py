@@ -1,14 +1,14 @@
 #!/usr/bin/python
 
-version = '1.1.3'
+import re, os, sys, time, tempfile, yaml
+
+version = yaml.load(open('package.json').read()).get('version')
 module = 'EISEN'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
 input_order = [
 
 ]
-
-import re, os, sys, time, tempfile
 
 header = '''/*
  * eisenscript v%s
