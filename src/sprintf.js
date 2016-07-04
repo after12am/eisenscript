@@ -1,14 +1,14 @@
 function makeArray(array) {
-	var ret = [];
-	if(array != null){
-		var i = array.length;
-		if ( i == null || array.split || array.setInterval || array.call ) {
+  var ret = [];
+  if(array != null){
+    var i = array.length;
+    if ( i == null || array.split || array.setInterval || array.call ) {
       ret[0] = array;
     } else {
       while( i ) ret[--i] = array[i];
     }
-	}
-	return ret;
+  }
+  return ret;
 }
 
 function sprintf(){
