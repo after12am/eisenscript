@@ -86,7 +86,7 @@ Interpreter.prototype.scale = function(x, y, z) {
 
 // make 3x3 rotation matrix to 4x4 matrix
 // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
-Interpreter.prototype.makeRotate = function(v) {
+Interpreter.prototype.matrix = function(v) {
   this.curr.matrix.set(
     v[0], v[1], v[2], 0, 
     v[3], v[4], v[5], 0, 
@@ -275,7 +275,7 @@ Interpreter.prototype.parseTransform = function(property) {
     case Symbol.RotateY: this.rotateY(degToRad(v)); break;
     case Symbol.RotateZ: this.rotateZ(degToRad(v)); break;
     case Symbol.Size: this.scale(v.x, v.y, v.z); break;
-    case Symbol.Matrix: this.makeRotate(v); break;
+    case Symbol.Matrix: this.matrix(v); break;
     case Symbol.Color: this.setColor(v); break;
     case Symbol.Hue: this.setHue(v); break;
     case Symbol.Saturation: this.setSaturation(v); break;
