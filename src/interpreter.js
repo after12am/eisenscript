@@ -196,7 +196,8 @@ Interpreter.prototype.generate = function(ast) {
     minsize: this.minsize,
     maxsize: this.maxsize,
     seed: this.seed,
-    objects: this.objects
+    objects: this.objects,
+    num: this.objects.length
   }
 }
 
