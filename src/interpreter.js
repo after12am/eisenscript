@@ -361,8 +361,8 @@ Interpreter.prototype.sampling = function(name, retry) {
   
   // if achieved maxdepth
   if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
-    if (this.rules[name].depth >= chosen.maxdepth) return false;
     if (chosen.alternate) return this.sampling(chosen.alternate);
+    if (this.rules[name].depth >= chosen.maxdepth) return false;
     if (this.depth < chosen.maxdepth) return chosen;
     return false;
   }
