@@ -5,7 +5,7 @@ var Interpreter = function() {
   this.define = [];
   this.rules = {};
   this.computed = [];
-  this.maxdepth = 100;
+  this.maxdepth = 1000;
   this.depth = 0;
   this.maxobjects = 1000;
   this.objectnum = 0;
@@ -25,7 +25,7 @@ var Interpreter = function() {
 // termination criteria
 Interpreter.prototype.terminated = function() {
   if (this.objectnum > this.maxobjects) return true;
-  if (this.depth >= this.maxdepth) return true;
+  if (this.depth > this.maxdepth) return true;
   return false;
 }
 
@@ -245,8 +245,10 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   
   // if not primitive, call rule and parse next transformation loops
   if (_.values(Primitive).indexOf(statement.id) === -1) {
+    this.rules[statement.id].depth = (this.rules[statement.id].depth || 0) + 1;
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
+    this.rules[statement.id].depth--;
     return this;
   }
   
@@ -358,8 +360,7 @@ Interpreter.prototype.sampling = function(name, retry) {
   }
   
   // if achieved maxdepth
-  chosen.depth = (chosen.depth || 0) + 1;
-  if (chosen.maxdepth && chosen.maxdepth < chosen.depth) {
+  if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
     if (chosen.alternate) return this.sampling(chosen.alternate);
     if (this.depth < chosen.maxdepth) return chosen;
     return false;
