@@ -3,6 +3,8 @@ eisenscript
 
 [![Build Status](https://travis-ci.org/after12am/eisenscript.svg?branch=master)](https://travis-ci.org/after12am/eisenscript)
 
+[Demo](https://after12am.github.io/eisenscript-editor/)
+
 EisenScript is a programming language designed by Mikael Hvidtfeldt for generating 3d structures.
 This language shows you that even a simple system has a big possibility to generate surprising
 and complex structures, and then brings a big amazing to you. A set of those structures, you would
