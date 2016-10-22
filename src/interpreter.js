@@ -25,7 +25,7 @@ var Interpreter = function() {
 // termination criteria
 Interpreter.prototype.terminated = function() {
   if (this.objectnum > this.maxobjects) return true;
-  if (this.depth >= this.maxdepth) return true;
+  if (this.depth > this.maxdepth) return true;
   return false;
 }
 
