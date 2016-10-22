@@ -245,8 +245,10 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   
   // if not primitive, call rule and parse next transformation loops
   if (_.values(Primitive).indexOf(statement.id) === -1) {
+    this.rules[statement.id].depth = (this.rules[statement.id].depth || 0) + 1;
     var rule = this.sampling(statement.id);
     if (rule) this.parseStatements(rule.body);
+    this.rules[statement.id].depth--;
     return this;
   }
   
@@ -358,11 +360,9 @@ Interpreter.prototype.sampling = function(name, retry) {
   }
   
   // if achieved maxdepth
-  this.rules[name].depth = (this.rules[name].depth || 0) + 1;
   if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
     if (chosen.alternate) return this.sampling(chosen.alternate);
     if (this.depth < chosen.maxdepth) return chosen;
-    this.rules[name].depth = 0;
     return false;
   }
   
