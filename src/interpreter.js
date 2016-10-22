@@ -358,11 +358,11 @@ Interpreter.prototype.sampling = function(name, retry) {
   }
   
   // if achieved maxdepth
-  chosen.depth = (chosen.depth || 0) + 1;
-  if (chosen.maxdepth && chosen.maxdepth < chosen.depth) {
+  this.rules[name].depth = (this.rules[name].depth || 0) + 1;
+  if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
     if (chosen.alternate) return this.sampling(chosen.alternate);
     if (this.depth < chosen.maxdepth) return chosen;
-    chosen.depth = 0;
+    this.rules[name].depth = 0;
     return false;
   }
   
