@@ -25,4 +25,8 @@ var Symbol = {
   Brightness: 'brightness',
   Blend: 'blend',
   Alpha: 'alpha'
+};
+
+if (module) {
+  module.exports = Symbol;
 }

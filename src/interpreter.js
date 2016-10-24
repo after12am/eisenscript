@@ -1,3 +1,15 @@
+'use strict';
+
+const Symbol = require('./symbol');
+const Color = require('color-js');
+const Matrix4 = require('./matrix');
+const Type = require('./type');
+const Primitive = require('./primitive');
+const _ = require('./_');
+const MersenneTwister = require('./mt');
+const sprintf = require('./sprintf');
+const { degToRad, randInt, clamp } = require('./math');
+
 // module generate object code from ast
 var Interpreter = function() {
   this.name = 'Interpreter';
@@ -88,8 +100,8 @@ Interpreter.prototype.scale = function(x, y, z) {
 // test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
 Interpreter.prototype.matrix = function(v) {
   this.curr.matrix.set(
-    v[0], v[1], v[2], 0, 
-    v[3], v[4], v[5], 0, 
+    v[0], v[1], v[2], 0,
+    v[3], v[4], v[5], 0,
     v[6], v[7], v[8], 0,
        0,    0,    0, 1
   );
@@ -145,7 +157,7 @@ Interpreter.prototype.generate = function(ast) {
       case Symbol.Rule: that.rewriteRule(statement); break;
     }
   });
-  
+
   // pull the defines
   ast.forEach(function(statement) {
     switch (statement.type) {
@@ -154,7 +166,7 @@ Interpreter.prototype.generate = function(ast) {
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
     }
   });
-  
+
   // creating intermediate code...
   // promise
   this.define.forEach(function(statement) {
@@ -173,10 +185,10 @@ Interpreter.prototype.generate = function(ast) {
         break;
     }
   });
-  
+
   // initial value is randomised chosen integer
   this.mt.setSeed(this.seed === 'initial' ? randInt(0, 65535) : this.seed);
-  
+
   // pull the statement of system environment
   this.define.forEach(function(statement) {
     switch (statement.type) {
@@ -185,10 +197,10 @@ Interpreter.prototype.generate = function(ast) {
         break;
     }
   });
-  
+
   // execute main
   this.parseStatements(this.computed);
-  
+
   // return the intermediate code
   return {
     maxdepth: this.maxdepth,
@@ -242,7 +254,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.popState();
     return this;
   }
-  
+
   // if not primitive, call rule and parse next transformation loops
   if (_.values(Primitive).indexOf(statement.id) === -1) {
     this.rules[statement.id].depth = (this.rules[statement.id].depth || 0) + 1;
@@ -251,7 +263,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
     this.rules[statement.id].depth--;
     return this;
   }
-  
+
   // achieve the end of nested transformation loops
   this.generatePrimitive(statement);
   return this;
@@ -294,7 +306,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   // if achieved maxobjects
   this.objectnum++;
   if (this.terminated()) return;
-  
+
   // blend the current color with the specified color
   if (this.curr.blend.computed) {
     this.curr.hex = this.curr.hex.toHSV();
@@ -302,7 +314,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     this.curr.hex.hue += (blend.hue - this.curr.hex.hue) * this.curr.blend.strength / 6;
     this.curr.hex.hue %= 360;
   }
-  
+
   // primitive object
   this.objects.push({
     type: Type.Primitive,
@@ -330,14 +342,14 @@ Interpreter.prototype.sampling = function(name, retry) {
       sprintf("%s.js", this.name)
     );
   }
-  
+
   // sum weights of each rules
   var sum = 0;
   this.rules[name].forEach(function(rule) {
     rule.weight = rule.weight || 1;
     sum += rule.weight;
   });
-  
+
   // choosing...
   var rand = this.mt.next() * sum;
   var chosen;
@@ -350,7 +362,7 @@ Interpreter.prototype.sampling = function(name, retry) {
     chosen = rule;
     break;
   }
-  
+
   // if rule could not be selected, interpreter tries to choose until 3 times
   if (!chosen) {
     retry = retry || 0;
@@ -358,7 +370,7 @@ Interpreter.prototype.sampling = function(name, retry) {
     // if achieve max retry count
     return false;
   }
-  
+
   // if achieved maxdepth
   if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
     if (chosen.alternate) return this.sampling(chosen.alternate);
@@ -366,7 +378,11 @@ Interpreter.prototype.sampling = function(name, retry) {
     if (this.depth < chosen.maxdepth) return chosen;
     return false;
   }
-  
+
   // the rule randomly chosen
   return chosen;
+}
+
+if (module) {
+  module.exports = Interpreter;
 }

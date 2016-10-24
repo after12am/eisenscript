@@ -14,3 +14,7 @@ var _ = {
     return values;
   }
 };
+
+if (module) {
+  module.exports = _;
+}
