@@ -59,7 +59,8 @@ gulp.task('serve', () => {
 
   gulp.watch([
     'app/tests/**/*',
-    'src/**/*'
+    'src/**/*',
+    'app/**/*'
   ]).on('change', reload);
 });
 
