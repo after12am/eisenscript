@@ -15,7 +15,9 @@ describe('Interpreter', function() {
   describe('#primitive', function() {
 
     const tests = [
-      'primitive/box.es'
+      'primitive/box.es',
+      'primitive/grid.es',
+      'primitive/sphere.es'
     ];
 
     tests.forEach(shouldBeGoodInterpreter);
