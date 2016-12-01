@@ -179,4 +179,8 @@ Matrix4.prototype = {
 
     );
   }
+};
+
+if (module) {
+  module.exports = Matrix4;
 }

@@ -1,3 +1,4 @@
+// TODO: move to parser.jison
 var Primitive = {
   Box: 'box',
   Grid: 'grid',
@@ -8,4 +9,8 @@ var Primitive = {
   // Mesh: 'mesh',
   // Cylinder: 'cylinder',
   // Tube: 'tube'
+};
+
+if (module) {
+  module.exports = Primitive;
 }

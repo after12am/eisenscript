@@ -59,9 +59,10 @@ def stat():
   return [os.stat(file).st_mtime for file in sources()]
 
 def test():
-  os.system('node test/cli/test.ast.js')
+  os.system("find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive")
 
 def monitor():
+  test()
   a = stat()
   while True:
     time.sleep(0.5)

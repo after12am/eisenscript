@@ -1,100 +1,70 @@
+'use strict';
+
 const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
+const webpack = require('webpack-stream');
 const browserSync = require('browser-sync');
 const del = require('del');
-
 const $ = gulpLoadPlugins();
+const _ = require('underscore');
 const reload = browserSync.reload;
 
-const rename = require('gulp-rename');
-
-gulp.task('styles', () => {
-  return gulp.src('app/styles/*.css')
-    .pipe(gulp.dest('.tmp/styles'))
-    .pipe(gulp.dest('dist/styles'))
-    .pipe(reload({stream: true}));
+/**
+ * regression test
+ */
+gulp.task('watch:test', () => {
+  gulp.watch([
+    'src/**/*',
+    'test/**/*'
+  ], ['test']);
 });
 
-gulp.task('scripts', () => {
-  return gulp.src('app/scripts/**/*.js')
+/**
+ * unit test
+ */
+gulp.task('test', () => {
+  return gulp.src('test/**/inter*.js')
     .pipe($.plumber())
-    .pipe(gulp.dest('.tmp/scripts'))
-    .pipe(gulp.dest('dist/scripts'))
-    .pipe(reload({stream: true}));
+    .pipe($.spawnMocha());
 });
 
-function lint(files, options) {
-  return gulp.src(files)
-    .pipe(reload({stream: true, once: true}))
-    .pipe($.eslint(options))
-    .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failAfterError()));
-}
-
-gulp.task('lint', () => {
-  return lint('app/scripts/**/*.js', {
-    fix: true
-  })
-    .pipe(gulp.dest('app/scripts'));
-});
-gulp.task('lint:test', () => {
-  return lint('test/spec/**/*.js', {
-    fix: true,
-    env: {
-      mocha: true
-    }
-  })
-    .pipe(gulp.dest('test/spec/**/*.js'));
+/**
+ * build source code as eisenscript library
+ */
+gulp.task('webpack', () => {
+  const config = require('./webpack.config');
+  const entry = _.values(config.entry);
+  return gulp.src(entry)
+    .pipe(webpack(config))
+    .pipe(gulp.dest('build/'));
 });
 
-gulp.task('html', ['styles', 'scripts'], () => {
-  return gulp.src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe(gulp.dest('dist'));
-});
-
-gulp.task('images', () => {
-  return gulp.src('app/images/**/*')
-    .pipe(gulp.dest('.tmp/images'))
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('fonts', () => {
-  return gulp.src(require('main-bower-files')('**/*.{eot,svg,ttf,woff,woff2}', function (err) {})
-    .concat('app/fonts/**/*'))
-    .pipe(gulp.dest('.tmp/fonts'))
-    .pipe(gulp.dest('dist/fonts'));
-});
-
-gulp.task('extras', () => {
-  return gulp.src([
-    'app/styles/ie/*.*'
-  ], {
-    dot: true
-  }).pipe(gulp.dest('dist/styles/ie/'));
-});
-
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.*']));
-
-gulp.task('serve', ['styles', 'scripts', 'images', 'fonts'], () => {
+/**
+ * start web app
+ */
+gulp.task('serve', () => {
   browserSync({
     notify: false,
     port: 9000,
+    startPath: '/',
+    open: 'external',
     server: {
-      baseDir: ['.tmp', 'app']
+      baseDir: ['app']
     }
   });
 
   gulp.watch([
-    'app/**/*.html',
-    'app/**/*.css',
-    'app/**/*.js'
-  ]).on('change', reload);
+    'src/**/*'
+  ], ['webpack']);
 
-  gulp.watch('app/styles/**/*.css', ['styles']);
-  gulp.watch('app/scripts/**/*.js', ['scripts']);
-  gulp.watch('app/fonts/**/*', ['fonts']);
+  gulp.watch([
+    'app/tests/**/*',
+    'src/**/*',
+    'app/**/*'
+  ]).on('change', reload);
 });
+
+
 
 gulp.task('serve:dist', () => {
   browserSync({
@@ -106,28 +76,31 @@ gulp.task('serve:dist', () => {
   });
 });
 
-gulp.task('serve:test', ['scripts'], () => {
-  browserSync({
-    notify: false,
-    port: 9000,
-    ui: false,
-    server: {
-      baseDir: 'test',
-      routes: {
-        '/scripts': '.tmp/scripts'
-      }
-    }
-  });
 
-  gulp.watch('app/scripts/**/*.js', ['scripts']);
-  gulp.watch('test/spec/**/*.js').on('change', reload);
-  gulp.watch('test/spec/**/*.js', ['lint:test']);
-});
 
-gulp.task('build', ['lint', 'images', 'fonts', 'styles', 'scripts', 'extras'], () => {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-});
-
-gulp.task('default', ['clean'], () => {
-  gulp.start('build');
-});
+// gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.*']));
+//
+// gulp.task('serve:test', ['scripts'], () => {
+//   browserSync({
+//     notify: false,
+//     port: 9000,
+//     ui: false,
+//     server: {
+//       baseDir: 'test',
+//       routes: {
+//         '/scripts': '.tmp/scripts'
+//       }
+//     }
+//   });
+//
+//   gulp.watch('app/tests/scripts/**/*.js', ['scripts']);
+//   gulp.watch('test/spec/**/*.js').on('change', reload);
+// });
+//
+// gulp.task('build', ['styles', 'scripts'], () => {
+//   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
+// });
+//
+// gulp.task('default', ['clean'], () => {
+//   gulp.start('build');
+// });

@@ -9,3 +9,7 @@ var Material = function(parameters) {
 Material.Basic = 'basic';
 Material.Normal = 'normal';
 Material.Lambert = 'lambert';
+
+if (module) {
+  module.exports = Material;
+}

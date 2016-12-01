@@ -15,6 +15,7 @@ $(function() {
 
   // compiling...
   var s = +new Date();
+  console.log(EISEN);
   var compiler = new EISEN.Compiler();
   var objectcode;
   try {
@@ -32,8 +33,6 @@ $(function() {
   renderer = new EISEN.TestRenderer(window.innerWidth, window.innerHeight, {
     materialType: window.navigator.userAgent.match('Chrome') ? 'lambert' : 'basic'
   });
-
-
 
   objectCode.objects.forEach(function(object) {
     switch (object.type) {

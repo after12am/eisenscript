@@ -15,12 +15,12 @@ body {
 <body>
 <script type="text/eisenscript" id="eisenscript">
 corner
-rule corner md 2 {
+rule corner md 20 {
   { s 1 2 1.2 }ARC
   {ry 36}corner
 }
-rule ARC md 1 {
-  // { z 0.85 rx 4.5 s 0.95 } ARC
+rule ARC md 10 {
+  { z 0.85 rx 4.5 s 0.95 } ARC
   box
 }
 
@@ -28,8 +28,6 @@ rule ARC md 1 {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="scripts/three.min.js"></script>
 <script src="scripts/dump.js"></script>
-<script src="scripts/vendor/color.js"></script>
-<script src="scripts/vendor/mt.js"></script>
 <script src="scripts/eisenscript.js"></script>
 <script src="scripts/main.js"></script>
 </body>

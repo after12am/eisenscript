@@ -9,7 +9,7 @@ function makeArray(array) {
     }
   }
   return ret;
-}
+};
 
 function sprintf(){
   var _arg = makeArray(arguments), template = _arg.shift(), i;
@@ -17,4 +17,8 @@ function sprintf(){
     template = template.replace('%s', _arg[i]);
   }
   return template;
+};
+
+if (module) {
+  module.exports = sprintf;
 }
