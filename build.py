@@ -70,7 +70,6 @@ def monitor():
     if a != b:
       a = b
       if 'test' in sys.argv:
-        build()
         test()
       if 'debug' in sys.argv:
         build()

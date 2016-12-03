@@ -23,7 +23,7 @@ var Interpreter = function() {
   this.objectnum = 0;
   this.minsize = .2;
   this.maxsize = 1.0;
-  this.seed = 'initial'; // integer or 'initial'
+  this.seed = 'initial'; // represents '1' // TODO: defines as constant value
   this.stack = [];
   this.curr = {};
   this.curr.matrix = new Matrix4();
@@ -118,8 +118,7 @@ Interpreter.prototype.randomColor = function() {
 }
 
 Interpreter.prototype.setColor = function(color) {
-  if (color === 'random') color = this.randomColor();
-  this.curr.hex = Color(color);
+  this.curr.hex = Color(color === 'random' ? this.randomColor() : color);
   return this;
 }
 
@@ -181,13 +180,13 @@ Interpreter.prototype.generate = function(ast) {
         }
         break;
       case Symbol.Define:
-        // not implemented, but I don't think the definition statement is need.
+        console.warn('[eisenscript.js] \'define\' preprocessor not implement yet');
         break;
     }
   });
 
-  // initial value is randomised chosen integer
-  this.mt.setSeed(this.seed === 'initial' ? randInt(0, 65535) : this.seed);
+  // integer or 'initial' which represents '1'
+  this.mt.setSeed(this.seed === 'initial' ? 1 : this.seed);
 
   // pull the statement of system environment
   this.define.forEach(function(statement) {
@@ -318,10 +317,10 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 
   // blend the current color with the specified color
   if (this.curr.blend.computed) {
-    this.curr.hex = this.curr.hex.toHSV();
-    var blend = Color(this.curr.blend.color).toHSV();
-    this.curr.hex.hue += (blend.hue - this.curr.hex.hue) * this.curr.blend.strength / 6;
-    this.curr.hex.hue %= 360;
+    this.curr.hex = this.curr.hex.blend(
+      Color(this.curr.blend.color === 'random' ? this.randomColor() : this.curr.blend.color),
+      this.curr.blend.strength / 2
+    );
   }
 
   // primitive object
@@ -339,7 +338,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 Interpreter.prototype.generateBackground = function(statement) {
   this.objects.push({
     type: Type.Background,
-    color: statement.value
+    color: statement.value === 'random' ? this.randomColor() : statement.value
   });
 }
 
