@@ -1,4 +1,5 @@
 /+
+// bug around three.js?
 corner
 rule corner md 4 {
   { s 1 2 1.2 }ARC

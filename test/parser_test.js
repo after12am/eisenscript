@@ -401,7 +401,7 @@ describe('Parser', function() {
       });
 
       describe('m [f1] ... [f9]', function() {
-        it('{ s 2.1 2.2 2.3 } box', function() {
+        it('{ m 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 } box', function() {
           const source = '{ m 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
@@ -448,73 +448,73 @@ describe('Parser', function() {
       });
 
       describe('sat / saturation [float]', function() {
-        it('{ sat 1.2 } box', function() {
-          const source = '{ sat 1.2 } box';
+        it('{ sat 0.9 } box', function() {
+          const source = '{ sat 0.9 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'saturation');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.9);
           assert.ok(ast[0].computed);
         });
 
-        it('{ saturation 1.2 } box', function() {
-          const source = '{ saturation 1.2 } box';
+        it('{ saturation 0.9 } box', function() {
+          const source = '{ saturation 0.9 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'saturation');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.9);
           assert.ok(ast[0].computed);
         });
       });
 
       describe('b / brightness [float]', function() {
-        it('{ b 1.2 } box', function() {
-          const source = '{ b 1.2 } box';
+        it('{ b 0.9 } box', function() {
+          const source = '{ b 0.9 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'brightness');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.9);
           assert.ok(ast[0].computed);
         });
 
-        it('{ brightness 1.2 } box', function() {
-          const source = '{ brightness 1.2 } box';
+        it('{ brightness 0.9 } box', function() {
+          const source = '{ brightness 0.9 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'brightness');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.9);
           assert.ok(ast[0].computed);
         });
       });
 
       describe('a / alpha [float]', function() {
-        it('{ a 1.2 } box', function() {
-          const source = '{ a 1.2 } box';
+        it('{ a 0.5 } box', function() {
+          const source = '{ a 0.5 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'alpha');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.5);
           assert.ok(ast[0].computed);
         });
 
-        it('{ alpha 1.2 } box', function() {
-          const source = '{ alpha 1.2 } box';
+        it('{ alpha 0.5 } box', function() {
+          const source = '{ alpha 0.5 } box';
           const ast = parser.parse(source);
           assert.ok(ast[0].type === 'statement');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'alpha');
-          assert.ok(ast[0].exprs[0].right.properties[0].value === 1.2);
+          assert.ok(ast[0].exprs[0].right.properties[0].value === 0.5);
           assert.ok(ast[0].computed);
         });
       });
