@@ -39,6 +39,7 @@
 "rz"                      return 'ROTATEZ';
 "s"                       return 'SIZE';
 "m"                       return 'MATRIX';
+"matrix"                  return 'MATRIX';
 "hue"                     return 'HUE';
 "h"                       return 'HUE';
 "saturation"              return 'SATURATION';
