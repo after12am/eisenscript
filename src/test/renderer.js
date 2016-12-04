@@ -1,7 +1,6 @@
 
 const Primitive = require('../primitive');
 const Material = require('./material');
-const Geometry = require('./geometry');
 const { degToRad, clamp } = require('../math');
 
 // TODO: kick out from eisenscript.
@@ -46,7 +45,7 @@ TestRenderer.prototype.clearColor = function(hex) {
 
 // add any primitive to stage
 TestRenderer.prototype.addPrimitive = function(parameters) {
-  var geometry = new Geometry(parameters.name);
+  var geometry;
   var material = new Material({
     type: this.materialType,
     color: parameters.color,
@@ -54,11 +53,82 @@ TestRenderer.prototype.addPrimitive = function(parameters) {
     transparent: true,
     wireframe: !!(parameters.name === Primitive.Grid)
   });
-  var mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.applyMatrix(parameters.matrix);
-  this.group.add(mesh);
+
+  switch (parameters.name) {
+    case Primitive.Box:
+    case Primitive.Grid:
+      geometry = new THREE.CubeGeometry(1, 1, 1);
+      var mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.applyMatrix(parameters.matrix);
+      this.group.add(mesh);
+      break;
+    case Primitive.Sphere:
+      geometry = new THREE.SphereGeometry(.5, 40, 32);
+      var mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.applyMatrix(parameters.matrix);
+      this.group.add(mesh);
+      break;
+    case Primitive.Line:
+      var geometry = new THREE.Geometry();
+      geometry.vertices.push(new THREE.Vector3(-.5, 0, 0));
+      geometry.vertices.push(new THREE.Vector3(.5, 0, 0));
+      var mesh = new THREE.Line(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.applyMatrix(parameters.matrix);
+      this.group.add(mesh);
+      break;
+    case Primitive.Point:
+      // NOTE: THREE.PointCloudMaterial is not a constructor
+      // var geometry = new THREE.Geometry();
+      // geometry.vertices.push(new THREE.Vector3( 0, 0, 0));
+      // var material = new THREE.PointCloudMaterial({
+      //   size: 1,
+      //   sizeAttenuation: false
+      // });
+      // var dot = new THREE.PointCloud(geometry, material);
+      // var mesh = new THREE.Mesh(geometry, material);
+      // mesh.castShadow = true;
+      // mesh.receiveShadow = true;
+      // mesh.applyMatrix(parameters.matrix);
+      // this.group.add(dot);
+      break;
+    case Primitive.Triangle:
+      var geometry = new THREE.Geometry();
+      geometry.vertices.push(new THREE.Vector3( 0.0,  .5, 0.0));
+      geometry.vertices.push(new THREE.Vector3(-.5, -.5, 0.0));
+      geometry.vertices.push(new THREE.Vector3( .5, -.5, 0.0));
+      geometry.faces.push(new THREE.Face3(0, 1, 2));
+      var material =  new THREE.MeshBasicMaterial({
+        color: parameters.color,
+        side:THREE.DoubleSide,
+        opacity: parameters.opacity,
+        transparent: true,
+      });
+      var mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.applyMatrix(parameters.matrix);
+      this.group.add(mesh);
+      break;
+    case Primitive.Mesh:
+      break;
+    case Primitive.Cylinder:
+      geometry = new THREE.CylinderGeometry(.5, .5, 1, 40);
+      var mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.applyMatrix(parameters.matrix);
+      this.group.add(mesh);
+      break;
+    case Primitive.Tube:
+      break;
+  }
+
   return this;
 };
 

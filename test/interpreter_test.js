@@ -27,11 +27,12 @@ describe('Interpreter', function() {
       'primitives/box.es',
       'primitives/grid.es',
       'primitives/sphere.es',
-      // 'primitives/line.es',
+      'primitives/line.es',
+      // NOTE: THREE.PointCloudMaterial is not a constructor
       // 'primitives/point.es',
-      // 'primitives/triangle.es',
+      'primitives/triangle.es',
       // 'primitives/mesh.es',
-      // 'primitives/cylinder.es',
+      'primitives/cylinder.es',
       // 'primitives/tube.es',
     ];
     tests.forEach(shouldBeGoodInterpreter);
