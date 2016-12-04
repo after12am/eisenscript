@@ -7,6 +7,13 @@ const shouldBeGoodInterpreter = require('./behavior/should_be_good_interpreter')
  * TODO: more color translation tests. blend
  */
 describe('Interpreter', function() {
+  describe.skip('default', function() {
+    const tests = [
+
+    ];
+    tests.forEach(shouldBeGoodInterpreter);
+  });
+
   describe('comments', function() {
     const tests = [
       'comments/single_line.es',
@@ -76,39 +83,40 @@ describe('Interpreter', function() {
       const tests = [
         'actions/seed.es',
         'actions/seed.initial.es',
+        // TODO: test default seed
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     describe('set maxobjects [integer]', function() {
-      it('set maxdepth 100', function() {
-        const tests = [
-          'actions/maxobjects.es',
-        ];
-        tests.forEach(shouldBeGoodInterpreter);
-      });
+      const tests = [
+        'actions/maxobjects.es',
+        // TODO: test default maxobjects
+      ];
+      tests.forEach(shouldBeGoodInterpreter);
     });
 
     // BUG:
     describe('set maxdepth [integer]', function() {
       const tests = [
 
+        // TODO: test default maxdepth
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     // TODO: not implemented yet
     describe('set minsize [float]', function() {
-      it('set minsize 10.1', function() {
-        const source = 'set minsize 10.1';
-      });
+      // it('set minsize 10.1', function() {
+      //   const source = 'set minsize 10.1';
+      // });
     });
 
     // TODO: not implemented yet
     describe('set maxsize [float]', function() {
-      it('set maxsize 10.1', function() {
-        const source = 'set maxsize 10.1';
-      });
+      // it('set maxsize 10.1', function() {
+      //   const source = 'set maxsize 10.1';
+      // });
     });
   });
 
@@ -131,6 +139,7 @@ describe('Interpreter', function() {
       'colorspace/blend.hex3.es',
       'colorspace/blend.hex6.es',
       'colorspace/blend.random.es',
+      // TODO: test default color
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });

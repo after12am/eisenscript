@@ -55,10 +55,10 @@ var clamp = function ( x, a, b ) {
 
 // Random integer from <low, high> interval
 
-var randInt = function ( low, high ) {
-
-  return low + Math.floor( Math.random() * ( high - low + 1 ) );
-};
+// var randInt = function ( low, high ) {
+//
+//   return low + Math.floor( Math.random() * ( high - low + 1 ) );
+// };
 
 // Random float from <low, high> interval
 
@@ -100,6 +100,6 @@ var degToRad = function() {
 
 if (module) {
   module.exports.degToRad = degToRad;
-  module.exports.randInt = randInt;
+  // module.exports.randInt = randInt;
   module.exports.clamp = clamp;
 }
