@@ -100,7 +100,8 @@ describe('Interpreter', function() {
     // BUG:
     describe('set maxdepth [integer]', function() {
       const tests = [
-
+        'actions/maxdepth.es',
+        'actions/maxdepth.strange.es'
         // TODO: test default maxdepth
       ];
       tests.forEach(shouldBeGoodInterpreter);

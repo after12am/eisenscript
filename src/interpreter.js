@@ -39,7 +39,11 @@ Interpreter.prototype.terminated = function() {
     if (this.objectnum > 1000) return true;
   }
   if (this.maxobjects && this.objectnum > this.maxobjects) return true;
-  if (this.maxdepth && this.depth > this.maxdepth) return true;
+
+  // NOTE: misterious working of structure synth
+  // set maxdepth 10
+  // rule R1 { box { x 1 hue 36 rx 10 } R1 } R1
+  if (this.maxdepth && this.depth > this.maxdepth - 3) return true;
   return false;
 }
 
