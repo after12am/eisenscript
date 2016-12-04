@@ -51,7 +51,6 @@ describe('Interpreter', function() {
       tests.forEach(shouldBeGoodInterpreter);
     });
 
-    // BUG: somewhat
     describe('weight', function() {
       const tests = [
         'modifiers/w.es',
@@ -84,8 +83,7 @@ describe('Interpreter', function() {
     describe('set maxobjects [integer]', function() {
       const tests = [
         'actions/maxobjects.es',
-        'actions/maxobjects.1001.es',
-        // TODO: test default maxobjects
+        'actions/maxobjects.achive_max_value.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
