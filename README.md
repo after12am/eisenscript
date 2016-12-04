@@ -13,11 +13,6 @@ If you want to create ”generative art” intuitively, this powerful language w
 
 <img src="http://after12am.github.io/eisenscript/shreenshot.png"/>
 
-## Requirements
-
-* [color.js](https://github.com/brehaut/color-js)
-* [mt.js](http://magicant.github.io/sjavascript/mt.js)
-
 ## Notes
 
 This is a javascript implementation for generating in real time in your browser.
