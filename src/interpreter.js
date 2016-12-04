@@ -16,9 +16,9 @@ var Interpreter = function() {
   this.define = [];
   this.rules = {};
   this.computed = [];
-  this.maxdepth = 1000;
+  this.maxdepth;
   this.depth = 0;
-  this.maxobjects = 1000;
+  this.maxobjects;
   this.objectnum = 0;
   this.minsize = .2;
   this.maxsize = 1.0;
@@ -35,8 +35,11 @@ var Interpreter = function() {
 
 // termination criteria
 Interpreter.prototype.terminated = function() {
-  if (this.objectnum > this.maxobjects) return true;
-  if (this.depth > this.maxdepth) return true;
+  if (!this.maxobjects && !this.maxdepth) {
+    if (this.objectnum > 1000) return true;
+  }
+  if (this.maxobjects && this.objectnum > this.maxobjects) return true;
+  if (this.maxdepth && this.depth > this.maxdepth) return true;
   return false;
 }
 

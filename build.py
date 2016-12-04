@@ -7,7 +7,7 @@ module = 'EISEN'
 input_path = 'src/'
 output_path = 'build/eisenscript.js'
 input_order = [
-
+  'test/interpreter_test.js'
 ]
 
 header = '''/*
