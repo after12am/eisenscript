@@ -26,7 +26,6 @@ var Interpreter = function() {
   this.stack = [];
   this.curr = {};
   this.curr.matrix = new Matrix4();
-  this.curr.hex = Color('#ff0000');
   this.curr.hsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
   this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
@@ -55,7 +54,6 @@ Interpreter.prototype.pushState = function() {
   this.depth++;
   this.stack.push({
     matrix: this.curr.matrix.clone(),
-    hex: this.curr.hex.clone(),
     hsv: this.curr.hsv.clone(),
     blend: _.extend({}, this.curr.blend),
     alpha: this.curr.alpha
@@ -124,7 +122,7 @@ Interpreter.prototype.randomColor = function() {
 }
 
 Interpreter.prototype.setColor = function(color) {
-  this.curr.hex = Color(color === 'random' ? this.randomColor() : color);
+  this.curr.hsv = Color(color === 'random' ? this.randomColor() : color).toHSV();
   return this;
 }
 
@@ -154,8 +152,8 @@ Interpreter.prototype.setBlend = function(color, strength) {
   this.curr.blend.color = color;
   this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1) / 2;
   // blend the current color with the specified color
-  this.curr.hex = this.curr.hex.blend(
-    Color(this.curr.blend.color === 'random' ? this.randomColor() : this.curr.blend.color),
+  this.curr.hsv = this.curr.hsv.blend(
+    Color(this.curr.blend.color === 'random' ? this.randomColor() : this.curr.blend.color).toHSV(),
     this.curr.blend.strength
   );
   return this;
@@ -347,7 +345,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
     type: Type.Primitive,
     name: statement.id,
     matrix: this.curr.matrix.clone(),
-    color: this.curr.hsv.computed ? this.curr.hex.blend(this.curr.hsv, 1).toCSS() : this.curr.hex.toCSS(),
+    color: this.curr.hsv.toCSS(),
     opacity: this.curr.alpha,
     depth: this.depth
   });
