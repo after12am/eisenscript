@@ -83,12 +83,11 @@ describe('Interpreter', function() {
     describe('set maxobjects [integer]', function() {
       const tests = [
         'actions/maxobjects.es',
-        'actions/maxobjects.achive_max_value.es',
+        // 'actions/maxobjects.achive_max_value.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
-    // BUG:
     describe('set maxdepth [integer]', function() {
       const tests = [
         'actions/maxdepth.es',
@@ -118,11 +117,11 @@ describe('Interpreter', function() {
     const tests = [
       'colorspace/h.es',
       'colorspace/hue.es',
-      'colorspace/sat.es', // TODO: console.log about 'Saturation is measured from 0 to 1 and is clamped to this interval (i.e. values larger then 1 are set to 1'
+      'colorspace/sat.es',
       'colorspace/saturation.es',
-      'colorspace/b.es', // TODO: console.log about 'Brightness is measured from 0 to 1 and is clamped to this interval.'
+      'colorspace/b.es',
       'colorspace/brightness.es',
-      'colorspace/a.es', // TODO: console.log about 'Alpha is measured from 0 to 1 and is clamped to this interval'
+      'colorspace/a.es',
       'colorspace/alpha.es',
       'colorspace/color.colorname.es',
       'colorspace/color.hex3.es',

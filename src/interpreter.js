@@ -36,7 +36,10 @@ var Interpreter = function() {
 // termination criteria
 Interpreter.prototype.terminated = function() {
   if (!this.maxobjects && !this.maxdepth) {
-    if (this.objectnum > 1000) return true;
+    if (this.depth > 1000) {
+      console.warn('[eisenscript.js] terminated because maximum number of generations reached (1000)');
+      return true;
+    }
   }
   if (this.maxobjects && this.objectnum > this.maxobjects) return true;
 
@@ -136,13 +139,17 @@ Interpreter.prototype.setHue = function(v) {
 
 Interpreter.prototype.setSaturation = function(v) {
   this.curr.hsv.computed = true;
-  this.curr.hsv.saturation = clamp(this.curr.hsv.saturation * v, 0, 1);
+  var sat = this.curr.hsv.saturation;
+  if (0 > sat * v || sat * v > 1) console.warn('[eisenscript.js] Saturation is measured from 0 to 1 and is clamped to this interval (i.e. values larger then 1 are set to 1.');
+  this.curr.hsv.saturation = clamp(sat * v, 0, 1);
   return this;
 }
 
 Interpreter.prototype.setBrightness = function(v) {
   this.curr.hsv.computed = true;
-  this.curr.hsv.value = clamp(this.curr.hsv.value * v, 0, 1);
+  var brightness = this.curr.hsv.value;
+  if (0 > brightness * v || brightness * v > 1) console.warn('[eisenscript.js] Brightness is measured from 0 to 1 and is clamped to this interval.');
+  this.curr.hsv.value = clamp(brightness * v, 0, 1);
   return this;
 }
 
@@ -150,6 +157,13 @@ Interpreter.prototype.setBlend = function(color, strength) {
   this.curr.blend.computed = true;
   this.curr.blend.color = color;
   this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1);
+  return this;
+}
+
+Interpreter.prototype.setAlpha = function(v) {
+  var alpha = this.curr.alpha;
+  if (0 > alpha * v || alpha * v > 1) console.warn('[eisenscript.js] Alpha is measured from 0 to 1 and is clamped to this interval.');
+  this.curr.alpha = clamp(this.curr.alpha * v, 0, 1);
   return this;
 }
 
@@ -316,7 +330,7 @@ Interpreter.prototype.parseTransform = function(property) {
     case Symbol.Saturation: this.setSaturation(v); break;
     case Symbol.Brightness: this.setBrightness(v); break;
     case Symbol.Blend: this.setBlend(property.color, property.strength); break;
-    case Symbol.Alpha: this.curr.alpha *= v; break;
+    case Symbol.Alpha: this.setAlpha(v); break;
   }
   return this;
 }
@@ -375,7 +389,7 @@ Interpreter.prototype.sampling = function(name, retry) {
   var chosen;
   for (var i = 0; i < this.rules[name].length; i++) {
     var rule = this.rules[name][i];
-    if (rule.weight - rand < 0) {
+    if (rand - rule.weight > 0) {
       rand -= rule.weight
       continue;
     }
@@ -392,6 +406,11 @@ Interpreter.prototype.sampling = function(name, retry) {
   }
 
   // if achieved maxdepth
+  // NOTE: maybe alternative code
+  // if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
+  //   if (chosen.alternate) return chosen.alternate;
+  //   return false
+  // }
   if (chosen.maxdepth && chosen.maxdepth < this.rules[name].depth) {
     if (chosen.alternate) return chosen.alternate;
     if (this.rules[name].depth >= chosen.maxdepth) return false;
