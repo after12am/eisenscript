@@ -117,13 +117,10 @@ Interpreter.prototype.matrix = function(v) {
   return this;
 }
 
-Interpreter.prototype.random16 = function() {
-  var rand = this.mt.next() * 0xffffff;
-  return Math.floor(rand).toString(16);
-}
-
 Interpreter.prototype.randomColor = function() {
-  return `#${this.random16()}`;
+  var rand = this.mt.next() * 0xffffff;
+  var color = Math.floor(rand).toString(16);
+  return `#${color}`;
 }
 
 Interpreter.prototype.setColor = function(color) {
