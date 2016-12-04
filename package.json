@@ -1,6 +1,6 @@
 {
   "name": "eisenscript",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "scripts": {
     "test": "find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
     "build": "$(npm bin)/webpack --config webpack.config.js -p"
