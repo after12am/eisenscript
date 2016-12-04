@@ -21,6 +21,7 @@ $(function() {
   try {
     objectCode = compiler.compile($('#eisenscript').text());
     console.log(objectCode);
+    console.log(JSON.stringify(objectCode));
   } catch (e) {
     console.error(e.message);
     return;

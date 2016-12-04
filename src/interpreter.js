@@ -5,10 +5,9 @@ const Color = require('color-js');
 const Matrix4 = require('./matrix');
 const Type = require('./type');
 const Primitive = require('./primitive');
-const _ = require('./_');
+const _ = require('./underscore');
 const MersenneTwister = require('./mt');
-const sprintf = require('./sprintf');
-const { degToRad, randInt, clamp } = require('./math');
+const { degToRad, clamp } = require('./math');
 
 // module generate object code from ast
 var Interpreter = function() {
@@ -17,9 +16,9 @@ var Interpreter = function() {
   this.define = [];
   this.rules = {};
   this.computed = [];
-  this.maxdepth = 1000;
+  this.maxdepth;
   this.depth = 0;
-  this.maxobjects = 1000;
+  this.maxobjects;
   this.objectnum = 0;
   this.minsize = .2;
   this.maxsize = 1.0;
@@ -36,8 +35,15 @@ var Interpreter = function() {
 
 // termination criteria
 Interpreter.prototype.terminated = function() {
-  if (this.objectnum > this.maxobjects) return true;
-  if (this.depth > this.maxdepth) return true;
+  if (!this.maxobjects && !this.maxdepth) {
+    if (this.objectnum > 1000) return true;
+  }
+  if (this.maxobjects && this.objectnum > this.maxobjects) return true;
+
+  // NOTE: misterious working of structure synth
+  // set maxdepth 10
+  // rule R1 { box { x 1 hue 36 rx 10 } R1 } R1
+  if (this.maxdepth && this.depth > this.maxdepth - 3) return true;
   return false;
 }
 
@@ -114,7 +120,7 @@ Interpreter.prototype.random16 = function() {
 }
 
 Interpreter.prototype.randomColor = function() {
-  return sprintf('#%s', this.random16());
+  return `#${this.random16()}`;
 }
 
 Interpreter.prototype.setColor = function(color) {
@@ -174,8 +180,14 @@ Interpreter.prototype.generate = function(ast) {
         switch (statement.key) {
           case Symbol.Maxdepth: that.maxdepth = statement.value; break;
           case Symbol.Maxobjects: that.maxobjects = statement.value; break;
-          case Symbol.Minsize: that.minsize = statement.value; break;
-          case Symbol.Maxsize: that.maxsize = statement.value; break;
+          case Symbol.Minsize:
+            console.warn('[eisenscript.js] \'set minsize\' not implement yet');
+            // that.minsize = statement.value;
+            break;
+          case Symbol.Maxsize:
+            console.warn('[eisenscript.js] \'set maxsize\' not implement yet');
+            // that.maxsize = statement.value;
+            break;
           case Symbol.Seed: that.seed = statement.value; break;
         }
         break;
@@ -209,7 +221,7 @@ Interpreter.prototype.generate = function(ast) {
     seed: this.seed,
     objects: this.objects,
     num: this.objects.length
-  }
+  };
 }
 
 // rewrite subtree related to rule statement
@@ -346,8 +358,8 @@ Interpreter.prototype.generateBackground = function(statement) {
 Interpreter.prototype.sampling = function(name, retry) {
   if (!this.rules[name]) {
     throw new Error(
-      sprintf("ReferenceError: '%s' is not defined. As reported by eisenscript interpreter.", name),
-      sprintf("%s.js", this.name)
+      `ReferenceError: '${name}' is not defined. As reported by eisenscript interpreter.`,
+      `${this.name}.js`
     );
   }
 

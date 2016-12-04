@@ -7,6 +7,13 @@ const shouldBeGoodInterpreter = require('./behavior/should_be_good_interpreter')
  * TODO: more color translation tests. blend
  */
 describe('Interpreter', function() {
+  describe.skip('default', function() {
+    const tests = [
+
+    ];
+    tests.forEach(shouldBeGoodInterpreter);
+  });
+
   describe('comments', function() {
     const tests = [
       'comments/single_line.es',
@@ -39,6 +46,7 @@ describe('Interpreter', function() {
         'modifiers/maxdepth.nested_transform.es',
         'modifiers/maxdepth.alternate_rule.es',
         'modifiers/maxdepth.parallel_traverse.es',
+        'modifiers/md.w.recursive.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
@@ -46,25 +54,17 @@ describe('Interpreter', function() {
     // BUG: somewhat
     describe('weight', function() {
       const tests = [
-
+        'modifiers/w.es',
+        'modifiers/weight.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
-
-      // describe('w / weight [float]', function() {
-      //   it('rule R1 weight 10.1 { box }', function() {
-      //     const source = 'rule R1 weight 10.1 { box }';
-      //   });
-      //
-      //   it('rule R1 w 10.1 { box }', function() {
-      //     const source = 'rule R1 w 10.1 { box }';
-      //   });
-      // });
     });
   });
 
   describe('actions', function() {
     describe('set background [color]', function() {
       const tests = [
+        'actions/background.colorname.es',
         'actions/background.hex3.es',
         'actions/background.hex6.es',
         'actions/background.random.es',
@@ -76,39 +76,42 @@ describe('Interpreter', function() {
       const tests = [
         'actions/seed.es',
         'actions/seed.initial.es',
+        // TODO: test default seed
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     describe('set maxobjects [integer]', function() {
-      it('set maxdepth 100', function() {
-        const tests = [
-          'actions/maxobjects.es',
-        ];
-        tests.forEach(shouldBeGoodInterpreter);
-      });
+      const tests = [
+        'actions/maxobjects.es',
+        'actions/maxobjects.1001.es',
+        // TODO: test default maxobjects
+      ];
+      tests.forEach(shouldBeGoodInterpreter);
     });
 
     // BUG:
     describe('set maxdepth [integer]', function() {
       const tests = [
-
+        'actions/maxdepth.es',
+        'actions/maxdepth.strange.es'
+        // TODO: test default maxdepth
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     // TODO: not implemented yet
     describe('set minsize [float]', function() {
-      it('set minsize 10.1', function() {
-        const source = 'set minsize 10.1';
-      });
+      // it('set minsize 10.1', function() {
+      //   const source = 'set minsize 10.1';
+      // });
     });
 
     // TODO: not implemented yet
     describe('set maxsize [float]', function() {
-      it('set maxsize 10.1', function() {
-        const source = 'set maxsize 10.1';
-      });
+      // it('set maxsize 10.1', function() {
+      //   const source = 'set maxsize 10.1';
+      // });
     });
   });
 
@@ -131,6 +134,7 @@ describe('Interpreter', function() {
       'colorspace/blend.hex3.es',
       'colorspace/blend.hex6.es',
       'colorspace/blend.random.es',
+      // TODO: test default color
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });

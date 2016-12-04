@@ -14,15 +14,41 @@ body {
 </head>
 <body>
 <script type="text/eisenscript" id="eisenscript">
-corner
-rule corner md 20 {
-  { s 1 2 1.2 }ARC
-  {ry 36}corner
+set maxdepth 100
+set maxobjects 3000
+r1
+36  * { x -2 ry 10   } r1
+
+rule r1 maxdepth 10 {
+   2 * { y -1 } 3 * { rz 15 x 1 b 0.9 h -20  } r2
+   { y 1 h 12 a 0.9  rx 36 }  r1
 }
-rule ARC md 10 {
-  { z 0.85 rx 4.5 s 0.95 } ARC
-  box
+
+rule r2 {
+   { s 0.9 0.1 1.1 hue 10 } box // a comment
 }
+
+rule r2 w 2 {
+   { hue 113 sat 19 a 23 s 0.1 0.9 1.1 } box
+}
+
+// rule dbox weight 0.5 {
+//   { x 1 s 1 } R1
+// }
+//
+// rule dbox weight 0.5 {
+//  { y 1 s 1 } R1
+// }
+
+// corner
+// rule corner md 20 {
+//   { s 1 2 1.2 }ARC
+//   {ry 36}corner
+// }
+// rule ARC md 10 {
+//   { z 0.85 rx 4.5 s 0.95 } ARC
+//   box
+// }
 
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
