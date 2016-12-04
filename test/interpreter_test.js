@@ -46,6 +46,7 @@ describe('Interpreter', function() {
         'modifiers/maxdepth.nested_transform.es',
         'modifiers/maxdepth.alternate_rule.es',
         'modifiers/maxdepth.parallel_traverse.es',
+        'modifiers/md.w.recursive.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
@@ -53,19 +54,10 @@ describe('Interpreter', function() {
     // BUG: somewhat
     describe('weight', function() {
       const tests = [
-
+        'modifiers/w.es',
+        'modifiers/weight.es',
       ];
       tests.forEach(shouldBeGoodInterpreter);
-
-      // describe('w / weight [float]', function() {
-      //   it('rule R1 weight 10.1 { box }', function() {
-      //     const source = 'rule R1 weight 10.1 { box }';
-      //   });
-      //
-      //   it('rule R1 w 10.1 { box }', function() {
-      //     const source = 'rule R1 w 10.1 { box }';
-      //   });
-      // });
     });
   });
 
@@ -92,6 +84,7 @@ describe('Interpreter', function() {
     describe('set maxobjects [integer]', function() {
       const tests = [
         'actions/maxobjects.es',
+        'actions/maxobjects.1001.es',
         // TODO: test default maxobjects
       ];
       tests.forEach(shouldBeGoodInterpreter);
