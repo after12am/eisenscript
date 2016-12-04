@@ -72,6 +72,7 @@ describe('Interpreter', function() {
   describe('actions', function() {
     describe('set background [color]', function() {
       const tests = [
+        'actions/background.colorname.es',
         'actions/background.hex3.es',
         'actions/background.hex6.es',
         'actions/background.random.es',
