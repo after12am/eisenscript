@@ -26,7 +26,7 @@ var Interpreter = function() {
   this.stack = [];
   this.curr = {};
   this.curr.matrix = new Matrix4();
-  this.curr.hsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
+  this.curr.hsv = Color({ hue: 0, saturation: 1, value: 1 });
   this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
   this.mt = new MersenneTwister();
@@ -127,13 +127,11 @@ Interpreter.prototype.setColor = function(color) {
 }
 
 Interpreter.prototype.setHue = function(v) {
-  this.curr.hsv.computed = true;
   this.curr.hsv.hue += v % 360;
   return this;
 }
 
 Interpreter.prototype.setSaturation = function(v) {
-  this.curr.hsv.computed = true;
   var sat = this.curr.hsv.saturation;
   if (0 > sat * v || sat * v > 1) console.warn('[eisenscript.js] Saturation is measured from 0 to 1 and is clamped to this interval (i.e. values larger then 1 are set to 1.');
   this.curr.hsv.saturation = clamp(sat * v, 0, 1);
@@ -141,7 +139,6 @@ Interpreter.prototype.setSaturation = function(v) {
 }
 
 Interpreter.prototype.setBrightness = function(v) {
-  this.curr.hsv.computed = true;
   var brightness = this.curr.hsv.value;
   if (0 > brightness * v || brightness * v > 1) console.warn('[eisenscript.js] Brightness is measured from 0 to 1 and is clamped to this interval.');
   this.curr.hsv.value = clamp(brightness * v, 0, 1);
