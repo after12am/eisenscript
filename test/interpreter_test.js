@@ -128,11 +128,11 @@ describe('Interpreter', function() {
       'colorspace/color.hex3.es',
       'colorspace/color.hex6.es',
       'colorspace/color.random.es',
+      'colorspace/color.default_color.es',
       'colorspace/blend.colorname.es',
       'colorspace/blend.hex3.es',
       'colorspace/blend.hex6.es',
       'colorspace/blend.random.es',
-      // TODO: test default color
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
