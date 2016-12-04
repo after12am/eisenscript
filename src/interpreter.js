@@ -28,7 +28,7 @@ var Interpreter = function() {
   this.curr.matrix = new Matrix4();
   this.curr.hex = Color('#ff0000');
   this.curr.hsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
-  this.curr.blend = { color: null, strength: 0, computed: false };
+  this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
   this.mt = new MersenneTwister();
 }
@@ -154,9 +154,13 @@ Interpreter.prototype.setBrightness = function(v) {
 }
 
 Interpreter.prototype.setBlend = function(color, strength) {
-  this.curr.blend.computed = true;
   this.curr.blend.color = color;
-  this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1);
+  this.curr.blend.strength = this.curr.blend.strength + clamp(strength, 0, 1) / 2;
+  // blend the current color with the specified color
+  this.curr.hex = this.curr.hex.blend(
+    Color(this.curr.blend.color === 'random' ? this.randomColor() : this.curr.blend.color),
+    this.curr.blend.strength
+  );
   return this;
 }
 
@@ -340,14 +344,6 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   // if achieved maxobjects
   this.objectnum++;
   if (this.terminated()) return;
-
-  // blend the current color with the specified color
-  if (this.curr.blend.computed) {
-    this.curr.hex = this.curr.hex.blend(
-      Color(this.curr.blend.color === 'random' ? this.randomColor() : this.curr.blend.color),
-      this.curr.blend.strength / 2
-    );
-  }
 
   // primitive object
   this.objects.push({
