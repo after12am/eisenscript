@@ -1,22 +1,11 @@
 #!/usr/bin/python
 
-import re, os, sys, time, tempfile, yaml
+import re, os, sys, time, tempfile
 
-version = yaml.load(open('package.json').read()).get('version')
-module = 'EISEN'
 input_path = 'src/'
-output_path = 'build/eisenscript.js'
 input_order = [
   'test/interpreter_test.js'
 ]
-
-header = '''/*
- * eisenscript v%s
- * https://github.com/after12am/eisenscript
- * (c)2013-2016 Satoshi Okami
- * Released under the MIT license
- */
-'''
 
 def sources():
   return input_order + [os.path.join(base, f) for base, folders, files in \
@@ -48,13 +37,6 @@ def release(data):
   os.remove(temp2_path)
   return compress(data)
 
-def build():
-  data = 'var %s = (function() {\nvar exports = {};\nexports.version=\'%s\'\n\n' % (module, version) + compile(sources()) + '\nreturn exports;\n})();\n'
-  if 'release' in sys.argv:
-    data = release(data)
-  open(output_path, 'w').write(header % version + data)
-  print 'built %s (%u lines)' % (output_path, len(data.split('\n')))
-
 def stat():
   return [os.stat(file).st_mtime for file in sources()]
 
@@ -71,13 +53,10 @@ def monitor():
       a = b
       if 'test' in sys.argv:
         test()
-      if 'debug' in sys.argv:
-        build()
 
 if __name__ == '__main__':
   if 'test' in sys.argv:
     monitor()
     sys.exit(0)
-  build()
   if 'debug' in sys.argv:
     monitor()
