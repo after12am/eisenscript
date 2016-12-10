@@ -2,6 +2,7 @@
 
 const Symbol = require('./symbol');
 const Color = require('color-js');
+const Transformation = require('./transform/transformation');
 const Matrix4 = require('./matrix');
 const Type = require('./type');
 const Primitive = require('./primitive');
@@ -25,7 +26,7 @@ var Interpreter = function() {
   this.seed = 'initial'; // represents '1' // TODO: defines as constant value
   this.stack = [];
   this.curr = {};
-  this.curr.matrix = new Matrix4();
+  this.curr.transformation = new Transformation();
   this.curr.hsv = Color({ hue: 0, saturation: 1, value: 1 });
   this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
@@ -53,7 +54,7 @@ Interpreter.prototype.terminated = function() {
 Interpreter.prototype.pushState = function() {
   this.depth++;
   this.stack.push({
-    matrix: this.curr.matrix.clone(),
+    transform: this.curr.transformation.clone(),
     hsv: this.curr.hsv.clone(),
     blend: _.extend({}, this.curr.blend),
     alpha: this.curr.alpha
@@ -70,50 +71,8 @@ Interpreter.prototype.popState = function() {
   return this;
 }
 
-Interpreter.prototype.translate = function(x, y, z) {
-  this.curr.matrix.translate({
-    x: x,
-    y: y,
-    z: z
-  });
-  return this;
-}
 
-Interpreter.prototype.rotateX = function(angle) {
-  this.curr.matrix.rotateX(angle);
-  return this;
-}
 
-Interpreter.prototype.rotateY = function(angle) {
-  this.curr.matrix.rotateY(angle);
-  return this;
-}
-
-Interpreter.prototype.rotateZ = function(angle) {
-  this.curr.matrix.rotateZ(angle);
-  return this;
-}
-
-Interpreter.prototype.scale = function(x, y, z) {
-  this.curr.matrix.scale({
-    x: x,
-    y: y,
-    z: z
-  });
-  return this;
-}
-
-// make 3x3 rotation matrix to 4x4 matrix
-// test: { m 1 0 0 0 .53 -.85 0 .85 .53 } box
-Interpreter.prototype.matrix = function(v) {
-  this.curr.matrix.set(
-    v[0], v[1], v[2], 0,
-    v[3], v[4], v[5], 0,
-    v[6], v[7], v[8], 0,
-       0,    0,    0, 1
-  );
-  return this;
-}
 
 Interpreter.prototype.randomColor = function() {
   var rand = this.mt.next() * 0xffffff;
@@ -313,14 +272,14 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 Interpreter.prototype.parseTransform = function(property) {
   var v = property.value;
   switch (property.key) {
-    case Symbol.XShift: this.translate(v, 0, 0); break;
-    case Symbol.YShift: this.translate(0, v, 0); break;
-    case Symbol.ZShift: this.translate(0, 0, v); break;
-    case Symbol.RotateX: this.rotateX(degToRad(v)); break;
-    case Symbol.RotateY: this.rotateY(degToRad(v)); break;
-    case Symbol.RotateZ: this.rotateZ(degToRad(v)); break;
-    case Symbol.Size: this.scale(v.x, v.y, v.z); break;
-    case Symbol.Matrix: this.matrix(v); break;
+    case Symbol.XShift: this.curr.transformation.translate(v, 0, 0); break;
+    case Symbol.YShift: this.curr.transformation.translate(0, v, 0); break;
+    case Symbol.ZShift: this.curr.transformation.translate(0, 0, v); break;
+    case Symbol.RotateX: this.curr.transformation.rotateX(degToRad(v)); break;
+    case Symbol.RotateY: this.curr.transformation.rotateY(degToRad(v)); break;
+    case Symbol.RotateZ: this.curr.transformation.rotateZ(degToRad(v)); break;
+    case Symbol.Size: this.curr.transformation.scale(v.x, v.y, v.z); break;
+    case Symbol.Matrix: this.curr.transformation.matrix(v); break;
     case Symbol.Color: this.setColor(v); break;
     case Symbol.Hue: this.setHue(v); break;
     case Symbol.Saturation: this.setSaturation(v); break;
@@ -341,7 +300,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
   this.objects.push({
     type: Type.Primitive,
     name: statement.id,
-    matrix: this.curr.matrix.clone(),
+    matrix: this.curr.transformation.clone().matrix4,
     color: this.curr.hsv.toCSS(),
     opacity: this.curr.alpha,
     depth: this.depth
