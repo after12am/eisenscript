@@ -1,7 +1,10 @@
 'use strict';
 
 const Symbol = require('./symbol');
+
 const Color = require('color-js');
+const ColorTrasformation = require('./transform/color_transformation');
+
 const Transformation = require('./transform/transformation');
 const Matrix4 = require('./matrix');
 const Type = require('./type');
@@ -27,6 +30,8 @@ var Interpreter = function() {
   this.stack = [];
   this.curr = {};
   this.curr.transformation = new Transformation();
+  this.curr.color = new ColorTrasformation(Color({ hue: 0, saturation: 1, value: 1 }));
+
   this.curr.hsv = Color({ hue: 0, saturation: 1, value: 1 });
   this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
@@ -71,14 +76,13 @@ Interpreter.prototype.popState = function() {
   return this;
 }
 
-
-
-
 Interpreter.prototype.randomColor = function() {
   var rand = this.mt.next() * 0xffffff;
-  var color = Math.floor(rand).toString(16);
-  return `#${color}`;
+  var hex = Math.floor(rand).toString(16);
+  return `#${hex}`;
 }
+
+
 
 Interpreter.prototype.setColor = function(color) {
   this.curr.hsv = Color(color === 'random' ? this.randomColor() : color).toHSV();
@@ -114,6 +118,9 @@ Interpreter.prototype.setBlend = function(color, strength) {
   );
   return this;
 }
+
+
+
 
 Interpreter.prototype.setAlpha = function(v) {
   var alpha = this.curr.alpha;
@@ -280,7 +287,11 @@ Interpreter.prototype.parseTransform = function(property) {
     case Symbol.RotateZ: this.curr.transformation.rotateZ(degToRad(v)); break;
     case Symbol.Size: this.curr.transformation.scale(v.x, v.y, v.z); break;
     case Symbol.Matrix: this.curr.transformation.matrix(v); break;
-    case Symbol.Color: this.setColor(v); break;
+    case Symbol.Color:
+      switch(color) {
+        case 'random': this.setRandomColor(); break;
+        default: this.setColor(v); break;
+      }
     case Symbol.Hue: this.setHue(v); break;
     case Symbol.Saturation: this.setSaturation(v); break;
     case Symbol.Brightness: this.setBrightness(v); break;
