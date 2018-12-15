@@ -3,7 +3,8 @@
   "version": "1.1.16",
   "scripts": {
     "test": "find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
-    "build": "$(npm bin)/webpack --config webpack.config.js -p"
+    "build": "$(npm bin)/webpack --config webpack.config.js -p",
+    "release": "$(npm bin)/release-it"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
@@ -22,6 +23,7 @@
     "istanbul": "^0.4.5",
     "jison": "^0.4.17",
     "mocha": "^5.2.0",
+    "release-it": "^9.0.1",
     "webpack": "^1.13.2",
     "webpack-stream": "^3.2.0"
   },
