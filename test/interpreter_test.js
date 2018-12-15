@@ -16,24 +16,24 @@ describe('Interpreter', function() {
 
   describe('comments', function() {
     const tests = [
-      'comments/single_line.es',
-      'comments/multiline.es',
+      'comments/single_line.es.txt',
+      'comments/multiline.es.txt',
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
 
   describe('primitives', function() {
     const tests = [
-      'primitives/box.es',
-      'primitives/grid.es',
-      'primitives/sphere.es',
-      'primitives/line.es',
+      'primitives/box.es.txt',
+      'primitives/grid.es.txt',
+      'primitives/sphere.es.txt',
+      'primitives/line.es.txt',
       // NOTE: THREE.PointCloudMaterial is not a constructor
-      // 'primitives/point.es',
-      'primitives/triangle.es',
-      // 'primitives/mesh.es',
-      'primitives/cylinder.es',
-      // 'primitives/tube.es',
+      // 'primitives/point.es.txt',
+      'primitives/triangle.es.txt',
+      // 'primitives/mesh.es.txt',
+      'primitives/cylinder.es.txt',
+      // 'primitives/tube.es.txt',
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
@@ -41,21 +41,21 @@ describe('Interpreter', function() {
   describe('modifiers', function() {
     describe('md / maxdepth [integer]', function() {
       const tests = [
-        'modifiers/md.es',
-        'modifiers/maxdepth.es',
-        'modifiers/maxdepth.nested_recursive_rule.es',
-        'modifiers/maxdepth.nested_transform.es',
-        'modifiers/maxdepth.alternate_rule.es',
-        'modifiers/maxdepth.parallel_traverse.es',
-        'modifiers/md.w.recursive.es',
+        'modifiers/md.es.txt',
+        'modifiers/maxdepth.es.txt',
+        'modifiers/maxdepth.nested_recursive_rule.es.txt',
+        'modifiers/maxdepth.nested_transform.es.txt',
+        'modifiers/maxdepth.alternate_rule.es.txt',
+        'modifiers/maxdepth.parallel_traverse.es.txt',
+        'modifiers/md.w.recursive.es.txt',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     describe('weight', function() {
       const tests = [
-        'modifiers/w.es',
-        'modifiers/weight.es',
+        'modifiers/w.es.txt',
+        'modifiers/weight.es.txt',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
@@ -64,18 +64,18 @@ describe('Interpreter', function() {
   describe('actions', function() {
     describe('set background [color]', function() {
       const tests = [
-        'actions/background.colorname.es',
-        'actions/background.hex3.es',
-        'actions/background.hex6.es',
-        'actions/background.random.es',
+        'actions/background.colorname.es.txt',
+        'actions/background.hex3.es.txt',
+        'actions/background.hex6.es.txt',
+        'actions/background.random.es.txt',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     describe('set seed [integer] / initial', function() {
       const tests = [
-        'actions/seed.es',
-        'actions/seed.initial.es',
+        'actions/seed.es.txt',
+        'actions/seed.initial.es.txt',
         // TODO: test default seed
       ];
       tests.forEach(shouldBeGoodInterpreter);
@@ -83,16 +83,16 @@ describe('Interpreter', function() {
 
     describe('set maxobjects [integer]', function() {
       const tests = [
-        'actions/maxobjects.es',
-        // 'actions/maxobjects.achive_max_value.es',
+        'actions/maxobjects.es.txt',
+        // 'actions/maxobjects.achive_max_value.es.txt',
       ];
       tests.forEach(shouldBeGoodInterpreter);
     });
 
     describe('set maxdepth [integer]', function() {
       const tests = [
-        'actions/maxdepth.es',
-        'actions/maxdepth.strange.es'
+        'actions/maxdepth.es.txt',
+        'actions/maxdepth.strange.es.txt'
         // TODO: test default maxdepth
       ];
       tests.forEach(shouldBeGoodInterpreter);
@@ -116,40 +116,40 @@ describe('Interpreter', function() {
   // NOTE: If you want to express same color transformation in three.js, use basic material type.
   describe('colorspace', function() {
     const tests = [
-      'colorspace/h.es',
-      'colorspace/hue.es',
-      'colorspace/sat.es',
-      'colorspace/saturation.es',
-      'colorspace/b.es',
-      'colorspace/brightness.es',
-      'colorspace/a.es',
-      'colorspace/alpha.es',
-      'colorspace/color.colorname.es',
-      'colorspace/color.hex3.es',
-      'colorspace/color.hex6.es',
-      'colorspace/color.random.es',
-      'colorspace/color.default_color.es',
-      'colorspace/blend.hex.and.hsv.es',
-      'colorspace/blend.colorname.es',
-      'colorspace/blend.hex3.es',
-      'colorspace/blend.hex6.es',
-      'colorspace/blend.random.es',
+      'colorspace/h.es.txt',
+      'colorspace/hue.es.txt',
+      'colorspace/sat.es.txt',
+      'colorspace/saturation.es.txt',
+      'colorspace/b.es.txt',
+      'colorspace/brightness.es.txt',
+      'colorspace/a.es.txt',
+      'colorspace/alpha.es.txt',
+      'colorspace/color.colorname.es.txt',
+      'colorspace/color.hex3.es.txt',
+      'colorspace/color.hex6.es.txt',
+      'colorspace/color.random.es.txt',
+      'colorspace/color.default_color.es.txt',
+      'colorspace/blend.hex.and.hsv.es.txt',
+      'colorspace/blend.colorname.es.txt',
+      'colorspace/blend.hex3.es.txt',
+      'colorspace/blend.hex6.es.txt',
+      'colorspace/blend.random.es.txt',
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
 
   describe('geometrical transformations', function() {
     const tests = [
-      'geometric/x.es',
-      'geometric/y.es',
-      'geometric/z.es',
-      'geometric/rx.es',
-      'geometric/ry.es',
-      'geometric/rz.es',
-      'geometric/s.1.es',
-      'geometric/s.3.es',
-      'geometric/m.es',
-      'geometric/matrix.es',
+      'geometric/x.es.txt',
+      'geometric/y.es.txt',
+      'geometric/z.es.txt',
+      'geometric/rx.es.txt',
+      'geometric/ry.es.txt',
+      'geometric/rz.es.txt',
+      'geometric/s.1.es.txt',
+      'geometric/s.3.es.txt',
+      'geometric/m.es.txt',
+      'geometric/matrix.es.txt',
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
