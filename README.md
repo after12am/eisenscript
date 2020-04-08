@@ -1,7 +1,7 @@
 eisenscript
 ===========
 
-[![Build Status](https://travis-ci.org/after12am/eisenscript.svg?branch=master)](https://travis-ci.org/after12am/eisenscript)
+[![CircleCI](https://circleci.com/gh/after12am/eisenscript.svg?style=svg)](https://circleci.com/gh/after12am/eisenscript)
 
 [Demo](https://after12am.github.io/eisenscript-editor/)
 
