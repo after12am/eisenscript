@@ -55,7 +55,7 @@ gulp.task('serve', () => {
 
   gulp.watch([
     'src/**/*'
-  ], ['webpack']);
+  ], gulp.series('webpack'));
 
   gulp.watch([
     'app/tests/**/*',
