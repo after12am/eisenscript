@@ -141,16 +141,24 @@ describe('Interpreter', function() {
   describe('geometrical transformations', function() {
     const tests = [
       'geometric/x.es.txt',
+      'geometric/x.def.es.txt',
       'geometric/y.es.txt',
+      'geometric/y.def.es.txt',
       'geometric/z.es.txt',
+      'geometric/z.def.es.txt',
       'geometric/rx.es.txt',
+      'geometric/rx.def.es.txt',
       'geometric/ry.es.txt',
+      'geometric/ry.def.es.txt',
       'geometric/rz.es.txt',
       'geometric/rz.def.es.txt',
       'geometric/s.1.es.txt',
+      'geometric/s.1.def.es.txt',
       'geometric/s.3.es.txt',
       'geometric/m.es.txt',
+      'geometric/m.def.es.txt',
       'geometric/matrix.es.txt',
+      'geometric/matrix.def.es.txt',
     ];
     tests.forEach(shouldBeGoodInterpreter);
   });
