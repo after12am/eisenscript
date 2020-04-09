@@ -146,6 +146,7 @@ describe('Interpreter', function() {
       'geometric/rx.es.txt',
       'geometric/ry.es.txt',
       'geometric/rz.es.txt',
+      'geometric/rz.def.es.txt',
       'geometric/s.1.es.txt',
       'geometric/s.3.es.txt',
       'geometric/m.es.txt',

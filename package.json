@@ -1,8 +1,9 @@
 {
   "name": "eisenscript",
-  "version": "1.1.16",
+  "version": "1.2.0",
   "scripts": {
     "test": "find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
+    "jison": "$(npm bin)/jison src/parser.jison -o src/parser.js",
     "build": "$(npm bin)/webpack --config webpack.config.js -p",
     "release": "$(npm bin)/release-it",
     "serve-doc": "$(npm bin)/docpress serve",

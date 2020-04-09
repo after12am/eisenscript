@@ -166,6 +166,19 @@ Interpreter.prototype.setAlpha = function(v) {
   return this;
 }
 
+Interpreter.prototype.resolveDefinition = function(symbol) {
+  for (var i = 0; i < this.define.length; i++) {
+    var statement = this.define[i];
+    switch (statement.type) {
+      case Symbol.Define:
+        if (statement.varname === symbol) {
+          return statement.value;
+        }
+    }
+  }
+  throw new Error(`Invalid symbol found: ${symbol}`);
+}
+
 // execute eisenscript
 Interpreter.prototype.generate = function(ast) {
   // rewriting ast
@@ -314,16 +327,17 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 
 // parse transformation property
 Interpreter.prototype.parseTransform = function(property) {
+  var r = (value) => (typeof(value) === 'string') ? +this.resolveDefinition(value) : +value;
   var v = property.value;
   switch (property.key) {
-    case Symbol.XShift: this.translate(v, 0, 0); break;
-    case Symbol.YShift: this.translate(0, v, 0); break;
-    case Symbol.ZShift: this.translate(0, 0, v); break;
-    case Symbol.RotateX: this.rotateX(degToRad(v)); break;
-    case Symbol.RotateY: this.rotateY(degToRad(v)); break;
-    case Symbol.RotateZ: this.rotateZ(degToRad(v)); break;
-    case Symbol.Size: this.scale(v.x, v.y, v.z); break;
-    case Symbol.Matrix: this.matrix(v); break;
+    case Symbol.XShift: this.translate(r(v), 0, 0); break;
+    case Symbol.YShift: this.translate(0, r(v), 0); break;
+    case Symbol.ZShift: this.translate(0, 0, r(v)); break;
+    case Symbol.RotateX: this.rotateX(degToRad(r(v))); break;
+    case Symbol.RotateY: this.rotateY(degToRad(r(v))); break;
+    case Symbol.RotateZ: this.rotateZ(degToRad(r(v))); break;
+    case Symbol.Size: this.scale(r(v.x), r(v.y), r(v.z)); break;
+    case Symbol.Matrix: this.matrix(property.value.map(v => r(v))); break;
     case Symbol.Color: this.setColor(v); break;
     case Symbol.Hue: this.setHue(v); break;
     case Symbol.Saturation: this.setSaturation(v); break;

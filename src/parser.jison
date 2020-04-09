@@ -220,6 +220,15 @@ geo
   | SIZE num         { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 } }; }
   | SIZE num num num { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 } }; }
   | MATRIX num num num num num num num num num { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
+  | XSHIFT STRING    { $$ = { type: 'property', key: 'xshift',  value: $2 }; }
+  | YSHIFT STRING    { $$ = { type: 'property', key: 'yshift',  value: $2 }; }
+  | ZSHIFT STRING    { $$ = { type: 'property', key: 'zshift',  value: $2 }; }
+  | ROTATEX STRING   { $$ = { type: 'property', key: 'rotatex', value: $2 }; }
+  | ROTATEY STRING   { $$ = { type: 'property', key: 'rotatey', value: $2 }; }
+  | ROTATEZ STRING   { $$ = { type: 'property', key: 'rotatez', value: $2 }; }
+  | SIZE STRING      { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 } }; }
+  | SIZE STRING STRING STRING { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 } }; }
+  | MATRIX STRING STRING STRING STRING STRING STRING STRING STRING STRING { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
   ;
 
 color
