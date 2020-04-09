@@ -217,9 +217,6 @@ Interpreter.prototype.generate = function(ast) {
           case Symbol.Seed: that.seed = statement.value; break;
         }
         break;
-      case Symbol.Define:
-        console.warn('[eisenscript.js] \'define\' preprocessor not implement yet');
-        break;
     }
   });
 
