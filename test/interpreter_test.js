@@ -166,13 +166,17 @@ describe('Interpreter', function() {
     tests.forEach(shouldBeGoodInterpreter);
   });
 
-  // NOTE: not implement yet
-  describe.skip('preprocessor commands', function() {
-    // describe('define', function() {
-    //   it('#define varname 1.2', function() {
-    //     const source = '#define varname 1.2';
-    //   });
-    // });
+  describe('preprocessor commands', function() {
+    describe('define', function() {
+      it('#define varname 10', function() {
+        const source = '#define varname 10\n{ x varname } box';
+        const ast = parser.parse(source);
+        const interpreter = new Interpreter();
+        const object = interpreter.generate(ast);
+        const expected = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 10, 0, 0, 1];
+        assert.deepEqual(expected, Array.from(object.objects[0].matrix.elements))
+      });
+    });
   });
 
   // NOTE: not implement yet
