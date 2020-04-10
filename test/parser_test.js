@@ -659,11 +659,17 @@ describe('Parser', function() {
         });
 
         it('{ set colorpool list:orange,white,grey', function() {
-          const source = 'set colorpool list:orange,white,grey';
-          const ast = parser.parse(source);
+          let source = 'set colorpool list:orange,white,grey';
+          let ast = parser.parse(source);
           assert.ok(ast[0].type === 'set');
           assert.ok(ast[0].key === 'colorpool');
           assert.ok(ast[0].value === 'list:orange,white,grey');
+
+          source = 'set colorpool list:#fff,#000,#red';
+          ast = parser.parse(source);
+          assert.ok(ast[0].type === 'set');
+          assert.ok(ast[0].key === 'colorpool');
+          assert.ok(ast[0].value === 'list:#fff,#000,#red');
         });
       });
     });
