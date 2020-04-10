@@ -225,7 +225,7 @@ Interpreter.prototype.generate = function(ast) {
             // colorpool
             const m = statement.value.match(/^list:(.*)/);
             if (m) {
-              that.colorpool = m[1].split(',');
+              that.colorpool = m[1].split(',').map(color => color.trim());
             }
             break;
         }
