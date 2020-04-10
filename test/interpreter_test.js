@@ -70,9 +70,14 @@ describe('Interpreter', function() {
         'actions/background.colorname.es.txt',
         'actions/background.hex3.es.txt',
         'actions/background.hex6.es.txt',
-        'actions/background.random.es.txt',
       ];
       tests.forEach(shouldBeGoodInterpreter);
+
+      // disable to use random as background color
+      const source = 'set background random';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      assert.throws(() => interpreter.generate(ast));
     });
 
     describe('set seed [integer] / initial', function() {

@@ -1,6 +1,6 @@
 {
   "name": "eisenscript",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "scripts": {
     "test": "find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
     "jison": "$(npm bin)/jison src/parser.jison -o src/parser.js",

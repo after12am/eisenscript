@@ -382,9 +382,12 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 
 // create background object code and stack it as intermediate code for renderer
 Interpreter.prototype.generateBackground = function(statement) {
+  if (statement.value === 'random') {
+    throw new Error('\'background\' expected a valid color identifier: Found: random');
+  }
   this.objects.push({
     type: Symbol.Background,
-    color: statement.value === 'random' ? this.randomColor() : statement.value
+    color: statement.value
   });
 }
 
