@@ -164,7 +164,7 @@ Interpreter.prototype.setAlpha = function(v) {
   return this;
 }
 
-Interpreter.prototype.resolveDefinition = function(symbol) {
+Interpreter.prototype.resolveVarname = function(symbol) {
   for (var i = 0; i < this.define.length; i++) {
     var statement = this.define[i];
     switch (statement.type) {
@@ -328,7 +328,7 @@ Interpreter.prototype.parseTransformStatement = function(transform) {
 
 // parse transformation property
 Interpreter.prototype.parseTransform = function(property) {
-  var r = (value) => (typeof(value) === 'string') ? +this.resolveDefinition(value) : +value;
+  var r = (value) => (typeof(value) === 'string') ? +this.resolveVarname(value) : +value;
   var v = property.value;
   switch (property.key) {
     case Symbol.XShift: this.translate(r(v), 0, 0); break;
