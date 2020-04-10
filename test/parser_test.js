@@ -296,7 +296,7 @@ describe('Parser', function() {
         it('{ x 1.2 } box', function() {
           const source = '{ x 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'xshift');
@@ -309,7 +309,7 @@ describe('Parser', function() {
         it('{ y 1.2 } box', function() {
           const source = '{ y 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'yshift');
@@ -322,7 +322,7 @@ describe('Parser', function() {
         it('{ z 1.2 } box', function() {
           const source = '{ z 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'zshift');
@@ -335,7 +335,7 @@ describe('Parser', function() {
         it('{ rx 1.2 } box', function() {
           const source = '{ rx 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'rotatex');
@@ -348,7 +348,7 @@ describe('Parser', function() {
         it('{ ry 1.2 } box', function() {
           const source = '{ ry 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'rotatey');
@@ -361,7 +361,7 @@ describe('Parser', function() {
         it('{ rz 1.2 } box', function() {
           const source = '{ rz 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'rotatez');
@@ -374,7 +374,7 @@ describe('Parser', function() {
         it('{ s 1.2 } box', function() {
           const source = '{ s 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'size');
@@ -389,7 +389,7 @@ describe('Parser', function() {
         it('{ s 2.1 2.2 2.3 } box', function() {
           const source = '{ s 2.1 2.2 2.3 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'size');
@@ -404,7 +404,7 @@ describe('Parser', function() {
         it('{ m 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 } box', function() {
           const source = '{ m 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'matrix');
@@ -427,7 +427,7 @@ describe('Parser', function() {
         it('{ h 1.2 } box', function() {
           const source = '{ h 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'hue');
@@ -438,7 +438,7 @@ describe('Parser', function() {
         it('{ hue 1.2 } box', function() {
           const source = '{ hue 1.2 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'hue');
@@ -451,7 +451,7 @@ describe('Parser', function() {
         it('{ sat 0.9 } box', function() {
           const source = '{ sat 0.9 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'saturation');
@@ -462,7 +462,7 @@ describe('Parser', function() {
         it('{ saturation 0.9 } box', function() {
           const source = '{ saturation 0.9 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'saturation');
@@ -475,7 +475,7 @@ describe('Parser', function() {
         it('{ b 0.9 } box', function() {
           const source = '{ b 0.9 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'brightness');
@@ -486,7 +486,7 @@ describe('Parser', function() {
         it('{ brightness 0.9 } box', function() {
           const source = '{ brightness 0.9 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'brightness');
@@ -499,7 +499,7 @@ describe('Parser', function() {
         it('{ a 0.5 } box', function() {
           const source = '{ a 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'alpha');
@@ -510,7 +510,7 @@ describe('Parser', function() {
         it('{ alpha 0.5 } box', function() {
           const source = '{ alpha 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'alpha');
@@ -523,7 +523,7 @@ describe('Parser', function() {
         it('{ color #fff } box', function() {
           const source = '{ color #fff } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'color');
@@ -534,7 +534,7 @@ describe('Parser', function() {
         it('{ color #ffffff } box', function() {
           const source = '{ color #ffffff } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'color');
@@ -545,7 +545,7 @@ describe('Parser', function() {
         it('{ color red } box', function() {
           const source = '{ color red } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'color');
@@ -556,7 +556,7 @@ describe('Parser', function() {
         it('{ color random } box', function() {
           const source = '{ color random } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'color');
@@ -569,7 +569,7 @@ describe('Parser', function() {
         it('{ blend #fff 0.5 } box', function() {
           const source = '{ blend #fff 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'blend');
@@ -581,7 +581,7 @@ describe('Parser', function() {
         it('{ blend #ffffff 0.5 } box', function() {
           const source = '{ blend #ffffff 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'blend');
@@ -593,7 +593,7 @@ describe('Parser', function() {
         it('{ blend red 0.5 } box', function() {
           const source = '{ blend red 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'blend');
@@ -605,7 +605,7 @@ describe('Parser', function() {
         it('{ blend random 0.5 } box', function() {
           const source = '{ blend random 0.5 } box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs[0].left === 1);
           assert.ok(ast[0].exprs[0].right.properties[0].key === 'blend');
@@ -673,7 +673,7 @@ describe('Parser', function() {
         it('box', function() {
           const source = 'box';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'box');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -684,7 +684,7 @@ describe('Parser', function() {
         it('grid', function() {
           const source = 'grid';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'grid');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -695,7 +695,7 @@ describe('Parser', function() {
         it('sphere', function() {
           const source = 'sphere';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'sphere');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -706,7 +706,7 @@ describe('Parser', function() {
         it('line', function() {
           const source = 'line';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'line');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -717,7 +717,7 @@ describe('Parser', function() {
         it('point', function() {
           const source = 'point';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'point');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -728,7 +728,7 @@ describe('Parser', function() {
         it('triangle', function() {
           const source = 'triangle';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'triangle');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -739,7 +739,7 @@ describe('Parser', function() {
         it('mesh', function() {
           const source = 'mesh';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'mesh');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -750,7 +750,7 @@ describe('Parser', function() {
         it('cylinder', function() {
           const source = 'cylinder';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'cylinder');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);
@@ -761,7 +761,7 @@ describe('Parser', function() {
         it('tube', function() {
           const source = 'tube';
           const ast = parser.parse(source);
-          assert.ok(ast[0].type === 'statement');
+          assert.ok(ast[0].type === 'primitive');
           assert.ok(ast[0].id === 'tube');
           assert.ok(ast[0].exprs.length === 0);
           assert.ok(ast[0].computed === true);

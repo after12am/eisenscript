@@ -59,6 +59,16 @@
 "."[0-9]+                 return 'NUMBER';
 "list:"[\w,]+             return 'COLORLIST';
 "image:"[\w\.\w]+         return 'IMAGE';
+"box"                     return 'BOX';
+"grid"                    return 'GRID';
+"sphere"                  return 'SPHERE';
+"line"                    return 'LINE';
+"point"                   return 'POINT';
+"triangle"                return 'TRIANGLE';
+"mesh"                    return 'MESH';
+"cylinder"                return 'CYLINDER';
+"tube"                    return 'TUBE';
+"squash"                  return 'SQUASH';
 [a-zA-Z_]+[a-zA-Z0-9_]*   return 'STRING';
 "#define"                 return 'DEFINE';
 "#"[a-fA-F0-9]{6}         return 'COLOR6';
@@ -178,7 +188,8 @@ statements
   ;
 
 statement
-  : expressions id { $$ = { type: 'statement', id: $2, exprs: $1 }; }
+  : expressions primitive { $$ = { type: 'primitive', id: $2, exprs: $1 }; }
+  | expressions id        { $$ = { type: 'statement', id: $2, exprs: $1 }; }
   ;
 
 expressions
@@ -273,3 +284,17 @@ id
 rulename
   : STRING {$$ = $1; }
   ;
+
+primitive
+  : BOX      { $$ = yytext; }
+  | SPHERE   { $$ = yytext; }
+  | GRID     { $$ = yytext; }
+  | LINE     { $$ = yytext; }
+  | POINT    { $$ = yytext; }
+  | TRIANGLE { $$ = yytext; }
+  | MESH     { $$ = yytext; }
+  | CYLINDER { $$ = yytext; }
+  | TUBE     { $$ = yytext; }
+  | SQUASH   { $$ = yytext; }
+  ;
+

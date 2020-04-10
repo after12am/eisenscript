@@ -4,7 +4,6 @@ const Symbol = require('./symbol');
 const Color = require('color-js');
 const Matrix4 = require('./matrix');
 const Type = require('./type');
-const Primitive = require('./primitive');
 const _ = require('./underscore');
 const MersenneTwister = require('./mt');
 const { degToRad, clamp } = require('./math');
@@ -195,6 +194,7 @@ Interpreter.prototype.generate = function(ast) {
       case Symbol.Define: that.define.push(statement); break;
       case Symbol.Set: that.define.push(statement); break;
       case Symbol.Statement: if (statement.computed) that.computed.push(statement); break;
+      case Symbol.Primitive: if (statement.computed) that.computed.push(statement); break;
     }
   });
 
@@ -290,7 +290,7 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   }
 
   // if not primitive, call rule and parse next transformation loops
-  if (_.values(Primitive).indexOf(statement.id) === -1) {
+  if (statement.type === 'statement') {
     this.rules[statement.id].depth = (this.rules[statement.id].depth || 0) + 1;
     var rule = this.sampling(statement.id);
     if (typeof rule === 'string') {
@@ -308,7 +308,12 @@ Interpreter.prototype.parseStatement = function(statement, index) {
   }
 
   // achieve the end of nested transformation loops
-  this.generatePrimitive(statement);
+  if (statement.type === 'primitive') {
+    this.generatePrimitive(statement);
+    return this
+  }
+
+  console.warn(`[eisenscript.js] Invalid statement found: ${JSON.stringify(statement)}`);
   return this;
 }
 
