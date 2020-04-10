@@ -20,7 +20,7 @@ var Interpreter = function() {
   this.objectnum = 0;
   this.minsize = .2;
   this.maxsize = 1.0;
-  this.seed = 'initial'; // represents '1' // TODO: defines as constant value
+  this.seed = 'initial'; // 'initial' represents random color
   this.stack = [];
   this.curr = {};
   this.curr.matrix = new Matrix4();
@@ -233,8 +233,12 @@ Interpreter.prototype.generate = function(ast) {
     }
   });
 
-  // integer or 'initial' which represents '1'
-  this.mt.setSeed(this.seed === 'initial' ? 1 : this.seed);
+  // if 'initial' is set, set random to seed
+  if (this.seed === 'initial') {
+    this.mt.setSeed(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+  } else {
+    this.mt.setSeed(this.seed);
+  }
 
   // pull the statement of system environment
   this.define.forEach(function(statement) {
