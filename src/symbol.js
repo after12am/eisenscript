@@ -2,6 +2,7 @@ var Symbol = {
   Define: 'define',
   Set: 'set',
   Statement: 'statement',
+  Primitive: 'primitive',
   Rule: 'rule',
   Modifier: 'modifier',
   Maxdepth: 'maxdepth',

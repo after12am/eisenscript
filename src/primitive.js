@@ -1,4 +1,3 @@
-// TODO: move to parser.jison
 var Primitive = {
   Box: 'box',
   Grid: 'grid',
