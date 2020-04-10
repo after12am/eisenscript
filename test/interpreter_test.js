@@ -1,6 +1,9 @@
 'use strict';
 
 const shouldBeGoodInterpreter = require('./behavior/should_be_good_interpreter');
+const { assert } = require('chai');
+const parser = require('../src/parser');
+const Interpreter = require('../src/interpreter');
 
 /**
  * TODO: more matrix tests
@@ -173,7 +176,7 @@ describe('Interpreter', function() {
   });
 
   // NOTE: not implement yet
-  describe.skip('colorpool', function() {
+  describe('colorpool', function() {
     // it('{ set colorpool randomhue', function() {
     //   const source = 'set colorpool randomhue';
     // });
@@ -190,8 +193,14 @@ describe('Interpreter', function() {
     //   const source = 'set colorpool image:filename.png';
     // });
     //
-    // it('{ set colorpool list:orange,white,grey', function() {
-    //   const source = 'set colorpool list:orange,white,grey';
-    // });
+    it('{ set colorpool list:orange,white,grey', function() {
+      const source = 'set colorpool list:orange,white,grey\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        assert.ok(['#808080', '#FFFFFF', '#FFA500'].includes(object.objects[i].color));
+      }
+    });
   });
 });

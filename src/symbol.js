@@ -21,6 +21,7 @@ var Symbol = {
   Size: 'size',
   Matrix: 'matrix',
   Color: 'color',
+  ColorPool: 'colorpool',
   Hue: 'hue',
   Saturation: 'saturation',
   Brightness: 'brightness',
