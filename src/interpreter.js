@@ -3,7 +3,6 @@
 const Symbol = require('./symbol');
 const Color = require('color-js');
 const Matrix4 = require('./matrix');
-const Type = require('./type');
 const _ = require('./underscore');
 const MersenneTwister = require('./mt');
 const { degToRad, clamp } = require('./math');
@@ -358,7 +357,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 
   // primitive object
   this.objects.push({
-    type: Type.Primitive,
+    type: Symbol.Primitive,
     name: statement.id,
     matrix: this.curr.matrix.clone(),
     color: this.curr.hsv.toCSS(),
@@ -370,7 +369,7 @@ Interpreter.prototype.generatePrimitive = function(statement) {
 // create background object code and stack it as intermediate code for renderer
 Interpreter.prototype.generateBackground = function(statement) {
   this.objects.push({
-    type: Type.Background,
+    type: Symbol.Background,
     color: statement.value === 'random' ? this.randomColor() : statement.value
   });
 }
