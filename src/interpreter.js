@@ -27,6 +27,7 @@ var Interpreter = function() {
   this.curr.hsv = _.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
   this.curr.blend = { color: null, strength: 0 };
   this.curr.alpha = 1;
+  this.colorpool = [];
   this.mt = new MersenneTwister();
 }
 
@@ -114,6 +115,12 @@ Interpreter.prototype.matrix = function(v) {
 }
 
 Interpreter.prototype.randomColor = function() {
+  // if colorpool is set, choose from colorset
+  if (this.colorpool.length > 0) {
+    const idx = Math.floor(this.mt.next() * this.colorpool.length);
+    return this.colorpool[idx];
+  }
+
   var rand = this.mt.next() * 0xffffff;
   var color = Math.floor(rand).toString(16);
   return `#${color}`;
@@ -214,6 +221,13 @@ Interpreter.prototype.generate = function(ast) {
             // that.maxsize = statement.value;
             break;
           case Symbol.Seed: that.seed = statement.value; break;
+          case Symbol.ColorPool:
+            // colorpool
+            const m = statement.value.match(/^list:(.*)/);
+            if (m) {
+              that.colorpool = m[1].split(',');
+            }
+            break;
         }
         break;
     }
