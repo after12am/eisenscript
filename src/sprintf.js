@@ -1,7 +1,7 @@
-function makeArray(array) {
-  var ret = [];
+const makeArray = (array) => {
+  const ret = [];
   if(array != null){
-    var i = array.length;
+    let i = array.length;
     if ( i == null || array.split || array.setInterval || array.call ) {
       ret[0] = array;
     } else {
@@ -11,14 +11,10 @@ function makeArray(array) {
   return ret;
 };
 
-function sprintf(){
-  var _arg = makeArray(arguments), template = _arg.shift(), i;
+export default function sprintf() {
+  let _arg = makeArray(arguments), template = _arg.shift(), i;
   for(i in _arg){
     template = template.replace('%s', _arg[i]);
   }
   return template;
 };
-
-if (module) {
-  module.exports = sprintf;
-}

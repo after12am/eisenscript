@@ -10,25 +10,23 @@
  * @author bhouston / http://exocortex.com
  */
 
-var Matrix4 = function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
+module.exports = class Matrix4 {
 
-  var te = this.elements = new Float32Array( 16 );
+  constructor( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
+    const te = this.elements = new Float32Array( 16 );
 
-  // TODO: if n11 is undefined, then just set to identity, otherwise copy all other values into matrix
-  //   we should not support semi specification of Matrix4, it is just weird.
+    // TODO: if n11 is undefined, then just set to identity, otherwise copy all other values into matrix
+    //   we should not support semi specification of Matrix4, it is just weird.
 
-  te[0] = ( n11 !== undefined ) ? n11 : 1; te[4] = n12 || 0; te[8] = n13 || 0; te[12] = n14 || 0;
-  te[1] = n21 || 0; te[5] = ( n22 !== undefined ) ? n22 : 1; te[9] = n23 || 0; te[13] = n24 || 0;
-  te[2] = n31 || 0; te[6] = n32 || 0; te[10] = ( n33 !== undefined ) ? n33 : 1; te[14] = n34 || 0;
-  te[3] = n41 || 0; te[7] = n42 || 0; te[11] = n43 || 0; te[15] = ( n44 !== undefined ) ? n44 : 1;
+    te[0] = ( n11 !== undefined ) ? n11 : 1; te[4] = n12 || 0; te[8] = n13 || 0; te[12] = n14 || 0;
+    te[1] = n21 || 0; te[5] = ( n22 !== undefined ) ? n22 : 1; te[9] = n23 || 0; te[13] = n24 || 0;
+    te[2] = n31 || 0; te[6] = n32 || 0; te[10] = ( n33 !== undefined ) ? n33 : 1; te[14] = n34 || 0;
+    te[3] = n41 || 0; te[7] = n42 || 0; te[11] = n43 || 0; te[15] = ( n44 !== undefined ) ? n44 : 1;
+  }
 
-};
+  set( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
 
-Matrix4.prototype = {
-
-  set: function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
-
-    var te = this.elements;
+    const te = this.elements;
 
     te[0] = n11; te[4] = n12; te[8] = n13; te[12] = n14;
     te[1] = n21; te[5] = n22; te[9] = n23; te[13] = n24;
@@ -37,9 +35,9 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  identity: function () {
+  identity() {
 
     this.set(
 
@@ -52,12 +50,12 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  translate: function ( v ) {
+  translate( v ) {
 
-    var te = this.elements;
-    var x = v.x, y = v.y, z = v.z;
+    const te = this.elements;
+    const x = v.x, y = v.y, z = v.z;
 
     te[12] = te[0] * x + te[4] * y + te[8] * z + te[12];
     te[13] = te[1] * x + te[5] * y + te[9] * z + te[13];
@@ -66,21 +64,21 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  rotateX: function ( angle ) {
+  rotateX( angle ) {
 
-    var te = this.elements;
-    var m12 = te[4];
-    var m22 = te[5];
-    var m32 = te[6];
-    var m42 = te[7];
-    var m13 = te[8];
-    var m23 = te[9];
-    var m33 = te[10];
-    var m43 = te[11];
-    var c = Math.cos( angle );
-    var s = Math.sin( angle );
+    const te = this.elements;
+    const m12 = te[4];
+    const m22 = te[5];
+    const m32 = te[6];
+    const m42 = te[7];
+    const m13 = te[8];
+    const m23 = te[9];
+    const m33 = te[10];
+    const m43 = te[11];
+    const c = Math.cos( angle );
+    const s = Math.sin( angle );
 
     te[4] = c * m12 + s * m13;
     te[5] = c * m22 + s * m23;
@@ -94,21 +92,21 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  rotateY: function ( angle ) {
+  rotateY( angle ) {
 
-    var te = this.elements;
-    var m11 = te[0];
-    var m21 = te[1];
-    var m31 = te[2];
-    var m41 = te[3];
-    var m13 = te[8];
-    var m23 = te[9];
-    var m33 = te[10];
-    var m43 = te[11];
-    var c = Math.cos( angle );
-    var s = Math.sin( angle );
+    const te = this.elements;
+    const m11 = te[0];
+    const m21 = te[1];
+    const m31 = te[2];
+    const m41 = te[3];
+    const m13 = te[8];
+    const m23 = te[9];
+    const m33 = te[10];
+    const m43 = te[11];
+    const c = Math.cos( angle );
+    const s = Math.sin( angle );
 
     te[0] = c * m11 - s * m13;
     te[1] = c * m21 - s * m23;
@@ -122,21 +120,21 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  rotateZ: function ( angle ) {
+  rotateZ( angle ) {
 
-    var te = this.elements;
-    var m11 = te[0];
-    var m21 = te[1];
-    var m31 = te[2];
-    var m41 = te[3];
-    var m12 = te[4];
-    var m22 = te[5];
-    var m32 = te[6];
-    var m42 = te[7];
-    var c = Math.cos( angle );
-    var s = Math.sin( angle );
+    const te = this.elements;
+    const m11 = te[0];
+    const m21 = te[1];
+    const m31 = te[2];
+    const m41 = te[3];
+    const m12 = te[4];
+    const m22 = te[5];
+    const m32 = te[6];
+    const m42 = te[7];
+    const c = Math.cos( angle );
+    const s = Math.sin( angle );
 
     te[0] = c * m11 + s * m12;
     te[1] = c * m21 + s * m22;
@@ -150,12 +148,12 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  scale: function ( v ) {
+  scale( v ) {
 
-    var te = this.elements;
-    var x = v.x, y = v.y, z = v.z;
+    const te = this.elements;
+    const x = v.x, y = v.y, z = v.z;
 
     te[0] *= x; te[4] *= y; te[8] *= z;
     te[1] *= x; te[5] *= y; te[9] *= z;
@@ -164,11 +162,11 @@ Matrix4.prototype = {
 
     return this;
 
-  },
+  }
 
-  clone: function () {
+  clone() {
 
-    var te = this.elements;
+    const te = this.elements;
 
     return new Matrix4(
 
@@ -179,8 +177,4 @@ Matrix4.prototype = {
 
     );
   }
-};
-
-if (module) {
-  module.exports = Matrix4;
 }
