@@ -2,8 +2,8 @@
 
 const shouldBeGoodInterpreter = require('./behavior/should_be_good_interpreter');
 const { assert } = require('chai');
-const parser = require('../src/parser');
-const Interpreter = require('../src/interpreter');
+import parser from '../src/parser';
+import Interpreter from '../src/interpreter';
 
 /**
  * TODO: more matrix tests

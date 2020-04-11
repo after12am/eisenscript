@@ -2,8 +2,8 @@
 
 const { assert } = require('chai');
 const fs = require('fs');
-const parser = require('../../src/parser');
-const Interpreter = require('../../src/interpreter');
+import parser from '../../src/parser';
+import Interpreter from '../../src/interpreter';
 
 // read testset from testset directory
 function read(testset, encoding = 'utf8') {

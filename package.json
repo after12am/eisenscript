@@ -3,7 +3,7 @@
   "version": "1.3.5",
   "scripts": {
     "start": "$(npm bin)/gulp serve",
-    "test": "find ./test -name '*_test.js' | xargs $(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
+    "test": "$(npm bin)/nyc --reporter=html $(npm bin)/_mocha test --recursive --require @babel/register",
     "jison": "$(npm bin)/jison src/parser.jison -o src/parser.js",
     "build": "$(npm bin)/webpack --config webpack.config.js -p && npm i",
     "release": "$(npm bin)/release-it",
@@ -11,6 +11,11 @@
     "build-doc": "$(npm bin)/docpress build"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/register": "^7.9.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
@@ -23,9 +28,9 @@
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.0.1",
     "gulp-spawn-mocha": "^3.1.0",
-    "istanbul": "^0.4.5",
     "jison": "^0.4.17",
     "mocha": "^5.2.0",
+    "nyc": "^15.0.1",
     "release-it": "^9.0.1",
     "webpack": "^1.13.2",
     "webpack-stream": "^3.2.0"
