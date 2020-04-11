@@ -4,9 +4,7 @@ const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const webpack = require('webpack-stream');
 const browserSync = require('browser-sync');
-const del = require('del');
 const $ = gulpLoadPlugins();
-const _ = require('underscore');
 const reload = browserSync.reload;
 
 /**
@@ -33,7 +31,7 @@ gulp.task('test', () => {
  */
 gulp.task('webpack', () => {
   const config = require('./webpack.config');
-  const entry = _.values(config.entry);
+  const entry = Object.values(config.entry);
   return gulp.src(entry)
     .pipe(webpack(config))
     .pipe(gulp.dest('build/'));
@@ -65,8 +63,6 @@ gulp.task('serve', () => {
   ]).on('change', reload);
 });
 
-
-
 gulp.task('serve:dist', () => {
   browserSync({
     notify: false,
@@ -76,32 +72,3 @@ gulp.task('serve:dist', () => {
     }
   });
 });
-
-
-
-// gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.*']));
-//
-// gulp.task('serve:test', ['scripts'], () => {
-//   browserSync({
-//     notify: false,
-//     port: 9000,
-//     ui: false,
-//     server: {
-//       baseDir: 'test',
-//       routes: {
-//         '/scripts': '.tmp/scripts'
-//       }
-//     }
-//   });
-//
-//   gulp.watch('app/tests/scripts/**/*.js', ['scripts']);
-//   gulp.watch('test/spec/**/*.js').on('change', reload);
-// });
-//
-// gulp.task('build', ['styles', 'scripts'], () => {
-//   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-// });
-//
-// gulp.task('default', ['clean'], () => {
-//   gulp.start('build');
-// });
