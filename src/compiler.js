@@ -13,7 +13,7 @@ export default class Compiler {
    * </pre>
    */
   compile(source) {
-    var interpreter = new Interpreter();
+    const interpreter = new Interpreter();
     return interpreter.generate(this.parse(source));
   }
 

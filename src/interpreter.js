@@ -120,8 +120,8 @@ module.exports = class Interpreter {
       return this.colorpool[idx];
     }
 
-    var rand = this.mt.next() * 0xffffff;
-    var color = Math.floor(rand).toString(16);
+    const rand = this.mt.next() * 0xffffff;
+    const color = Math.floor(rand).toString(16);
     return `#${color}`;
   }
 
@@ -138,7 +138,7 @@ module.exports = class Interpreter {
 
   setSaturation(v) {
     this.curr.hsv.computed = true;
-    var sat = this.curr.hsv.saturation;
+    const sat = this.curr.hsv.saturation;
     if (0 > sat * v || sat * v > 1) console.warn('[eisenscript.js] Saturation is measured from 0 to 1 and is clamped to this interval (i.e. values larger then 1 are set to 1.');
     this.curr.hsv.saturation = clamp(sat * v, 0, 1);
     return this;
@@ -146,7 +146,7 @@ module.exports = class Interpreter {
 
   setBrightness(v) {
     this.curr.hsv.computed = true;
-    var brightness = this.curr.hsv.value;
+    const brightness = this.curr.hsv.value;
     if (0 > brightness * v || brightness * v > 1) console.warn('[eisenscript.js] Brightness is measured from 0 to 1 and is clamped to this interval.');
     this.curr.hsv.value = clamp(brightness * v, 0, 1);
     return this;
@@ -164,15 +164,15 @@ module.exports = class Interpreter {
   }
 
   setAlpha(v) {
-    var alpha = this.curr.alpha;
+    const alpha = this.curr.alpha;
     if (0 > alpha * v || alpha * v > 1) console.warn('[eisenscript.js] Alpha is measured from 0 to 1 and is clamped to this interval.');
     this.curr.alpha = clamp(this.curr.alpha * v, 0, 1);
     return this;
   }
 
   resolveVarname(symbol) {
-    for (var i = 0; i < this.define.length; i++) {
-      var statement = this.define[i];
+    for (let i = 0; i < this.define.length; i++) {
+      const statement = this.define[i];
       switch (statement.type) {
         case Symbol.Define:
           if (statement.varname === symbol) {
@@ -186,7 +186,7 @@ module.exports = class Interpreter {
   // execute eisenscript
   generate(ast) {
     // rewriting ast
-    var that = this;
+    const that = this;
     ast.forEach(function(statement) {
       switch (statement.type) {
         case Symbol.Rule: that.rewriteRule(statement); break;
@@ -276,7 +276,7 @@ module.exports = class Interpreter {
 
   // execute statements
   parseStatements(statements) {
-    var i = 0, len = statements.length;
+    let i = 0, len = statements.length;
     while (i < len) {
       if (this.terminated()) break;
       this.parseStatement(statements[i], 0);
@@ -288,10 +288,10 @@ module.exports = class Interpreter {
   // execute a statement
   parseStatement(statement, index) {
     // parse transformation expression
-    var expr = statement.exprs[index];
+    const expr = statement.exprs[index];
     if (expr) {
       this.pushState();
-      for (var i = 0; i < expr.left; i++) {
+      for (let i = 0; i < expr.left; i++) {
         if (this.terminated()) break;
         this.parseTransformStatement(expr.right);
         // if statement.exprs[index + 1] is undefined, it would break the transformation loops.
@@ -304,15 +304,14 @@ module.exports = class Interpreter {
     // if not primitive, call rule and parse next transformation loops
     if (statement.type === 'statement') {
       this.rules[statement.id].depth = (this.rules[statement.id].depth || 0) + 1;
-      var rule = this.sampling(statement.id);
+      let rule = this.sampling(statement.id);
       if (typeof rule === 'string') {
-        var name = rule;
+        const name = rule;
         this.rules[name].depth = (this.rules[name].depth || 0) + 1;
-        var rule = this.sampling(name);
+        rule = this.sampling(name);
         this.parseStatements(rule.body);
         this.rules[name].depth--;
-      }
-      else if (rule) {
+      } else if (rule) {
         this.parseStatements(rule.body);
       }
       this.rules[statement.id].depth--;
@@ -331,7 +330,7 @@ module.exports = class Interpreter {
 
   // break down transformation set
   parseTransformStatement(transform) {
-    var i = 0, len = transform.properties.length;
+    let i = 0, len = transform.properties.length;
     while (i < len) {
       this.parseTransform(transform.properties[i]);
       i++;
@@ -341,8 +340,8 @@ module.exports = class Interpreter {
 
   // parse transformation property
   parseTransform(property) {
-    var r = (value) => (typeof(value) === 'string') ? +this.resolveVarname(value) : +value;
-    var v = property.value;
+    const r = (value) => (typeof(value) === 'string') ? +this.resolveVarname(value) : +value;
+    const v = property.value;
     switch (property.key) {
       case Symbol.XShift: this.translate(r(v), 0, 0); break;
       case Symbol.YShift: this.translate(0, r(v), 0); break;
@@ -400,17 +399,17 @@ module.exports = class Interpreter {
     }
 
     // sum weights of each rules
-    var sum = 0;
+    let sum = 0;
     this.rules[name].forEach(function(rule) {
       rule.weight = rule.weight || 1;
       sum += rule.weight;
     });
 
     // choosing...
-    var rand = this.mt.next() * sum;
-    var chosen;
-    for (var i = 0; i < this.rules[name].length; i++) {
-      var rule = this.rules[name][i];
+    let rand = this.mt.next() * sum;
+    let chosen;
+    for (let i = 0; i < this.rules[name].length; i++) {
+      const rule = this.rules[name][i];
       if (rand - rule.weight > 0) {
         rand -= rule.weight
         continue;

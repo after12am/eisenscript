@@ -14,17 +14,16 @@ export default class OBJExporter {
   // If function name change to 'export', google clousure complains about that.
   exports(meshes) {
     this.buff = sprintf(this.header);
-    for (var i = 0; i < meshes.length; i++) this.exportMesh(meshes[i], i);
+    for (let i = 0; i < meshes.length; i++) this.exportMesh(meshes[i], i);
     return this.buff;
   }
 
   exportMesh(mesh, i) {
-    var that = this;
-    var m = mesh.matrix.elements;
+    const that = this;
+    const m = mesh.matrix.elements;
 
     // group
-    var group = mesh.material.name + i;
-    if (mesh.name) group = mesh.name;
+    const group = mesh.name ? mesh.name : mesh.material.name + i;
     this.buff += sprintf("g %s\n", group);
 
     // material
@@ -57,8 +56,8 @@ export default class OBJExporter {
     // uvs
     mesh.geometry.faceVertexUvs.forEach(function(uvs) {
       // test: vt 0.1 0.2
-      for (var i = 0; i < uvs.length; i++) {
-        for (var j = 0; j < uvs[i].length; j++) {
+      for (let i = 0; i < uvs.length; i++) {
+        for (let j = 0; j < uvs[i].length; j++) {
           that.buff += sprintf(
             "vt %s %s\n",
             uvs[i][j].x,
