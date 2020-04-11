@@ -1,4 +1,4 @@
-function makeArray(array) {
+const makeArray = (array) => {
   var ret = [];
   if(array != null){
     var i = array.length;
@@ -11,14 +11,10 @@ function makeArray(array) {
   return ret;
 };
 
-function sprintf(){
+export default function sprintf() {
   var _arg = makeArray(arguments), template = _arg.shift(), i;
   for(i in _arg){
     template = template.replace('%s', _arg[i]);
   }
   return template;
 };
-
-if (module) {
-  module.exports = sprintf;
-}

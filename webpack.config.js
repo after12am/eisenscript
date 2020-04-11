@@ -5,7 +5,7 @@ const { version } = require('./package.json');
 
 const copyright = `eisenscript v${version}
 https://github.com/after12am/eisenscript
-(c)2013-2016 Satoshi Okami
+(c)2013-2020 Satoshi Okami
 Released under the MIT license`;
 
 module.exports = {
@@ -24,7 +24,6 @@ module.exports = {
   module: {
     loaders: [
       {
-        // test: /\.jsx?$/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015']
