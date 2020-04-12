@@ -15,7 +15,6 @@ function createGeometry(type) {
     case 'grid': return new THREE.BoxBufferGeometry(1, 1, 1);
     case 'sphere': return new THREE.SphereBufferGeometry(.5, 32, 32);
     case 'mesh': return;
-    case 'cylinder': return;
     case 'tube': return;
     case 'squash': return;
     case 'line':
@@ -23,6 +22,7 @@ function createGeometry(type) {
       points.push( new THREE.Vector3(-.5, 0, 0 ));
       points.push( new THREE.Vector3( .5, 0, 0 ));
       return new THREE.BufferGeometry().setFromPoints(points);
+    case 'cylinder': return new THREE.CylinderBufferGeometry(.5, .5, 1, 32);
   }
 }
 
