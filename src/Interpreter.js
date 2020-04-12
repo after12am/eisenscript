@@ -352,7 +352,7 @@ module.exports = class Interpreter {
       case Symbol.Size: this.scale(r(v.x), r(v.y), r(v.z)); break;
       case Symbol.Matrix: this.matrix(property.value.map(v => r(v))); break;
       case Symbol.Color: this.setColor(v); break;
-      case Symbol.Hue: this.setHue(v); break;
+      case Symbol.Hue: this.setHue(r(v)); break;
       case Symbol.Saturation: this.setSaturation(v); break;
       case Symbol.Brightness: this.setBrightness(v); break;
       case Symbol.Blend: this.setBlend(property.color, property.strength); break;

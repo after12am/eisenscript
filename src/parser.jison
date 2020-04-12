@@ -244,6 +244,7 @@ geo
 
 color
   : HUE num          { $$ = { type: 'property', key: 'hue',   value: $2 }; }
+  | HUE STRING       { $$ = { type: 'property', key: 'hue',   value: $2 }; }
   | ALPHA num        { $$ = { type: 'property', key: 'alpha', value: $2 }; }
   | COLOR COLOR3     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
   | COLOR COLOR6     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
