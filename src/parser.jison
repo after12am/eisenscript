@@ -256,6 +256,7 @@ color
   | BLEND RANDOM num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
   | BLEND STRING num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
   | SATURATION num    { $$ = { type: 'property', key: 'saturation', value: $2 }; }
+  | SATURATION STRING { $$ = { type: 'property', key: 'saturation', value: $2 }; }
   | BRIGHTNESS num    { $$ = { type: 'property', key: 'brightness', value: $2 }; }
   | BRIGHTNESS STRING { $$ = { type: 'property', key: 'brightness', value: $2 }; }
   ;
