@@ -101,8 +101,18 @@ function init(objectCode) {
   group = new THREE.Group();
   scene.add(group);
 
-  var geometries = [];
+  let transparent = false;
+  for (let i = 0; i < objectCode.objects.length; i++) {
+    let object = objectCode.objects[i]
+    if (object.type === 'primitive') {
+      if (object.opacity !== 1) {
+        transparent = true;
+        break;
+      }
+    }
+  }
 
+  var geometries = [];
   objectCode.objects.forEach(function(object) {
     switch (object.type) {
       case 'background':
@@ -114,39 +124,53 @@ function init(objectCode) {
         matrix.fromArray(object.matrix.elements)
         geometry.applyMatrix(matrix);
 
-        var meshMaterial = new THREE.MeshPhongMaterial({
-          color: parseInt(object.color.replace(/^#/, '0x'), 16),
-          specular: 0x999999,
-          shininess: 30,
-          flatShading: true,
-          shininess: 0,
-          opacity: object.opacity,
-          transparent: true
-        });
+        if (transparent) {
+          var meshMaterial = new THREE.MeshPhongMaterial({
+            color: parseInt(object.color.replace(/^#/, '0x'), 16),
+            specular: 0x999999,
+            shininess: 30,
+            flatShading: true,
+            shininess: 0,
+            opacity: object.opacity,
+            transparent: true
+          });
 
-        if (object.name === 'grid') {
-          meshMaterial.wireframe = true
-        }
+          if (object.name === 'grid') {
+            meshMaterial.wireframe = true
+          }
 
-        if (object.name === 'line') {
-          group.add(new THREE.Line( geometry, meshMaterial ));
+          if (object.name === 'line') {
+            group.add(new THREE.Line( geometry, meshMaterial ));
+          } else {
+            group.add(new THREE.Mesh(geometry, meshMaterial));
+          }
+
         } else {
-          group.add(new THREE.Mesh(geometry, meshMaterial));
+          // if not transparency, use this for performance
+          // change hex color format to 0xFF7733 from #FF7733
+          const color = new THREE.Color();
+          applyVertexColors(geometry, color.setHex(object.color.replace(/^#/, '0x')));
+          geometries.push(geometry);
         }
 
-
-
-        // if not using opacity at all, use this
-        // // change hex color format to 0xFF7733 from #FF7733
-        // const color = new THREE.Color();
-        // applyVertexColors(geometry, color.setHex(object.color.replace(/^#/, '0x')));
-        // geometries.push(geometry);
         break;
     }
   });
 
-  // var defaultMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, flatShading: true, vertexColors: true, emissive: 0x072534, transparent: true, opacity: 1});
-  // group.add(new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries(geometries), defaultMaterial));
+  // if not transparency, use this for performance
+  if (!transparent) {
+    var defaultMaterial = new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      flatShading: true,
+      vertexColors: true,
+      emissive: 0x072534,
+      transparent: true,
+      opacity: 1,
+      wireframe: true
+    });
+    group.add(new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries(geometries), defaultMaterial));
+  }
+
 }
 
 
