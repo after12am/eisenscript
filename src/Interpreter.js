@@ -4,6 +4,7 @@ const Matrix4 = require('./Matrix4');
 const utils = require('./utils');
 const MersenneTwister = require('./mt');
 const { degToRad, clamp } = require('./math');
+const csscolor = require('./csscolor');
 
 // module generate object code from ast
 module.exports = class Interpreter {
@@ -180,7 +181,11 @@ module.exports = class Interpreter {
           }
       }
     }
-    return symbol;
+    // In case of csscolor like white, blue, darkgrey...
+    if (csscolor[symbol]) {
+      return symbol;
+    }
+    throw new Error(`Invalid symbol found: ${symbol}`);
   }
 
   // execute eisenscript
