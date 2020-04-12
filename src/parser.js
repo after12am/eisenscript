@@ -119,23 +119,38 @@ break;
 case 25:
  this.$ = { type: 'set', key: 'color', value: $$[$0].toLowerCase() }; 
 break;
-case 26: case 27:
+case 26:
  this.$ = { type: 'property', key: 'hue',   value: $$[$0] }; 
 break;
-case 28: case 29:
+case 27:
+ this.$ = { type: 'property', key: 'hue',   value: $$[$0], defined: true }; 
+break;
+case 28:
  this.$ = { type: 'property', key: 'alpha', value: $$[$0] }; 
 break;
-case 30: case 31: case 32: case 33:
+case 29:
+ this.$ = { type: 'property', key: 'alpha', value: $$[$0], defined: true }; 
+break;
+case 30: case 31: case 32:
  this.$ = { type: 'property', key: 'color', value: $$[$0].toLowerCase() }; 
+break;
+case 33:
+ this.$ = { type: 'property', key: 'color', value: $$[$0].toLowerCase(), defined: true }; 
 break;
 case 34: case 35: case 36: case 37:
  this.$ = { type: 'property', key: 'blend', color: $$[$0-1].toLowerCase(), strength: $$[$0] }; 
 break;
-case 38: case 39:
+case 38:
  this.$ = { type: 'property', key: 'saturation', value: $$[$0] }; 
 break;
-case 40: case 41:
+case 39:
+ this.$ = { type: 'property', key: 'saturation', value: $$[$0], defined: true }; 
+break;
+case 40:
  this.$ = { type: 'property', key: 'brightness', value: $$[$0] }; 
+break;
+case 41:
+ this.$ = { type: 'property', key: 'brightness', value: $$[$0], defined: true }; 
 break;
 case 42: case 43: case 44: case 45: case 46:
  this.$ = { type: 'set', key: 'colorpool', value: $$[$0].toLowerCase() }; 
@@ -149,11 +164,17 @@ break;
 case 53:
  this.$ = { type: 'modifier', key: 'weight',   value: $$[$0] }; 
 break;
-case 54: case 56:
+case 54:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0] }; 
 break;
-case 55: case 57:
+case 55:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0-2], alternate: $$[$0]}; 
+break;
+case 56:
+ this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0], defined: true }; 
+break;
+case 57:
+ this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0-2], alternate: $$[$0], defined: true}; 
 break;
 case 60:
  this.$ = { type: 'primitive', id: $$[$0], exprs: $$[$0-1] }; 
@@ -173,32 +194,59 @@ break;
 case 67:
  type: 'property', this.$ = $$[$0-1]; this.$.push($$[$0]); 
 break;
-case 71: case 80:
+case 71:
  this.$ = { type: 'property', key: 'xshift',  value: $$[$0] }; 
 break;
-case 72: case 81:
+case 72:
  this.$ = { type: 'property', key: 'yshift',  value: $$[$0] }; 
 break;
-case 73: case 82:
+case 73:
  this.$ = { type: 'property', key: 'zshift',  value: $$[$0] }; 
 break;
-case 74: case 83:
+case 74:
  this.$ = { type: 'property', key: 'rotatex', value: $$[$0] }; 
 break;
-case 75: case 84:
+case 75:
  this.$ = { type: 'property', key: 'rotatey', value: $$[$0] }; 
 break;
-case 76: case 85:
+case 76:
  this.$ = { type: 'property', key: 'rotatez', value: $$[$0] }; 
 break;
-case 77: case 86:
+case 77:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0], y: $$[$0], z: $$[$0] } }; 
 break;
-case 78: case 87:
+case 78:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0-2], y: $$[$0-1], z: $$[$0] } }; 
 break;
-case 79: case 88:
+case 79:
  this.$ = { type: 'property', key: 'matrix', value: [$$[$0-8], $$[$0-7], $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1], $$[$0]] }; 
+break;
+case 80:
+ this.$ = { type: 'property', key: 'xshift',  value: $$[$0], defined: true }; 
+break;
+case 81:
+ this.$ = { type: 'property', key: 'yshift',  value: $$[$0], defined: true }; 
+break;
+case 82:
+ this.$ = { type: 'property', key: 'zshift',  value: $$[$0], defined: true }; 
+break;
+case 83:
+ this.$ = { type: 'property', key: 'rotatex', value: $$[$0], defined: true }; 
+break;
+case 84:
+ this.$ = { type: 'property', key: 'rotatey', value: $$[$0], defined: true }; 
+break;
+case 85:
+ this.$ = { type: 'property', key: 'rotatez', value: $$[$0], defined: true }; 
+break;
+case 86:
+ this.$ = { type: 'property', key: 'size',    value: { x: $$[$0], y: $$[$0], z: $$[$0] }, defined: true }; 
+break;
+case 87:
+ this.$ = { type: 'property', key: 'size',    value: { x: $$[$0-2], y: $$[$0-1], z: $$[$0] }, defined: true }; 
+break;
+case 88:
+ this.$ = { type: 'property', key: 'matrix', value: [$$[$0-8], $$[$0-7], $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1], $$[$0]], defined: true }; 
 break;
 case 90:
  this.$ =  $$[$0]; 

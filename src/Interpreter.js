@@ -268,8 +268,7 @@ module.exports = class Interpreter {
         switch (param.key) {
           case Symbol.Weight: rule.weight = param.value; break;
           case Symbol.Maxdepth:
-            const maxdepth = typeof(param.value) === 'string' ? that.resolveVarname(param.value) : param.value;
-            rule.maxdepth = maxdepth;
+            rule.maxdepth = param.defined ? +that.resolveVarname(param.value) : param.value;
             rule.alternate = param.alternate;
             break;
         }
@@ -346,24 +345,36 @@ module.exports = class Interpreter {
 
   // parse transformation property
   parseTransform(property) {
-    const r = (value) => (typeof(value) === 'string') ? +this.resolveVarname(value) : +value;
-    const hex = (value) => value.startsWith('#') ? value : this.resolveVarname(value);
+    const r = (p) => p.defined ? this.resolveVarname(p.value) : p.value;
+    const p = property;
     const v = property.value;
     switch (property.key) {
-      case Symbol.XShift: this.translate(r(v), 0, 0); break;
-      case Symbol.YShift: this.translate(0, r(v), 0); break;
-      case Symbol.ZShift: this.translate(0, 0, r(v)); break;
-      case Symbol.RotateX: this.rotateX(degToRad(r(v))); break;
-      case Symbol.RotateY: this.rotateY(degToRad(r(v))); break;
-      case Symbol.RotateZ: this.rotateZ(degToRad(r(v))); break;
-      case Symbol.Size: this.scale(r(v.x), r(v.y), r(v.z)); break;
-      case Symbol.Matrix: this.matrix(property.value.map(v => r(v))); break;
-      case Symbol.Color: this.setColor(hex(v)); break;
-      case Symbol.Hue: this.setHue(r(v)); break;
-      case Symbol.Saturation: this.setSaturation(r(v)); break;
-      case Symbol.Brightness: this.setBrightness(r(v)); break;
+      case Symbol.XShift: this.translate(r(p), 0, 0); break;
+      case Symbol.YShift: this.translate(0, r(p), 0); break;
+      case Symbol.ZShift: this.translate(0, 0, r(p)); break;
+      case Symbol.RotateX: this.rotateX(degToRad(r(p))); break;
+      case Symbol.RotateY: this.rotateY(degToRad(r(p))); break;
+      case Symbol.RotateZ: this.rotateZ(degToRad(r(p))); break;
+      case Symbol.Size:
+        if (p.defined) {
+          this.scale(+this.resolveVarname(v.x), +this.resolveVarname(v.y), +this.resolveVarname(v.z));
+        } else {
+          this.scale(v.x, v.y, v.z);
+        }
+        break;
+      case Symbol.Matrix:
+        if (p.defined) {
+          this.matrix(property.value.map(v => this.resolveVarname(v)));
+        } else {
+          this.matrix(property.value);
+        }
+        break;
+      case Symbol.Color: this.setColor(r(p)); break;
+      case Symbol.Hue: this.setHue(r(p)); break;
+      case Symbol.Saturation: this.setSaturation(r(p)); break;
+      case Symbol.Brightness: this.setBrightness(r(p)); break;
       case Symbol.Blend: this.setBlend(property.color, property.strength); break;
-      case Symbol.Alpha: this.setAlpha(r(v)); break;
+      case Symbol.Alpha: this.setAlpha(r(p)); break;
     }
     return this;
   }
