@@ -14,11 +14,15 @@ function createGeometry(type) {
     case 'box':
     case 'grid': return new THREE.BoxBufferGeometry(1, 1, 1);
     case 'sphere': return new THREE.SphereBufferGeometry(.5, 32, 32);
-    case 'line': return;
     case 'mesh': return;
     case 'cylinder': return;
     case 'tube': return;
     case 'squash': return;
+    case 'line':
+      var points = [];
+      points.push( new THREE.Vector3(-.5, 0, 0 ));
+      points.push( new THREE.Vector3( .5, 0, 0 ));
+      return new THREE.BufferGeometry().setFromPoints(points);
   }
 }
 
@@ -117,7 +121,13 @@ function init(objectCode) {
           meshMaterial.wireframe = true
         }
 
-        group.add(new THREE.Mesh(geometry, meshMaterial));
+        if (object.name === 'line') {
+          group.add(new THREE.Line( geometry, meshMaterial ));
+        } else {
+          group.add(new THREE.Mesh(geometry, meshMaterial));
+        }
+
+
 
         // if not using opacity at all, use this
         // // change hex color format to 0xFF7733 from #FF7733
