@@ -44,10 +44,10 @@ gulp.task('serve', () => {
   browserSync({
     notify: false,
     port: 9000,
-    startPath: '/',
+    startPath: '/examples',
     open: 'external',
     server: {
-      baseDir: ['app']
+      baseDir: ['.']
     }
   });
 
@@ -56,10 +56,8 @@ gulp.task('serve', () => {
   ], gulp.series('webpack'));
 
   gulp.watch([
-    'app/tests/**/*',
     'src/**/*',
-    'app/**/*',
-    'test/**/*',
+    'examples/**/*',
   ]).on('change', reload);
 });
 
