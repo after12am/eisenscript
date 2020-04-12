@@ -9,7 +9,7 @@ const Interpreter = require('../../src/Interpreter');
 function read(testset, encoding = 'utf8') {
   return Promise.resolve()
   .then(() => {
-    return fs.readFileSync(`test/testset/${testset}`, encoding);
+    return fs.readFileSync(testset, encoding);
   })
   .then((data) => {
     const m = data.trim().match(/^\/\+\n([\s\S.]*)\n\+\/\n([\s\S.]*)/);
