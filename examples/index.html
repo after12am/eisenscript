@@ -67,9 +67,9 @@ $(function() {
     console.log('compile time:', (+new Date() - s) + 'ms');
 
     var s = +new Date();
-    console.log('render time:', (+new Date() - s) + 'ms');
     init(objectCode);
     render();
+    console.log('render time:', (+new Date() - s) + 'ms');
     // console.log(JSON.stringify(objectCode));
 
   } catch (e) {
