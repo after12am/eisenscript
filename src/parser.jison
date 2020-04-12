@@ -57,7 +57,7 @@
 <<EOF>>                   return 'EOF';
 [0-9]+("."[0-9]*)?        return 'NUMBER';
 "."[0-9]+                 return 'NUMBER';
-"list:"[\w,#]+             return 'COLORLIST';
+"list:"[\w,#]+            return 'COLORLIST';
 "image:"[\w\.\w]+         return 'IMAGE';
 "box"                     return 'BOX';
 "grid"                    return 'GRID';
