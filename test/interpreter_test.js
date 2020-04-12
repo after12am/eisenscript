@@ -92,6 +92,13 @@ describe('Interpreter', function() {
   describe('colorspace', function() {
     const tests = readdir('test/testset/colorspace');
     tests.forEach(shouldBeGoodInterpreter);
+
+    /*
+    // fix bug: a.define.varname.es.txt
+
+      #define aa 100
+      { color #fff b aa } box
+    */
   });
 
   describe('geometrical transformations', function() {

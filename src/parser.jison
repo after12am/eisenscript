@@ -243,20 +243,21 @@ geo
   ;
 
 color
-  : HUE num          { $$ = { type: 'property', key: 'hue',   value: $2 }; }
-  | HUE STRING       { $$ = { type: 'property', key: 'hue',   value: $2 }; }
-  | ALPHA num        { $$ = { type: 'property', key: 'alpha', value: $2 }; }
-  | ALPHA STRING     { $$ = { type: 'property', key: 'alpha', value: $2 }; }
-  | COLOR COLOR3     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR COLOR6     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR RANDOM     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR STRING     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | BLEND COLOR3 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND COLOR6 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND RANDOM num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND STRING num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | SATURATION num   { $$ = { type: 'property', key: 'saturation', value: $2 }; }
-  | BRIGHTNESS num   { $$ = { type: 'property', key: 'brightness', value: $2 }; }
+  : HUE num           { $$ = { type: 'property', key: 'hue',   value: $2 }; }
+  | HUE STRING        { $$ = { type: 'property', key: 'hue',   value: $2 }; }
+  | ALPHA num         { $$ = { type: 'property', key: 'alpha', value: $2 }; }
+  | ALPHA STRING      { $$ = { type: 'property', key: 'alpha', value: $2 }; }
+  | COLOR COLOR3      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR COLOR6      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR RANDOM      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR STRING      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | BLEND COLOR3 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND COLOR6 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND RANDOM num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND STRING num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | SATURATION num    { $$ = { type: 'property', key: 'saturation', value: $2 }; }
+  | BRIGHTNESS num    { $$ = { type: 'property', key: 'brightness', value: $2 }; }
+  | BRIGHTNESS STRING { $$ = { type: 'property', key: 'brightness', value: $2 }; }
   ;
 
 
