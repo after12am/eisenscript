@@ -6,7 +6,7 @@
     "test": "$(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
     "jison": "$(npm bin)/jison src/parser.jison -o src/parser.js",
     "build": "$(npm bin)/webpack --config webpack.config.js -p && npm i",
-    "release": "$(npm bin)/release-it",
+    "release": "npm login && $(npm bin)/release-it",
     "serve-doc": "$(npm bin)/docpress serve",
     "build-doc": "$(npm bin)/docpress build"
   },
