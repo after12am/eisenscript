@@ -20,4 +20,4 @@ Original implementation is included in Structure Synth authored by Mikael Hvidtf
 
 ## License
 
-Copyright (c) 2013-2018 Satoshi Okami. See the LICENSE file for license rights and limitations (MIT).
+Copyright (c) 2013-2020 Satoshi Okami. See the LICENSE file for license rights and limitations (MIT).
