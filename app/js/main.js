@@ -11,17 +11,21 @@ function render() {
 
 function createGeometry(type) {
   switch (type) {
-    case 'box':
+    case 'box': return new THREE.BoxBufferGeometry(1, 1, 1);
+    // TODO https://threejs.org/docs/#api/en/geometries/WireframeGeometry
     case 'grid': return new THREE.BoxBufferGeometry(1, 1, 1);
     case 'sphere': return new THREE.SphereBufferGeometry(.5, 32, 32);
-    case 'mesh': return;
-    case 'tube': return;
     case 'line':
       var points = [];
       points.push( new THREE.Vector3(-.5, 0, 0 ));
       points.push( new THREE.Vector3( .5, 0, 0 ));
       return new THREE.BufferGeometry().setFromPoints(points);
+    case 'point':
+        console.warn("point is not implemented yet"); return;
+    case 'mesh': console.warn("mesh is not implemented yet"); return;
     case 'cylinder': return new THREE.CylinderBufferGeometry(.5, .5, 1, 32);
+    case 'tube': console.warn("tube is not implemented yet"); return;
+    case 'triangle': console.warn("triangle is not implemented yet"); return;
     case 'squash':
       var geometry = new THREE.SphereBufferGeometry(.5, 32, 32);
       geometry.scale(1, .5, 1);
