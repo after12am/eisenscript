@@ -16,13 +16,16 @@ function createGeometry(type) {
     case 'sphere': return new THREE.SphereBufferGeometry(.5, 32, 32);
     case 'mesh': return;
     case 'tube': return;
-    case 'squash': return;
     case 'line':
       var points = [];
       points.push( new THREE.Vector3(-.5, 0, 0 ));
       points.push( new THREE.Vector3( .5, 0, 0 ));
       return new THREE.BufferGeometry().setFromPoints(points);
     case 'cylinder': return new THREE.CylinderBufferGeometry(.5, .5, 1, 32);
+    case 'squash':
+      var geometry = new THREE.SphereBufferGeometry(.5, 32, 32);
+      geometry.scale(1, .5, 1);
+      return geometry;
   }
 }
 
