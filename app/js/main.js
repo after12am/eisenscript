@@ -11,8 +11,8 @@ function render() {
 
 function createGeometry(type) {
   switch (type) {
-    case 'box': return new THREE.BoxBufferGeometry(1, 1, 1);
-    case 'grid': return;
+    case 'box':
+    case 'grid': return new THREE.BoxBufferGeometry(1, 1, 1);
     case 'sphere': return new THREE.SphereBufferGeometry(.5, 32, 32);
     case 'line': return;
     case 'mesh': return;
@@ -112,6 +112,10 @@ function init(objectCode) {
           opacity: object.opacity,
           transparent: true
         });
+
+        if (object.name === 'grid') {
+          meshMaterial.wireframe = true
+        }
 
         group.add(new THREE.Mesh(geometry, meshMaterial));
 
