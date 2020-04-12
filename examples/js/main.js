@@ -125,6 +125,8 @@ function init(objectCode) {
         geometry.applyMatrix(matrix);
 
         if (transparent) {
+          console.warn(`If you don't use transparency (alpha parameter), performance will be improved extremely.`);
+
           var meshMaterial = new THREE.MeshPhongMaterial({
             color: parseInt(object.color.replace(/^#/, '0x'), 16),
             specular: 0x999999,
@@ -171,6 +173,7 @@ function init(objectCode) {
     group.add(new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries(geometries), defaultMaterial));
   }
 
+  console.log(`Build done. Created ${geometries.length} objects.`);
 }
 
 
