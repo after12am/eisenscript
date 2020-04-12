@@ -180,7 +180,7 @@ module.exports = class Interpreter {
           }
       }
     }
-    throw new Error(`Invalid symbol found: ${symbol}`);
+    return symbol;
   }
 
   // execute eisenscript
@@ -341,6 +341,7 @@ module.exports = class Interpreter {
   // parse transformation property
   parseTransform(property) {
     const r = (value) => (typeof(value) === 'string') ? +this.resolveVarname(value) : +value;
+    const hex = (value) => value.startsWith('#') ? value : this.resolveVarname(value);
     const v = property.value;
     switch (property.key) {
       case Symbol.XShift: this.translate(r(v), 0, 0); break;
@@ -351,7 +352,7 @@ module.exports = class Interpreter {
       case Symbol.RotateZ: this.rotateZ(degToRad(r(v))); break;
       case Symbol.Size: this.scale(r(v.x), r(v.y), r(v.z)); break;
       case Symbol.Matrix: this.matrix(property.value.map(v => r(v))); break;
-      case Symbol.Color: this.setColor(v); break;
+      case Symbol.Color: this.setColor(hex(v)); break;
       case Symbol.Hue: this.setHue(r(v)); break;
       case Symbol.Saturation: this.setSaturation(r(v)); break;
       case Symbol.Brightness: this.setBrightness(r(v)); break;

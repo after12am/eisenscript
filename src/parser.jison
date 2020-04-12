@@ -160,7 +160,9 @@ colorpool
   ;
 
 define
-  : DEFINE STRING num { $$ = { type: 'define', varname: $2, value: $3 }; }
+  : DEFINE STRING num    { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR3 { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR6 { $$ = { type: 'define', varname: $2, value: $3 }; }
   ;
 
 ////////////////////////////////////////////////////
