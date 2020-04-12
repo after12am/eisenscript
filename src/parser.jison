@@ -179,9 +179,11 @@ modifiers
   ;
 
 modifier
-  : WEIGHT num                 { $$ = { type: 'modifier', key: 'weight',   value: $2 }; }
-  | MAXDEPTH num               { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
-  | MAXDEPTH num '>' rulename  { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
+  : WEIGHT num                    { $$ = { type: 'modifier', key: 'weight',   value: $2 }; }
+  | MAXDEPTH num                  { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
+  | MAXDEPTH num '>' rulename     { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
+  | MAXDEPTH STRING               { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
+  | MAXDEPTH STRING '>' rulename  { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
   ;
 
 statements

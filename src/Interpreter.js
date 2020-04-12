@@ -185,13 +185,7 @@ module.exports = class Interpreter {
 
   // execute eisenscript
   generate(ast) {
-    // rewriting ast
     const that = this;
-    ast.forEach(function(statement) {
-      switch (statement.type) {
-        case Symbol.Rule: that.rewriteRule(statement); break;
-      }
-    });
 
     // pull the defines
     ast.forEach(function(statement) {
@@ -232,6 +226,13 @@ module.exports = class Interpreter {
       }
     });
 
+    // rewriting ast
+    ast.forEach(function(statement) {
+      switch (statement.type) {
+        case Symbol.Rule: that.rewriteRule(statement); break;
+      }
+    });
+
     // integer or 'initial' which represents '1'
     this.mt.setSeed(this.seed === 'initial' ? 1 : this.seed);
 
@@ -261,11 +262,16 @@ module.exports = class Interpreter {
 
   // rewrite subtree related to rule statement
   rewriteRule(rule) {
+    const that = this;
     rule.params.forEach(function(param) {
       if (param.type === Symbol.Modifier) {
         switch (param.key) {
           case Symbol.Weight: rule.weight = param.value; break;
-          case Symbol.Maxdepth: rule.maxdepth = param.value; rule.alternate = param.alternate; break;
+          case Symbol.Maxdepth:
+            const maxdepth = typeof(param.value) === 'string' ? that.resolveVarname(param.value) : param.value;
+            rule.maxdepth = maxdepth;
+            rule.alternate = param.alternate;
+            break;
         }
       }
     });
