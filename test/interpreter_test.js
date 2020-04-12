@@ -64,7 +64,6 @@ describe('Interpreter', function() {
 
     describe('set maxobjects [integer]', function() {
       const tests = readdir('test/testset/actions/maxobjects');
-      // TODO: 'test/testset/actions/maxobjects.achive_max_value.es.txt',
       tests.forEach(shouldBeGoodInterpreter);
     });
 

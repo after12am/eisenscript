@@ -33,7 +33,7 @@ module.exports = class Interpreter {
   // termination criteria
   terminated() {
     if (!this.maxobjects && !this.maxdepth) {
-      if (this.depth > 1000) {
+      if (this.depth >= 1000) {
         console.warn('[eisenscript.js] terminated because maximum number of generations reached (1000)');
         return true;
       }
