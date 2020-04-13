@@ -1,3 +1,7 @@
+# Flaming Fuzzball
+
+![flaming-fuzzball.png](flaming-fuzzball.png)
+
 ```
 /*
 https://www.flickr.com/photos/groovelock/3467720255/in/pool-structuresynth/

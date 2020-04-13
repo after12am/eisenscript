@@ -1,3 +1,7 @@
+# Torus
+
+![torus.png](torus.png)
+
 ```
 set maxobjects 16000
 
