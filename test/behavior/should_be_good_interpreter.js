@@ -33,7 +33,7 @@ function compile(source) {
 }
 
 module.exports = function(testset) {
-  it(testset.split('/')[1], function() {
+  it(testset, function() {
     return read(testset)
     .then(({ source, expected }) => {
       const output = compile(source);
