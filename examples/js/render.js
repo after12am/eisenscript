@@ -1,5 +1,21 @@
 var scene, camera, renderer, group;
 
+function toDataURL(format) {
+  if (renderer) {
+    const dom = renderer.domElement;
+    switch (format) {
+      case 'jpg':
+      case 'jpeg': return dom.toDataURL("image/jpeg");
+      case 'gif': return dom.toDataURL("image/gif");
+      default: return dom.toDataURL("image/png");
+    }
+  }
+}
+
+function save(format) {
+  window.open(toDataURL(format));
+}
+
 function render() {
   requestAnimationFrame( render );
 
