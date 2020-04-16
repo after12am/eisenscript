@@ -14,7 +14,7 @@ gulp.task('watch:test', () => {
   gulp.watch([
     'src/**/*',
     'test/**/*'
-  ], ['test']);
+  ], gulp.series('test'));
 });
 
 /**

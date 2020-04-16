@@ -1,6 +1,11 @@
+# Boxes
+
+![boxes.png](boxes.png)
+
 ```
 set maxdepth 600
 set background #333
+
 { h 30 sat 0.2 h -67 b 0.8 } spiral
 
 rule spiral w 100 {

@@ -26,7 +26,7 @@ canvas {
 <script src="js/eisenscript.js"></script>
 <script src="js/BufferGeometryUtils.js"></script>
 <script src="js/OrbitControls.js"></script>
-<script src="js/main.js"></script>
+<script src="js/render.js"></script>
 <script type="text/eisenscript" id="eisenscript">
 
 { hue 0 sat 0.8 s 1.5 } r2
@@ -67,9 +67,9 @@ $(function() {
     console.log('compile time:', (+new Date() - s) + 'ms');
 
     var s = +new Date();
-    console.log('render time:', (+new Date() - s) + 'ms');
     init(objectCode);
     render();
+    console.log('render time:', (+new Date() - s) + 'ms');
     // console.log(JSON.stringify(objectCode));
 
   } catch (e) {

@@ -20,6 +20,8 @@
   * [bloom](examples/bloom.md)
   * [boxes](examples/boxes.md)
   * [bubble](examples/bubble.md)
+  * [cubic](examples/cubic.md)
+  * [flaming fuzzball](examples/flaming-fuzzball.md)
   * [frames](examples/frames.md)
   * [milkcrown](examples/milkcrown.md)
   * [mondrian](examples/mondrian.md)

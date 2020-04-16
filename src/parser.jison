@@ -57,7 +57,7 @@
 <<EOF>>                   return 'EOF';
 [0-9]+("."[0-9]*)?        return 'NUMBER';
 "."[0-9]+                 return 'NUMBER';
-"list:"[\w,#]+             return 'COLORLIST';
+"list:"[\w,#]+            return 'COLORLIST';
 "image:"[\w\.\w]+         return 'IMAGE';
 "box"                     return 'BOX';
 "grid"                    return 'GRID';
@@ -160,7 +160,9 @@ colorpool
   ;
 
 define
-  : DEFINE STRING num { $$ = { type: 'define', varname: $2, value: $3 }; }
+  : DEFINE STRING num    { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR3 { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR6 { $$ = { type: 'define', varname: $2, value: $3 }; }
   ;
 
 ////////////////////////////////////////////////////
@@ -177,9 +179,11 @@ modifiers
   ;
 
 modifier
-  : WEIGHT num                 { $$ = { type: 'modifier', key: 'weight',   value: $2 }; }
-  | MAXDEPTH num               { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
-  | MAXDEPTH num '>' rulename  { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
+  : WEIGHT num                    { $$ = { type: 'modifier', key: 'weight',   value: $2 }; }
+  | MAXDEPTH num                  { $$ = { type: 'modifier', key: 'maxdepth', value: $2 }; }
+  | MAXDEPTH num '>' rulename     { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4}; }
+  | MAXDEPTH STRING               { $$ = { type: 'modifier', key: 'maxdepth', value: $2, defined: true }; }
+  | MAXDEPTH STRING '>' rulename  { $$ = { type: 'modifier', key: 'maxdepth', value: $2, alternate: $4, defined: true}; }
   ;
 
 statements
@@ -231,30 +235,35 @@ geo
   | SIZE num         { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 } }; }
   | SIZE num num num { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 } }; }
   | MATRIX num num num num num num num num num { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
-  | XSHIFT STRING    { $$ = { type: 'property', key: 'xshift',  value: $2 }; }
-  | YSHIFT STRING    { $$ = { type: 'property', key: 'yshift',  value: $2 }; }
-  | ZSHIFT STRING    { $$ = { type: 'property', key: 'zshift',  value: $2 }; }
-  | ROTATEX STRING   { $$ = { type: 'property', key: 'rotatex', value: $2 }; }
-  | ROTATEY STRING   { $$ = { type: 'property', key: 'rotatey', value: $2 }; }
-  | ROTATEZ STRING   { $$ = { type: 'property', key: 'rotatez', value: $2 }; }
-  | SIZE STRING      { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 } }; }
-  | SIZE STRING STRING STRING { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 } }; }
-  | MATRIX STRING STRING STRING STRING STRING STRING STRING STRING STRING { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10] }; }
+  | XSHIFT STRING    { $$ = { type: 'property', key: 'xshift',  value: $2, defined: true }; }
+  | YSHIFT STRING    { $$ = { type: 'property', key: 'yshift',  value: $2, defined: true }; }
+  | ZSHIFT STRING    { $$ = { type: 'property', key: 'zshift',  value: $2, defined: true }; }
+  | ROTATEX STRING   { $$ = { type: 'property', key: 'rotatex', value: $2, defined: true }; }
+  | ROTATEY STRING   { $$ = { type: 'property', key: 'rotatey', value: $2, defined: true }; }
+  | ROTATEZ STRING   { $$ = { type: 'property', key: 'rotatez', value: $2, defined: true }; }
+  | SIZE STRING      { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 }, defined: true }; }
+  | SIZE STRING STRING STRING { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 }, defined: true }; }
+  | MATRIX STRING STRING STRING STRING STRING STRING STRING STRING STRING { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10], defined: true }; }
   ;
 
 color
-  : HUE num          { $$ = { type: 'property', key: 'hue',   value: $2 }; }
-  | ALPHA num        { $$ = { type: 'property', key: 'alpha', value: $2 }; }
-  | COLOR COLOR3     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR COLOR6     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR RANDOM     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | COLOR STRING     { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
-  | BLEND COLOR3 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND COLOR6 num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND RANDOM num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | BLEND STRING num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
-  | SATURATION num   { $$ = { type: 'property', key: 'saturation', value: $2 }; }
-  | BRIGHTNESS num   { $$ = { type: 'property', key: 'brightness', value: $2 }; }
+  : HUE num           { $$ = { type: 'property', key: 'hue',   value: $2 }; }
+  | HUE STRING        { $$ = { type: 'property', key: 'hue',   value: $2, defined: true }; }
+  | ALPHA num         { $$ = { type: 'property', key: 'alpha', value: $2 }; }
+  | ALPHA STRING      { $$ = { type: 'property', key: 'alpha', value: $2, defined: true }; }
+  | COLOR COLOR3      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR COLOR6      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR RANDOM      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR STRING      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase(), defined: true }; }
+  | BLEND COLOR3 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND COLOR6 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND RANDOM num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND STRING num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+// TODO: make BLEND possible to use defined varname.
+  | SATURATION num    { $$ = { type: 'property', key: 'saturation', value: $2 }; }
+  | SATURATION STRING { $$ = { type: 'property', key: 'saturation', value: $2, defined: true }; }
+  | BRIGHTNESS num    { $$ = { type: 'property', key: 'brightness', value: $2 }; }
+  | BRIGHTNESS STRING { $$ = { type: 'property', key: 'brightness', value: $2, defined: true }; }
   ;
 
 
