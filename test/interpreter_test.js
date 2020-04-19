@@ -117,11 +117,11 @@ describe('Interpreter', function() {
     //   const source = 'set colorpool randomhue';
     // });
     //
-    // it('{ set colorpool randomhue', function() {
-    //   const source = 'set colorpool randomhue';
+    // it('{ set colorpool randomrgb', function() {
+    //   const source = 'set colorpool randomrgb';
     // });
     //
-    // it('{ set colorpool randomhue', function() {
+    // it('{ set colorpool greyscale', function() {
     //   const source = 'set colorpool greyscale';
     // });
     //
