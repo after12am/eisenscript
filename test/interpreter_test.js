@@ -60,6 +60,13 @@ describe('Interpreter', function() {
     describe('set seed [integer] / initial', function() {
       const tests = readdir('test/testset/actions/seed');
       tests.forEach(shouldBeGoodInterpreter);
+
+      // The color is different every time if initial is set.
+      const source = 'set seed initial\n10 * { x 1 color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      assert.isFalse(JSON.stringify(interpreter.generate(ast)) === JSON.stringify(interpreter.generate(ast)));
     });
 
     describe('set maxobjects [integer]', function() {
