@@ -5,7 +5,7 @@
     "start": "$(npm bin)/gulp serve",
     "test": "$(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
     "jison": "$(npm bin)/jison src/parser.jison -o src/parser.js",
-    "build": "$(npm bin)/webpack --config webpack.config.js -p && npm i",
+    "build": "$(npm bin)/webpack --config webpack.config.js -p",
     "release": "npm login && $(npm bin)/release-it",
     "serve-doc": "$(npm bin)/docpress serve",
     "build-doc": "$(npm bin)/docpress build"
