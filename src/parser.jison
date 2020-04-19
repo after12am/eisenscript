@@ -18,6 +18,7 @@
 "background"              return 'BACKGROUND';
 "colorpool"               return 'COLORPOOL';
 "rule"                    return 'RULE';
+"Rule"                    return 'RULE';
 ">"                       return '>';
 "{"                       return '{';
 "}"                       return '}';

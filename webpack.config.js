@@ -2,7 +2,7 @@
 
 const webpack = require('webpack');
 
-const copyright = `eisenscript v2.0.4
+const copyright = `eisenscript v2.0.5
 https://github.com/after12am/eisenscript
 (c)2013-2020 Satoshi Okami
 Released under the MIT license`;
