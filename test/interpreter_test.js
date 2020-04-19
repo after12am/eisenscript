@@ -69,7 +69,6 @@ describe('Interpreter', function() {
 
     describe('set maxdepth [integer]', function() {
       const tests = readdir('test/testset/actions/maxdepth');
-      // TODO: test default maxdepth
       tests.forEach(shouldBeGoodInterpreter);
     });
 

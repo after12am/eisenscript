@@ -130,6 +130,7 @@ function init(objectCode) {
     let object = objectCode.objects[i]
     if (object.type === 'primitive') {
       if (object.opacity !== 1) {
+        console.warn(`If you don't use transparency (alpha parameter), performance will be improved extremely.`);
         transparent = true;
         break;
       }
@@ -137,6 +138,7 @@ function init(objectCode) {
   }
 
   var geometries = [];
+  var count = 0;
   objectCode.objects.forEach(function(object) {
     switch (object.type) {
       case 'background':
@@ -149,8 +151,6 @@ function init(objectCode) {
         geometry.applyMatrix(matrix);
 
         if (transparent) {
-          console.warn(`If you don't use transparency (alpha parameter), performance will be improved extremely.`);
-
           var meshMaterial = new THREE.MeshPhongMaterial({
             color: parseInt(object.color.replace(/^#/, '0x'), 16),
             specular: 0x999999,
@@ -179,6 +179,7 @@ function init(objectCode) {
           geometries.push(geometry);
         }
 
+        count++;
         break;
     }
   });
@@ -197,7 +198,7 @@ function init(objectCode) {
     group.add(new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries(geometries), defaultMaterial));
   }
 
-  console.log(`Build done. Created ${geometries.length} objects.`);
+  console.log(`Build done. Created ${count} objects.`);
 }
 
 
