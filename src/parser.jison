@@ -69,11 +69,12 @@
 "cylinder"                return 'CYLINDER';
 "tube"                    return 'TUBE';
 "squash"                  return 'SQUASH';
+(aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgrey|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|grey|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen) return 'COLORNAME';
+(ALICEBLUE|ANTIQUEWHITE|AQUA|AQUAMARINE|AZURE|BEIGE|BISQUE|BLACK|BLANCHEDALMOND|BLUE|BLUEVIOLET|BROWN|BURLYWOOD|CADETBLUE|CHARTREUSE|CHOCOLATE|CORAL|CORNFLOWERBLUE|CORNSILK|CRIMSON|CYAN|DARKBLUE|DARKCYAN|DARKGOLDENROD|DARKGRAY|DARKGREY|DARKGREEN|DARKKHAKI|DARKMAGENTA|DARKOLIVEGREEN|DARKORANGE|DARKORCHID|DARKRED|DARKSALMON|DARKSEAGREEN|DARKSLATEBLUE|DARKSLATEGRAY|DARKSLATEGREY|DARKTURQUOISE|DARKVIOLET|DEEPPINK|DEEPSKYBLUE|DIMGRAY|DIMGREY|DODGERBLUE|FIREBRICK|FLORALWHITE|FORESTGREEN|FUCHSIA|GAINSBORO|GHOSTWHITE|GOLD|GOLDENROD|GRAY|GREY|GREEN|GREENYELLOW|HONEYDEW|HOTPINK|INDIANRED|INDIGO|IVORY|KHAKI|LAVENDER|LAVENDERBLUSH|LAWNGREEN|LEMONCHIFFON|LIGHTBLUE|LIGHTCORAL|LIGHTCYAN|LIGHTGOLDENRODYELLOW|LIGHTGRAY|LIGHTGREY|LIGHTGREEN|LIGHTPINK|LIGHTSALMON|LIGHTSEAGREEN|LIGHTSKYBLUE|LIGHTSLATEGRAY|LIGHTSLATEGREY|LIGHTSTEELBLUE|LIGHTYELLOW|LIME|LIMEGREEN|LINEN|MAGENTA|MAROON|MEDIUMAQUAMARINE|MEDIUMBLUE|MEDIUMORCHID|MEDIUMPURPLE|MEDIUMSEAGREEN|MEDIUMSLATEBLUE|MEDIUMSPRINGGREEN|MEDIUMTURQUOISE|MEDIUMVIOLETRED|MIDNIGHTBLUE|MINTCREAM|MISTYROSE|MOCCASIN|NAVAJOWHITE|NAVY|OLDLACE|OLIVE|OLIVEDRAB|ORANGE|ORANGERED|ORCHID|PALEGOLDENROD|PALEGREEN|PALETURQUOISE|PALEVIOLETRED|PAPAYAWHIP|PEACHPUFF|PERU|PINK|PLUM|POWDERBLUE|PURPLE|REBECCAPURPLE|RED|ROSYBROWN|ROYALBLUE|SADDLEBROWN|SALMON|SANDYBROWN|SEAGREEN|SEASHELL|SIENNA|SILVER|SKYBLUE|SLATEBLUE|SLATEGRAY|SLATEGREY|SNOW|SPRINGGREEN|STEELBLUE|TAN|TEAL|THISTLE|TOMATO|TURQUOISE|VIOLET|WHEAT|WHITE|WHITESMOKE|YELLOW|YELLOWGREEN) return 'COLORNAME';
 [a-zA-Z_]+[a-zA-Z0-9_]*   return 'STRING';
 "#define"                 return 'DEFINE';
 "#"[a-fA-F0-9]{6}         return 'COLOR6';
 "#"[a-fA-F0-9]{3}         return 'COLOR3';
-
 
 /lex
 
@@ -143,6 +144,7 @@ seed
 background
   : SET BACKGROUND COLOR3 { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
   | SET BACKGROUND COLOR6 { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
+  | SET BACKGROUND COLORNAME { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
   | SET BACKGROUND STRING { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
   | SET BACKGROUND RANDOM { $$ = { type: 'set', key: 'background', value: $3.toLowerCase() }; }
   ;
@@ -160,9 +162,10 @@ colorpool
   ;
 
 define
-  : DEFINE STRING num    { $$ = { type: 'define', varname: $2, value: $3 }; }
-  | DEFINE STRING COLOR3 { $$ = { type: 'define', varname: $2, value: $3 }; }
-  | DEFINE STRING COLOR6 { $$ = { type: 'define', varname: $2, value: $3 }; }
+  : DEFINE STRING num       { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR3    { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLOR6    { $$ = { type: 'define', varname: $2, value: $3 }; }
+  | DEFINE STRING COLORNAME { $$ = { type: 'define', varname: $2, value: $3 }; }
   ;
 
 ////////////////////////////////////////////////////
@@ -254,9 +257,11 @@ color
   | COLOR COLOR3      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
   | COLOR COLOR6      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
   | COLOR RANDOM      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
+  | COLOR COLORNAME   { $$ = { type: 'property', key: 'color', value: $2.toLowerCase() }; }
   | COLOR STRING      { $$ = { type: 'property', key: 'color', value: $2.toLowerCase(), defined: true }; }
   | BLEND COLOR3 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
   | BLEND COLOR6 num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
+  | BLEND COLORNAME num { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
   | BLEND RANDOM num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
   | BLEND STRING num  { $$ = { type: 'property', key: 'blend', color: $2.toLowerCase(), strength: $3 }; }
 // TODO: make BLEND possible to use defined varname.

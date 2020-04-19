@@ -72,12 +72,12 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[5,18,29,31,32,33,34,35,36,43,44,47,77,78,79,80,81,82,83,84,85,86,87],$V1=[29,47,77,78,79,80,81,82,83,84,85,86,87],$V2=[2,63],$V3=[1,19],$V4=[1,17],$V5=[1,18],$V6=[1,20],$V7=[1,21],$V8=[1,22],$V9=[1,32],$Va=[1,37],$Vb=[1,38],$Vc=[1,39],$Vd=[1,40],$Ve=[1,57],$Vf=[1,73],$Vg=[5,18,29,31,32,33,34,35,36,43,44,47,49,63,64,65,66,67,68,69,70,77,78,79,80,81,82,83,84,85,86,87],$Vh=[5,18,19,29,31,32,33,34,35,36,43,44,47,49,51,52,63,64,65,66,67,68,69,70,71,72,74,77,78,79,80,81,82,83,84,85,86,87],$Vi=[19,47,51],$Vj=[5,18,29,31,32,33,34,35,36,43,44,47,49,77,78,79,80,81,82,83,84,85,86,87],$Vk=[18,31,32,33,34,35,36,49,63,64,65,66,67,68,69,70],$Vl=[29,47,49,77,78,79,80,81,82,83,84,85,86,87],$Vm=[1,159];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[5,18,30,32,33,34,35,36,37,44,45,48,78,79,80,81,82,83,84,85,86,87,88],$V1=[30,48,78,79,80,81,82,83,84,85,86,87,88],$V2=[2,67],$V3=[1,19],$V4=[1,17],$V5=[1,18],$V6=[1,20],$V7=[1,21],$V8=[1,22],$V9=[1,32],$Va=[1,37],$Vb=[1,38],$Vc=[1,39],$Vd=[1,40],$Ve=[1,59],$Vf=[1,75],$Vg=[5,18,30,32,33,34,35,36,37,44,45,48,50,64,65,66,67,68,69,70,71,78,79,80,81,82,83,84,85,86,87,88],$Vh=[5,18,19,30,32,33,34,35,36,37,44,45,48,50,52,53,64,65,66,67,68,69,70,71,72,73,75,78,79,80,81,82,83,84,85,86,87,88],$Vi=[19,48,52],$Vj=[5,18,30,32,33,34,35,36,37,44,45,48,50,78,79,80,81,82,83,84,85,86,87,88],$Vk=[18,32,33,34,35,36,37,50,64,65,66,67,68,69,70,71],$Vl=[30,48,50,78,79,80,81,82,83,84,85,86,87,88],$Vm=[1,164];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"eisenscript":3,"lines":4,"EOF":5,"line":6,"maxdepth":7,"maxobjects":8,"minsize":9,"maxsize":10,"seed":11,"background":12,"color":13,"colorpool":14,"define":15,"rule":16,"statement":17,"SET":18,"MAXDEPTH":19,"num":20,"MAXOBJECTS":21,"MINSIZE":22,"MAXSIZE":23,"SEED":24,"INITIAL":25,"BACKGROUND":26,"COLOR3":27,"COLOR6":28,"STRING":29,"RANDOM":30,"COLOR":31,"HUE":32,"ALPHA":33,"BLEND":34,"SATURATION":35,"BRIGHTNESS":36,"COLORPOOL":37,"RANDOMHUE":38,"RANDOMRGB":39,"GREYSCALE":40,"COLORLIST":41,"IMAGE":42,"DEFINE":43,"RULE":44,"id":45,"modifiers":46,"{":47,"statements":48,"}":49,"modifier":50,"WEIGHT":51,">":52,"rulename":53,"expressions":54,"primitive":55,"expression":56,"object":57,"n":58,"*":59,"properties":60,"property":61,"geo":62,"XSHIFT":63,"YSHIFT":64,"ZSHIFT":65,"ROTATEX":66,"ROTATEY":67,"ROTATEZ":68,"SIZE":69,"MATRIX":70,"+":71,"-":72,"/":73,"(":74,"e":75,")":76,"NUMBER":77,"BOX":78,"SPHERE":79,"GRID":80,"LINE":81,"POINT":82,"TRIANGLE":83,"MESH":84,"CYLINDER":85,"TUBE":86,"SQUASH":87,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",18:"SET",19:"MAXDEPTH",21:"MAXOBJECTS",22:"MINSIZE",23:"MAXSIZE",24:"SEED",25:"INITIAL",26:"BACKGROUND",27:"COLOR3",28:"COLOR6",29:"STRING",30:"RANDOM",31:"COLOR",32:"HUE",33:"ALPHA",34:"BLEND",35:"SATURATION",36:"BRIGHTNESS",37:"COLORPOOL",38:"RANDOMHUE",39:"RANDOMRGB",40:"GREYSCALE",41:"COLORLIST",42:"IMAGE",43:"DEFINE",44:"RULE",47:"{",49:"}",51:"WEIGHT",52:">",59:"*",63:"XSHIFT",64:"YSHIFT",65:"ZSHIFT",66:"ROTATEX",67:"ROTATEY",68:"ROTATEZ",69:"SIZE",70:"MATRIX",71:"+",72:"-",73:"/",74:"(",75:"e",76:")",77:"NUMBER",78:"BOX",79:"SPHERE",80:"GRID",81:"LINE",82:"POINT",83:"TRIANGLE",84:"MESH",85:"CYLINDER",86:"TUBE",87:"SQUASH"},
-productions_: [0,[3,2],[4,2],[4,0],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[7,3],[8,3],[9,3],[10,3],[11,3],[11,3],[12,3],[12,3],[12,3],[12,3],[13,3],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,3],[13,3],[13,3],[13,3],[13,2],[13,2],[13,2],[13,2],[14,3],[14,3],[14,3],[14,3],[14,3],[15,3],[15,3],[15,3],[16,6],[46,2],[46,0],[50,2],[50,2],[50,4],[50,2],[50,4],[48,2],[48,0],[17,2],[17,2],[54,2],[54,0],[56,1],[56,3],[57,3],[60,2],[60,0],[61,1],[61,1],[62,2],[62,2],[62,2],[62,2],[62,2],[62,2],[62,2],[62,4],[62,10],[62,2],[62,2],[62,2],[62,2],[62,2],[62,2],[62,2],[62,4],[62,10],[20,1],[20,2],[20,2],[20,3],[20,3],[20,4],[20,4],[20,3],[58,1],[45,1],[53,1],[55,1],[55,1],[55,1],[55,1],[55,1],[55,1],[55,1],[55,1],[55,1],[55,1]],
+symbols_: {"error":2,"eisenscript":3,"lines":4,"EOF":5,"line":6,"maxdepth":7,"maxobjects":8,"minsize":9,"maxsize":10,"seed":11,"background":12,"color":13,"colorpool":14,"define":15,"rule":16,"statement":17,"SET":18,"MAXDEPTH":19,"num":20,"MAXOBJECTS":21,"MINSIZE":22,"MAXSIZE":23,"SEED":24,"INITIAL":25,"BACKGROUND":26,"COLOR3":27,"COLOR6":28,"COLORNAME":29,"STRING":30,"RANDOM":31,"COLOR":32,"HUE":33,"ALPHA":34,"BLEND":35,"SATURATION":36,"BRIGHTNESS":37,"COLORPOOL":38,"RANDOMHUE":39,"RANDOMRGB":40,"GREYSCALE":41,"COLORLIST":42,"IMAGE":43,"DEFINE":44,"RULE":45,"id":46,"modifiers":47,"{":48,"statements":49,"}":50,"modifier":51,"WEIGHT":52,">":53,"rulename":54,"expressions":55,"primitive":56,"expression":57,"object":58,"n":59,"*":60,"properties":61,"property":62,"geo":63,"XSHIFT":64,"YSHIFT":65,"ZSHIFT":66,"ROTATEX":67,"ROTATEY":68,"ROTATEZ":69,"SIZE":70,"MATRIX":71,"+":72,"-":73,"/":74,"(":75,"e":76,")":77,"NUMBER":78,"BOX":79,"SPHERE":80,"GRID":81,"LINE":82,"POINT":83,"TRIANGLE":84,"MESH":85,"CYLINDER":86,"TUBE":87,"SQUASH":88,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",18:"SET",19:"MAXDEPTH",21:"MAXOBJECTS",22:"MINSIZE",23:"MAXSIZE",24:"SEED",25:"INITIAL",26:"BACKGROUND",27:"COLOR3",28:"COLOR6",29:"COLORNAME",30:"STRING",31:"RANDOM",32:"COLOR",33:"HUE",34:"ALPHA",35:"BLEND",36:"SATURATION",37:"BRIGHTNESS",38:"COLORPOOL",39:"RANDOMHUE",40:"RANDOMRGB",41:"GREYSCALE",42:"COLORLIST",43:"IMAGE",44:"DEFINE",45:"RULE",48:"{",50:"}",52:"WEIGHT",53:">",60:"*",64:"XSHIFT",65:"YSHIFT",66:"ZSHIFT",67:"ROTATEX",68:"ROTATEY",69:"ROTATEZ",70:"SIZE",71:"MATRIX",72:"+",73:"-",74:"/",75:"(",76:"e",77:")",78:"NUMBER",79:"BOX",80:"SPHERE",81:"GRID",82:"LINE",83:"POINT",84:"TRIANGLE",85:"MESH",86:"CYLINDER",87:"TUBE",88:"SQUASH"},
+productions_: [0,[3,2],[4,2],[4,0],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[7,3],[8,3],[9,3],[10,3],[11,3],[11,3],[12,3],[12,3],[12,3],[12,3],[12,3],[13,3],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,2],[13,3],[13,3],[13,3],[13,3],[13,3],[13,2],[13,2],[13,2],[13,2],[14,3],[14,3],[14,3],[14,3],[14,3],[15,3],[15,3],[15,3],[15,3],[16,6],[47,2],[47,0],[51,2],[51,2],[51,4],[51,2],[51,4],[49,2],[49,0],[17,2],[17,2],[55,2],[55,0],[57,1],[57,3],[58,3],[61,2],[61,0],[62,1],[62,1],[63,2],[63,2],[63,2],[63,2],[63,2],[63,2],[63,2],[63,4],[63,10],[63,2],[63,2],[63,2],[63,2],[63,2],[63,2],[63,2],[63,4],[63,10],[20,1],[20,2],[20,2],[20,3],[20,3],[20,4],[20,4],[20,3],[59,1],[46,1],[54,1],[56,1],[56,1],[56,1],[56,1],[56,1],[56,1],[56,1],[56,1],[56,1],[56,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -86,10 +86,10 @@ switch (yystate) {
 case 1:
  this.$ = $$[$0-1]; return this.$; 
 break;
-case 2: case 51: case 58: case 62:
+case 2: case 55: case 62: case 66:
  this.$ = $$[$0-1]; this.$.push($$[$0]); 
 break;
-case 3: case 52: case 59: case 63: case 68:
+case 3: case 56: case 63: case 67: case 72:
  this.$ = []; 
 break;
 case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
@@ -113,174 +113,174 @@ break;
 case 19: case 20:
  this.$ = { type: 'set', key: 'seed', value: $$[$0] }; 
 break;
-case 21: case 22: case 23: case 24:
+case 21: case 22: case 23: case 24: case 25:
  this.$ = { type: 'set', key: 'background', value: $$[$0].toLowerCase() }; 
 break;
-case 25:
+case 26:
  this.$ = { type: 'set', key: 'color', value: $$[$0].toLowerCase() }; 
 break;
-case 26:
+case 27:
  this.$ = { type: 'property', key: 'hue',   value: $$[$0] }; 
 break;
-case 27:
+case 28:
  this.$ = { type: 'property', key: 'hue',   value: $$[$0], defined: true }; 
 break;
-case 28:
+case 29:
  this.$ = { type: 'property', key: 'alpha', value: $$[$0] }; 
 break;
-case 29:
+case 30:
  this.$ = { type: 'property', key: 'alpha', value: $$[$0], defined: true }; 
 break;
-case 30: case 31: case 32:
+case 31: case 32: case 33: case 34:
  this.$ = { type: 'property', key: 'color', value: $$[$0].toLowerCase() }; 
 break;
-case 33:
+case 35:
  this.$ = { type: 'property', key: 'color', value: $$[$0].toLowerCase(), defined: true }; 
 break;
-case 34: case 35: case 36: case 37:
+case 36: case 37: case 38: case 39: case 40:
  this.$ = { type: 'property', key: 'blend', color: $$[$0-1].toLowerCase(), strength: $$[$0] }; 
 break;
-case 38:
+case 41:
  this.$ = { type: 'property', key: 'saturation', value: $$[$0] }; 
 break;
-case 39:
+case 42:
  this.$ = { type: 'property', key: 'saturation', value: $$[$0], defined: true }; 
 break;
-case 40:
+case 43:
  this.$ = { type: 'property', key: 'brightness', value: $$[$0] }; 
 break;
-case 41:
+case 44:
  this.$ = { type: 'property', key: 'brightness', value: $$[$0], defined: true }; 
 break;
-case 42: case 43: case 44: case 45: case 46:
+case 45: case 46: case 47: case 48: case 49:
  this.$ = { type: 'set', key: 'colorpool', value: $$[$0].toLowerCase() }; 
 break;
-case 47: case 48: case 49:
+case 50: case 51: case 52: case 53:
  this.$ = { type: 'define', varname: $$[$0-1], value: $$[$0] }; 
 break;
-case 50:
+case 54:
  this.$ = { type: 'rule', id: $$[$0-4], params: $$[$0-3], body: $$[$0-1] }; 
 break;
-case 53:
+case 57:
  this.$ = { type: 'modifier', key: 'weight',   value: $$[$0] }; 
 break;
-case 54:
+case 58:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0] }; 
 break;
-case 55:
+case 59:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0-2], alternate: $$[$0]}; 
 break;
-case 56:
+case 60:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0], defined: true }; 
 break;
-case 57:
+case 61:
  this.$ = { type: 'modifier', key: 'maxdepth', value: $$[$0-2], alternate: $$[$0], defined: true}; 
 break;
-case 60:
+case 64:
  this.$ = { type: 'primitive', id: $$[$0], exprs: $$[$0-1] }; 
 break;
-case 61:
+case 65:
  this.$ = { type: 'statement', id: $$[$0], exprs: $$[$0-1] }; 
 break;
-case 64:
+case 68:
  this.$ = { type: 'expr', left:  1, right: $$[$0] }; 
 break;
-case 65:
+case 69:
  this.$ = { type: 'expr', left: $$[$0-2], right: $$[$0] }; 
 break;
-case 66:
+case 70:
  this.$ = { type: 'object', properties: $$[$0-1] }; 
 break;
-case 67:
+case 71:
  type: 'property', this.$ = $$[$0-1]; this.$.push($$[$0]); 
 break;
-case 71:
+case 75:
  this.$ = { type: 'property', key: 'xshift',  value: $$[$0] }; 
 break;
-case 72:
+case 76:
  this.$ = { type: 'property', key: 'yshift',  value: $$[$0] }; 
 break;
-case 73:
+case 77:
  this.$ = { type: 'property', key: 'zshift',  value: $$[$0] }; 
 break;
-case 74:
+case 78:
  this.$ = { type: 'property', key: 'rotatex', value: $$[$0] }; 
 break;
-case 75:
+case 79:
  this.$ = { type: 'property', key: 'rotatey', value: $$[$0] }; 
 break;
-case 76:
+case 80:
  this.$ = { type: 'property', key: 'rotatez', value: $$[$0] }; 
 break;
-case 77:
+case 81:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0], y: $$[$0], z: $$[$0] } }; 
 break;
-case 78:
+case 82:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0-2], y: $$[$0-1], z: $$[$0] } }; 
 break;
-case 79:
+case 83:
  this.$ = { type: 'property', key: 'matrix', value: [$$[$0-8], $$[$0-7], $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1], $$[$0]] }; 
 break;
-case 80:
+case 84:
  this.$ = { type: 'property', key: 'xshift',  value: $$[$0], defined: true }; 
 break;
-case 81:
+case 85:
  this.$ = { type: 'property', key: 'yshift',  value: $$[$0], defined: true }; 
 break;
-case 82:
+case 86:
  this.$ = { type: 'property', key: 'zshift',  value: $$[$0], defined: true }; 
 break;
-case 83:
+case 87:
  this.$ = { type: 'property', key: 'rotatex', value: $$[$0], defined: true }; 
 break;
-case 84:
+case 88:
  this.$ = { type: 'property', key: 'rotatey', value: $$[$0], defined: true }; 
 break;
-case 85:
+case 89:
  this.$ = { type: 'property', key: 'rotatez', value: $$[$0], defined: true }; 
 break;
-case 86:
+case 90:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0], y: $$[$0], z: $$[$0] }, defined: true }; 
 break;
-case 87:
+case 91:
  this.$ = { type: 'property', key: 'size',    value: { x: $$[$0-2], y: $$[$0-1], z: $$[$0] }, defined: true }; 
 break;
-case 88:
+case 92:
  this.$ = { type: 'property', key: 'matrix', value: [$$[$0-8], $$[$0-7], $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1], $$[$0]], defined: true }; 
 break;
-case 90:
+case 94:
  this.$ =  $$[$0]; 
 break;
-case 91:
+case 95:
  this.$ = -$$[$0]; 
 break;
-case 92:
+case 96:
  this.$ =  $$[$0-2]*$$[$0]; 
 break;
-case 93:
+case 97:
  this.$ =  $$[$0-2]/$$[$0]; 
 break;
-case 94:
+case 98:
  this.$ = -$$[$0-2]*$$[$0]; 
 break;
-case 95:
+case 99:
  this.$ = -$$[$0-2]/$$[$0]; 
 break;
-case 96:
+case 100:
  this.$ =  $$[$0-1]; 
 break;
-case 97:
+case 101:
  this.$ = parseFloat(yytext); 
 break;
-case 98: case 100: case 101: case 102: case 103: case 104: case 105: case 106: case 107: case 108: case 109:
+case 102: case 104: case 105: case 106: case 107: case 108: case 109: case 110: case 111: case 112: case 113:
  this.$ = yytext; 
 break;
-case 99:
+case 103:
 this.$ = $$[$0]; 
 break;
 }
 },
-table: [o($V0,[2,3],{3:1,4:2}),{1:[3]},o($V1,$V2,{6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:11,14:12,15:13,16:14,17:15,54:25,5:[1,3],18:[1,16],31:$V3,32:$V4,33:$V5,34:$V6,35:$V7,36:$V8,43:[1,23],44:[1,24]}),{1:[2,1]},o($V0,[2,2]),o($V0,[2,4]),o($V0,[2,5]),o($V0,[2,6]),o($V0,[2,7]),o($V0,[2,8]),o($V0,[2,9]),o($V0,[2,10]),o($V0,[2,11]),o($V0,[2,12]),o($V0,[2,13]),o($V0,[2,14]),{19:[1,26],21:[1,27],22:[1,28],23:[1,29],24:[1,30],26:[1,31],31:$V9,37:[1,33]},{20:34,29:[1,35],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:41,29:[1,42],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{27:[1,43],28:[1,44],29:[1,46],30:[1,45]},{27:[1,47],28:[1,48],29:[1,50],30:[1,49]},{20:51,29:[1,52],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:53,29:[1,54],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,55]},{29:$Ve,45:56},{29:$Ve,45:59,47:$Vf,55:58,56:60,57:71,58:72,77:$Vd,78:[1,61],79:[1,62],80:[1,63],81:[1,64],82:[1,65],83:[1,66],84:[1,67],85:[1,68],86:[1,69],87:[1,70]},{20:74,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:75,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:76,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:77,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:78,25:[1,79],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{27:[1,80],28:[1,81],29:[1,82],30:[1,83]},{30:[1,84]},{38:[1,85],39:[1,86],40:[1,87],41:[1,88],42:[1,89]},o($Vg,[2,26]),o($Vg,[2,27]),o($Vh,[2,89],{59:[1,90],73:[1,91]}),{58:92,77:$Vd},{58:93,77:$Vd},{75:[1,94]},o([5,18,19,29,31,32,33,34,35,36,43,44,47,49,51,52,59,63,64,65,66,67,68,69,70,71,72,73,74,77,78,79,80,81,82,83,84,85,86,87],[2,97]),o($Vg,[2,28]),o($Vg,[2,29]),o($Vg,[2,30]),o($Vg,[2,31]),o($Vg,[2,32]),o($Vg,[2,33]),{20:95,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:96,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:97,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:98,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},o($Vg,[2,38]),o($Vg,[2,39]),o($Vg,[2,40]),o($Vg,[2,41]),{20:99,27:[1,100],28:[1,101],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},o($Vi,[2,52],{46:102}),o([5,18,19,29,31,32,33,34,35,36,43,44,47,49,51,77,78,79,80,81,82,83,84,85,86,87],[2,98]),o($Vj,[2,60]),o($Vj,[2,61]),o($V1,[2,62]),o($Vj,[2,100]),o($Vj,[2,101]),o($Vj,[2,102]),o($Vj,[2,103]),o($Vj,[2,104]),o($Vj,[2,105]),o($Vj,[2,106]),o($Vj,[2,107]),o($Vj,[2,108]),o($Vj,[2,109]),o($V1,[2,64]),{59:[1,103]},o($Vk,[2,68],{60:104}),o($V0,[2,15]),o($V0,[2,16]),o($V0,[2,17]),o($V0,[2,18]),o($V0,[2,19]),o($V0,[2,20]),o($V0,[2,21]),o($V0,[2,22]),o($V0,[2,23]),o($V0,[2,24]),o($Vg,[2,25]),o($V0,[2,42]),o($V0,[2,43]),o($V0,[2,44]),o($V0,[2,45]),o($V0,[2,46]),{58:105,77:$Vd},{58:106,77:$Vd},o($Vh,[2,90]),o($Vh,[2,91],{59:[1,107],73:[1,108]}),{76:[1,109]},o($Vg,[2,34]),o($Vg,[2,35]),o($Vg,[2,36]),o($Vg,[2,37]),o($V0,[2,47]),o($V0,[2,48]),o($V0,[2,49]),{19:[1,113],47:[1,110],50:111,51:[1,112]},{47:$Vf,57:114},{13:118,18:[1,127],31:$V3,32:$V4,33:$V5,34:$V6,35:$V7,36:$V8,49:[1,115],61:116,62:117,63:[1,119],64:[1,120],65:[1,121],66:[1,122],67:[1,123],68:[1,124],69:[1,125],70:[1,126]},o($Vh,[2,92]),o($Vh,[2,93]),{58:128,77:$Vd},{58:129,77:$Vd},o($Vh,[2,96]),o($Vl,[2,59],{48:130}),o($Vi,[2,51]),{20:131,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:132,29:[1,133],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},o($V1,[2,65]),o($V1,[2,66]),o($Vk,[2,67]),o($Vk,[2,69]),o($Vk,[2,70]),{20:134,29:[1,135],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:136,29:[1,137],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:138,29:[1,139],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:140,29:[1,141],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:142,29:[1,143],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:144,29:[1,145],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:146,29:[1,147],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{20:148,29:[1,149],58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{31:$V9},o($Vh,[2,94]),o($Vh,[2,95]),o($V1,$V2,{54:25,17:151,49:[1,150]}),o($Vi,[2,53]),o($Vi,[2,54],{52:[1,152]}),o($Vi,[2,56],{52:[1,153]}),o($Vk,[2,71]),o($Vk,[2,80]),o($Vk,[2,72]),o($Vk,[2,81]),o($Vk,[2,73]),o($Vk,[2,82]),o($Vk,[2,74]),o($Vk,[2,83]),o($Vk,[2,75]),o($Vk,[2,84]),o($Vk,[2,76]),o($Vk,[2,85]),o($Vk,[2,77],{58:36,20:154,71:$Va,72:$Vb,74:$Vc,77:$Vd}),o($Vk,[2,86],{29:[1,155]}),{20:156,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,157]},o($V0,[2,50]),o($Vl,[2,58]),{29:$Vm,53:158},{29:$Vm,53:160},{20:161,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,162]},{20:163,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,164]},o($Vi,[2,55]),o($Vi,[2,99]),o($Vi,[2,57]),o($Vk,[2,78]),o($Vk,[2,87]),{20:165,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,166]},{20:167,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,168]},{20:169,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,170]},{20:171,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,172]},{20:173,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,174]},{20:175,58:36,71:$Va,72:$Vb,74:$Vc,77:$Vd},{29:[1,176]},o($Vk,[2,79]),o($Vk,[2,88])],
+table: [o($V0,[2,3],{3:1,4:2}),{1:[3]},o($V1,$V2,{6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:11,14:12,15:13,16:14,17:15,55:25,5:[1,3],18:[1,16],32:$V3,33:$V4,34:$V5,35:$V6,36:$V7,37:$V8,44:[1,23],45:[1,24]}),{1:[2,1]},o($V0,[2,2]),o($V0,[2,4]),o($V0,[2,5]),o($V0,[2,6]),o($V0,[2,7]),o($V0,[2,8]),o($V0,[2,9]),o($V0,[2,10]),o($V0,[2,11]),o($V0,[2,12]),o($V0,[2,13]),o($V0,[2,14]),{19:[1,26],21:[1,27],22:[1,28],23:[1,29],24:[1,30],26:[1,31],32:$V9,38:[1,33]},{20:34,30:[1,35],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:41,30:[1,42],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{27:[1,43],28:[1,44],29:[1,46],30:[1,47],31:[1,45]},{27:[1,48],28:[1,49],29:[1,50],30:[1,52],31:[1,51]},{20:53,30:[1,54],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:55,30:[1,56],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,57]},{30:$Ve,46:58},{30:$Ve,46:61,48:$Vf,56:60,57:62,58:73,59:74,78:$Vd,79:[1,63],80:[1,64],81:[1,65],82:[1,66],83:[1,67],84:[1,68],85:[1,69],86:[1,70],87:[1,71],88:[1,72]},{20:76,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:77,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:78,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:79,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:80,25:[1,81],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{27:[1,82],28:[1,83],29:[1,84],30:[1,85],31:[1,86]},{31:[1,87]},{39:[1,88],40:[1,89],41:[1,90],42:[1,91],43:[1,92]},o($Vg,[2,27]),o($Vg,[2,28]),o($Vh,[2,93],{60:[1,93],74:[1,94]}),{59:95,78:$Vd},{59:96,78:$Vd},{76:[1,97]},o([5,18,19,30,32,33,34,35,36,37,44,45,48,50,52,53,60,64,65,66,67,68,69,70,71,72,73,74,75,78,79,80,81,82,83,84,85,86,87,88],[2,101]),o($Vg,[2,29]),o($Vg,[2,30]),o($Vg,[2,31]),o($Vg,[2,32]),o($Vg,[2,33]),o($Vg,[2,34]),o($Vg,[2,35]),{20:98,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:99,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:100,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:101,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:102,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},o($Vg,[2,41]),o($Vg,[2,42]),o($Vg,[2,43]),o($Vg,[2,44]),{20:103,27:[1,104],28:[1,105],29:[1,106],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},o($Vi,[2,56],{47:107}),o([5,18,19,30,32,33,34,35,36,37,44,45,48,50,52,78,79,80,81,82,83,84,85,86,87,88],[2,102]),o($Vj,[2,64]),o($Vj,[2,65]),o($V1,[2,66]),o($Vj,[2,104]),o($Vj,[2,105]),o($Vj,[2,106]),o($Vj,[2,107]),o($Vj,[2,108]),o($Vj,[2,109]),o($Vj,[2,110]),o($Vj,[2,111]),o($Vj,[2,112]),o($Vj,[2,113]),o($V1,[2,68]),{60:[1,108]},o($Vk,[2,72],{61:109}),o($V0,[2,15]),o($V0,[2,16]),o($V0,[2,17]),o($V0,[2,18]),o($V0,[2,19]),o($V0,[2,20]),o($V0,[2,21]),o($V0,[2,22]),o($V0,[2,23]),o($V0,[2,24]),o($V0,[2,25]),o($Vg,[2,26]),o($V0,[2,45]),o($V0,[2,46]),o($V0,[2,47]),o($V0,[2,48]),o($V0,[2,49]),{59:110,78:$Vd},{59:111,78:$Vd},o($Vh,[2,94]),o($Vh,[2,95],{60:[1,112],74:[1,113]}),{77:[1,114]},o($Vg,[2,36]),o($Vg,[2,37]),o($Vg,[2,38]),o($Vg,[2,39]),o($Vg,[2,40]),o($V0,[2,50]),o($V0,[2,51]),o($V0,[2,52]),o($V0,[2,53]),{19:[1,118],48:[1,115],51:116,52:[1,117]},{48:$Vf,58:119},{13:123,18:[1,132],32:$V3,33:$V4,34:$V5,35:$V6,36:$V7,37:$V8,50:[1,120],62:121,63:122,64:[1,124],65:[1,125],66:[1,126],67:[1,127],68:[1,128],69:[1,129],70:[1,130],71:[1,131]},o($Vh,[2,96]),o($Vh,[2,97]),{59:133,78:$Vd},{59:134,78:$Vd},o($Vh,[2,100]),o($Vl,[2,63],{49:135}),o($Vi,[2,55]),{20:136,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:137,30:[1,138],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},o($V1,[2,69]),o($V1,[2,70]),o($Vk,[2,71]),o($Vk,[2,73]),o($Vk,[2,74]),{20:139,30:[1,140],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:141,30:[1,142],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:143,30:[1,144],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:145,30:[1,146],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:147,30:[1,148],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:149,30:[1,150],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:151,30:[1,152],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{20:153,30:[1,154],59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{32:$V9},o($Vh,[2,98]),o($Vh,[2,99]),o($V1,$V2,{55:25,17:156,50:[1,155]}),o($Vi,[2,57]),o($Vi,[2,58],{53:[1,157]}),o($Vi,[2,60],{53:[1,158]}),o($Vk,[2,75]),o($Vk,[2,84]),o($Vk,[2,76]),o($Vk,[2,85]),o($Vk,[2,77]),o($Vk,[2,86]),o($Vk,[2,78]),o($Vk,[2,87]),o($Vk,[2,79]),o($Vk,[2,88]),o($Vk,[2,80]),o($Vk,[2,89]),o($Vk,[2,81],{59:36,20:159,72:$Va,73:$Vb,75:$Vc,78:$Vd}),o($Vk,[2,90],{30:[1,160]}),{20:161,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,162]},o($V0,[2,54]),o($Vl,[2,62]),{30:$Vm,54:163},{30:$Vm,54:165},{20:166,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,167]},{20:168,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,169]},o($Vi,[2,59]),o($Vi,[2,103]),o($Vi,[2,61]),o($Vk,[2,82]),o($Vk,[2,91]),{20:170,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,171]},{20:172,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,173]},{20:174,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,175]},{20:176,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,177]},{20:178,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,179]},{20:180,59:36,72:$Va,73:$Vb,75:$Vc,78:$Vd},{30:[1,181]},o($Vk,[2,83]),o($Vk,[2,92])],
 defaultActions: {3:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
@@ -764,9 +764,9 @@ case 2:/* ignore comment */
 break;
 case 3:return 18
 break;
-case 4:return 51;
+case 4:return 52;
 break;
-case 5:return 51;
+case 5:return 52;
 break;
 case 6:return 19;
 break;
@@ -784,15 +784,15 @@ case 12:return 25;
 break;
 case 13:return 26;
 break;
-case 14:return 37;
+case 14:return 38;
 break;
-case 15:return 44;
+case 15:return 45;
 break;
-case 16:return 52;
+case 16:return 53;
 break;
-case 17:return 47;
+case 17:return 48;
 break;
-case 18:return 49;
+case 18:return 50;
 break;
 case 19:return '[';
 break;
@@ -800,108 +800,112 @@ case 20:return ']';
 break;
 case 21:return '^';
 break;
-case 22:return 59;
+case 22:return 60;
 break;
-case 23:return 73;
+case 23:return 74;
 break;
-case 24:return 71;
+case 24:return 72;
 break;
-case 25:return 72;
+case 25:return 73;
 break;
-case 26:return 74;
+case 26:return 75;
 break;
-case 27:return 76;
+case 27:return 77;
 break;
 case 28:return ',';
 break;
-case 29:return 63;
+case 29:return 64;
 break;
-case 30:return 64;
+case 30:return 65;
 break;
-case 31:return 65;
+case 31:return 66;
 break;
-case 32:return 66;
+case 32:return 67;
 break;
-case 33:return 67;
+case 33:return 68;
 break;
-case 34:return 68;
+case 34:return 69;
 break;
-case 35:return 69;
+case 35:return 70;
 break;
-case 36:return 70;
+case 36:return 71;
 break;
-case 37:return 70;
+case 37:return 71;
 break;
-case 38:return 32;
+case 38:return 33;
 break;
-case 39:return 32;
+case 39:return 33;
 break;
-case 40:return 35;
+case 40:return 36;
 break;
-case 41:return 35;
+case 41:return 36;
 break;
-case 42:return 36;
+case 42:return 37;
 break;
-case 43:return 36;
+case 43:return 37;
 break;
-case 44:return 33;
+case 44:return 34;
 break;
-case 45:return 33;
+case 45:return 34;
 break;
-case 46:return 31;
+case 46:return 32;
 break;
-case 47:return 30;
+case 47:return 31;
 break;
-case 48:return 34;
+case 48:return 35;
 break;
-case 49:return 38;
+case 49:return 39;
 break;
-case 50:return 39;
+case 50:return 40;
 break;
-case 51:return 40;
+case 51:return 41;
 break;
 case 52:return 5;
 break;
-case 53:return 77;
+case 53:return 78;
 break;
-case 54:return 77;
+case 54:return 78;
 break;
-case 55:return 41;
+case 55:return 42;
 break;
-case 56:return 42;
+case 56:return 43;
 break;
-case 57:return 78;
+case 57:return 79;
 break;
-case 58:return 80;
+case 58:return 81;
 break;
-case 59:return 79;
+case 59:return 80;
 break;
-case 60:return 81;
+case 60:return 82;
 break;
-case 61:return 82;
+case 61:return 83;
 break;
-case 62:return 83;
+case 62:return 84;
 break;
-case 63:return 84;
+case 63:return 85;
 break;
-case 64:return 85;
+case 64:return 86;
 break;
-case 65:return 86;
+case 65:return 87;
 break;
-case 66:return 87;
+case 66:return 88;
 break;
 case 67:return 29;
 break;
-case 68:return 43;
+case 68:return 29;
 break;
-case 69:return 28;
+case 69:return 30;
 break;
-case 70:return 27;
+case 70:return 44;
+break;
+case 71:return 28;
+break;
+case 72:return 27;
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:\/\/.*)/,/^(?:\/\*[\w\W]*?\*\/)/,/^(?:set\b)/,/^(?:w\b)/,/^(?:weight\b)/,/^(?:md\b)/,/^(?:maxdepth\b)/,/^(?:maxobjects\b)/,/^(?:minsize\b)/,/^(?:maxsize\b)/,/^(?:seed\b)/,/^(?:initial\b)/,/^(?:background\b)/,/^(?:colorpool\b)/,/^(?:rule\b)/,/^(?:>)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\^)/,/^(?:\*)/,/^(?:\/)/,/^(?:\+)/,/^(?:-)/,/^(?:\()/,/^(?:\))/,/^(?:,)/,/^(?:x\b)/,/^(?:y\b)/,/^(?:z\b)/,/^(?:rx\b)/,/^(?:ry\b)/,/^(?:rz\b)/,/^(?:s\b)/,/^(?:m\b)/,/^(?:matrix\b)/,/^(?:hue\b)/,/^(?:h\b)/,/^(?:saturation\b)/,/^(?:sat\b)/,/^(?:brightness\b)/,/^(?:b\b)/,/^(?:alpha\b)/,/^(?:a\b)/,/^(?:color\b)/,/^(?:random\b)/,/^(?:blend\b)/,/^(?:randomhue\b)/,/^(?:randomrgb\b)/,/^(?:greyscale\b)/,/^(?:$)/,/^(?:[0-9]+(\.[0-9]*)?)/,/^(?:\.[0-9]+)/,/^(?:list:[\w,#]+)/,/^(?:image:[\w\.\w]+)/,/^(?:box\b)/,/^(?:grid\b)/,/^(?:sphere\b)/,/^(?:line\b)/,/^(?:point\b)/,/^(?:triangle\b)/,/^(?:mesh\b)/,/^(?:cylinder\b)/,/^(?:tube\b)/,/^(?:squash\b)/,/^(?:[a-zA-Z_]+[a-zA-Z0-9_]*)/,/^(?:#define\b)/,/^(?:#[a-fA-F0-9]{6})/,/^(?:#[a-fA-F0-9]{3})/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:\/\/.*)/,/^(?:\/\*[\w\W]*?\*\/)/,/^(?:set\b)/,/^(?:w\b)/,/^(?:weight\b)/,/^(?:md\b)/,/^(?:maxdepth\b)/,/^(?:maxobjects\b)/,/^(?:minsize\b)/,/^(?:maxsize\b)/,/^(?:seed\b)/,/^(?:initial\b)/,/^(?:background\b)/,/^(?:colorpool\b)/,/^(?:rule\b)/,/^(?:>)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\^)/,/^(?:\*)/,/^(?:\/)/,/^(?:\+)/,/^(?:-)/,/^(?:\()/,/^(?:\))/,/^(?:,)/,/^(?:x\b)/,/^(?:y\b)/,/^(?:z\b)/,/^(?:rx\b)/,/^(?:ry\b)/,/^(?:rz\b)/,/^(?:s\b)/,/^(?:m\b)/,/^(?:matrix\b)/,/^(?:hue\b)/,/^(?:h\b)/,/^(?:saturation\b)/,/^(?:sat\b)/,/^(?:brightness\b)/,/^(?:b\b)/,/^(?:alpha\b)/,/^(?:a\b)/,/^(?:color\b)/,/^(?:random\b)/,/^(?:blend\b)/,/^(?:randomhue\b)/,/^(?:randomrgb\b)/,/^(?:greyscale\b)/,/^(?:$)/,/^(?:[0-9]+(\.[0-9]*)?)/,/^(?:\.[0-9]+)/,/^(?:list:[\w,#]+)/,/^(?:image:[\w\.\w]+)/,/^(?:box\b)/,/^(?:grid\b)/,/^(?:sphere\b)/,/^(?:line\b)/,/^(?:point\b)/,/^(?:triangle\b)/,/^(?:mesh\b)/,/^(?:cylinder\b)/,/^(?:tube\b)/,/^(?:squash\b)/,/^(?:(aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgrey|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|grey|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen))/,/^(?:(ALICEBLUE|ANTIQUEWHITE|AQUA|AQUAMARINE|AZURE|BEIGE|BISQUE|BLACK|BLANCHEDALMOND|BLUE|BLUEVIOLET|BROWN|BURLYWOOD|CADETBLUE|CHARTREUSE|CHOCOLATE|CORAL|CORNFLOWERBLUE|CORNSILK|CRIMSON|CYAN|DARKBLUE|DARKCYAN|DARKGOLDENROD|DARKGRAY|DARKGREY|DARKGREEN|DARKKHAKI|DARKMAGENTA|DARKOLIVEGREEN|DARKORANGE|DARKORCHID|DARKRED|DARKSALMON|DARKSEAGREEN|DARKSLATEBLUE|DARKSLATEGRAY|DARKSLATEGREY|DARKTURQUOISE|DARKVIOLET|DEEPPINK|DEEPSKYBLUE|DIMGRAY|DIMGREY|DODGERBLUE|FIREBRICK|FLORALWHITE|FORESTGREEN|FUCHSIA|GAINSBORO|GHOSTWHITE|GOLD|GOLDENROD|GRAY|GREY|GREEN|GREENYELLOW|HONEYDEW|HOTPINK|INDIANRED|INDIGO|IVORY|KHAKI|LAVENDER|LAVENDERBLUSH|LAWNGREEN|LEMONCHIFFON|LIGHTBLUE|LIGHTCORAL|LIGHTCYAN|LIGHTGOLDENRODYELLOW|LIGHTGRAY|LIGHTGREY|LIGHTGREEN|LIGHTPINK|LIGHTSALMON|LIGHTSEAGREEN|LIGHTSKYBLUE|LIGHTSLATEGRAY|LIGHTSLATEGREY|LIGHTSTEELBLUE|LIGHTYELLOW|LIME|LIMEGREEN|LINEN|MAGENTA|MAROON|MEDIUMAQUAMARINE|MEDIUMBLUE|MEDIUMORCHID|MEDIUMPURPLE|MEDIUMSEAGREEN|MEDIUMSLATEBLUE|MEDIUMSPRINGGREEN|MEDIUMTURQUOISE|MEDIUMVIOLETRED|MIDNIGHTBLUE|MINTCREAM|MISTYROSE|MOCCASIN|NAVAJOWHITE|NAVY|OLDLACE|OLIVE|OLIVEDRAB|ORANGE|ORANGERED|ORCHID|PALEGOLDENROD|PALEGREEN|PALETURQUOISE|PALEVIOLETRED|PAPAYAWHIP|PEACHPUFF|PERU|PINK|PLUM|POWDERBLUE|PURPLE|REBECCAPURPLE|RED|ROSYBROWN|ROYALBLUE|SADDLEBROWN|SALMON|SANDYBROWN|SEAGREEN|SEASHELL|SIENNA|SILVER|SKYBLUE|SLATEBLUE|SLATEGRAY|SLATEGREY|SNOW|SPRINGGREEN|STEELBLUE|TAN|TEAL|THISTLE|TOMATO|TURQUOISE|VIOLET|WHEAT|WHITE|WHITESMOKE|YELLOW|YELLOWGREEN))/,/^(?:[a-zA-Z_]+[a-zA-Z0-9_]*)/,/^(?:#define\b)/,/^(?:#[a-fA-F0-9]{6})/,/^(?:#[a-fA-F0-9]{3})/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72],"inclusive":true}}
 });
 return lexer;
 })();

@@ -181,10 +181,6 @@ module.exports = class Interpreter {
           }
       }
     }
-    // In case of csscolor like white, blue, darkgrey...
-    if (csscolor[symbol]) {
-      return symbol;
-    }
     throw new Error(`Invalid symbol found: ${symbol}`);
   }
 
