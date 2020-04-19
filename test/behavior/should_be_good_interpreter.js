@@ -41,3 +41,5 @@ module.exports = function(testset) {
     });
   });
 }
+
+module.exports.compile = compile;
