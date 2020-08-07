@@ -18,6 +18,9 @@ module.exports = class Symbol {
   static get RotateX() { return 'rotatex'; }
   static get RotateY() { return 'rotatey'; }
   static get RotateZ() { return 'rotatez'; }
+  static get FX() { return 'fx'; }
+  static get FY() { return 'fy'; }
+  static get FZ() { return 'fz'; }
   static get Size() { return 'size'; }
   static get Matrix() { return 'matrix'; }
   static get Color() { return 'color'; }
