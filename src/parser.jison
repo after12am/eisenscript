@@ -38,6 +38,9 @@
 "rx"                      return 'ROTATEX';
 "ry"                      return 'ROTATEY';
 "rz"                      return 'ROTATEZ';
+"fx"                      return 'FX';
+"fy"                      return 'FY';
+"fz"                      return 'FZ';
 "s"                       return 'SIZE';
 "m"                       return 'MATRIX';
 "matrix"                  return 'MATRIX';
@@ -245,6 +248,9 @@ geo
   | ROTATEX STRING   { $$ = { type: 'property', key: 'rotatex', value: $2, defined: true }; }
   | ROTATEY STRING   { $$ = { type: 'property', key: 'rotatey', value: $2, defined: true }; }
   | ROTATEZ STRING   { $$ = { type: 'property', key: 'rotatez', value: $2, defined: true }; }
+  | FX               { $$ = { type: 'property', key: 'fx' }; }
+  | FY               { $$ = { type: 'property', key: 'fy' }; }
+  | FZ               { $$ = { type: 'property', key: 'fz' }; }
   | SIZE STRING      { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $2, z: $2 }, defined: true }; }
   | SIZE STRING STRING STRING { $$ = { type: 'property', key: 'size',    value: { x: $2, y: $3, z: $4 }, defined: true }; }
   | MATRIX STRING STRING STRING STRING STRING STRING STRING STRING STRING { $$ = { type: 'property', key: 'matrix', value: [$2, $3, $4, $5, $6, $7, $8, $9, $10], defined: true }; }

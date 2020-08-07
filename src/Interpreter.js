@@ -361,6 +361,9 @@ module.exports = class Interpreter {
       case Symbol.RotateX: this.rotateX(degToRad(r(p))); break;
       case Symbol.RotateY: this.rotateY(degToRad(r(p))); break;
       case Symbol.RotateZ: this.rotateZ(degToRad(r(p))); break;
+      case Symbol.FX: this.matrix([-1, 0, 0, 0, 1, 0, 0, 0, 1]); break;
+      case Symbol.FY: this.matrix([1, 0, 0, 0, -1, 0, 0, 0, 1]); break;
+      case Symbol.FZ: this.matrix([1, 0, 0, 0, 1, 0, 0, 0, -1]); break;
       case Symbol.Size:
         if (p.defined) {
           this.scale(+this.resolveVarname(v.x), +this.resolveVarname(v.y), +this.resolveVarname(v.z));
