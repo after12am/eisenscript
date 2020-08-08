@@ -160,7 +160,7 @@ describe('Interpreter', function() {
       for (let i = 0; i < 100; i++) {
         const color = object.objects[i].color;
         const r = color.substring(1, 3);
-        assert.ok(color, `#${r}${r}${r}`);
+        assert.equal(color, `#${r}${r}${r}`);
       }
     });
     //
