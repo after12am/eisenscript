@@ -31,5 +31,6 @@ module.exports = class Symbol {
   static get Blend() { return 'blend'; }
   static get Alpha() { return 'alpha'; }
   static get ColorList() { return 'list'; }
+  static get ColorRandomhue() { return 'randomhue'; }
   static get ColorGreyscale() { return 'greyscale'; }
 }

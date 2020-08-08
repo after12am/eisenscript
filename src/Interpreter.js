@@ -136,9 +136,11 @@ module.exports = class Interpreter {
         break;
       case Symbol.ColorGreyscale:
         // random r=g=b
-        const rand = this.mt.next() * 0xff;
-        const r = Math.floor(rand).toString(16);
+        const r = Math.floor(this.mt.next() * 0xff).toString(16);
         return `#${r}${r}${r}`;
+      case Symbol.ColorRandomhue:
+        const rgb = utils.hsv2rgb(Math.floor(this.mt.next() * 360), 1, 1);
+        return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
     }
 
     const rand = this.mt.next() * 0xffffff;
@@ -243,8 +245,9 @@ module.exports = class Interpreter {
                 that.colorscheme = m[1].split(',').map(color => color.trim());
                 break;
               }
-              if (statement.value === Symbol.ColorGreyscale) {
-                that.colorpool = Symbol.ColorGreyscale;
+              if (statement.value === Symbol.ColorGreyscale
+               || statement.value === Symbol.ColorRandomhue) {
+                that.colorpool = statement.value;
                 break;
               }
               break;
