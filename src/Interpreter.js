@@ -27,7 +27,8 @@ module.exports = class Interpreter {
     this.curr.hsv = utils.extend(Color({ hue: 0, saturation: 1, value: 1 }), { computed: false });
     this.curr.blend = { color: null, strength: 0 };
     this.curr.alpha = 1;
-    this.colorpool = [];
+    this.colorpool = null;
+    this.colorscheme = [];
     this.mt = new MersenneTwister();
   }
 
@@ -126,11 +127,30 @@ module.exports = class Interpreter {
 
   randomColor() {
     // if colorpool is set, choose from colorset
-    if (this.colorpool.length > 0) {
-      const idx = Math.floor(this.mt.next() * this.colorpool.length);
-      return this.colorpool[idx];
+    if (this.colorpool === Symbol.ColorList) {
+      if (this.colorscheme.length > 0) {
+        const idx = Math.floor(this.mt.next() * this.colorpool.length);
+        return this.colorscheme[idx];
+      }
     }
-
+    else if (this.colorpool === Symbol.ColorGreyscale) {
+      // random r=g=b
+      const r = this.mt.next() * 255;
+      return `#${utils.rgb2hex(r, r, r)}`;
+    }
+    else if (this.colorpool === Symbol.ColorRandomhue) {
+      const h = Math.floor(this.mt.next() * 360);
+      const rgb = utils.hsv2rgb(h, 1, 1);
+      return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
+    }
+    else if (this.colorpool === Symbol.ColorRandomrgb) {
+      const rgb = [
+        this.mt.next() * 255,
+        this.mt.next() * 255,
+        this.mt.next() * 255
+      ];
+      return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
+    }
     const rand = this.mt.next() * 0xffffff;
     const color = Math.floor(rand).toString(16);
     return `#${color}`;
@@ -229,7 +249,15 @@ module.exports = class Interpreter {
               // colorpool
               const m = statement.value.match(/^list:(.*)/);
               if (m) {
-                that.colorpool = m[1].split(',').map(color => color.trim());
+                that.colorpool = Symbol.ColorList;
+                that.colorscheme = m[1].split(',').map(color => color.trim());
+                break;
+              }
+              if (statement.value === Symbol.ColorGreyscale
+               || statement.value === Symbol.ColorRandomhue
+               || statement.value === Symbol.ColorRandomrgb) {
+                that.colorpool = statement.value;
+                break;
               }
               break;
           }

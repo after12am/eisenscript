@@ -6,6 +6,7 @@ const shouldBeGoodInterpreter = require('./behavior/should_be_good_interpreter')
 const { assert } = require('chai');
 const parser = require('../src/parser');
 const Interpreter = require('../src/Interpreter');
+const utils = require('../src/utils');
 
 function readdir(dir) {
   return fs.readdirSync(dir).map(filename => path.join(dir, filename));
@@ -120,17 +121,48 @@ describe('Interpreter', function() {
 
   // NOTE: not implement yet
   describe('colorpool', function() {
-    // it('{ set colorpool randomhue', function() {
-    //   const source = 'set colorpool randomhue';
-    // });
-    //
-    // it('{ set colorpool randomrgb', function() {
-    //   const source = 'set colorpool randomrgb';
-    // });
-    //
-    // it('{ set colorpool greyscale', function() {
-    //   const source = 'set colorpool greyscale';
-    // });
+    it('{ set colorpool randomhue', function() {
+      const source = 'set colorpool randomhue\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        const color = object.objects[i].color;
+        const hex = color.substring(1, 7);
+        const rgb = utils.hex2rgb(hex);
+        const hsv = utils.rgb2hsv(rgb[0], rgb[1], rgb[2]);
+        assert.ok(hsv[0] >= 0 && hsv[0] <= 360);
+        assert.equal(hsv[1], 1);
+        assert.equal(hsv[2], 1);
+      }
+    });
+    
+    it('{ set colorpool randomrgb', function() {
+      const source = 'set colorpool randomrgb\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        const color = object.objects[i].color;
+        const hex = color.substring(1, 7);
+        const rgb = utils.hex2rgb(hex);
+        assert.ok(rgb[0] >= 0 && rgb[0] <= 360);
+        assert.ok(rgb[1] >= 0 && rgb[1] <= 360);
+        assert.ok(rgb[2] >= 0 && rgb[2] <= 360);
+      }
+    });
+
+    it('{ set colorpool greyscale', function() {
+      const source = 'set colorpool greyscale\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        const color = object.objects[i].color;
+        const r = color.substring(1, 3);
+        assert.equal(color, `#${r}${r}${r}`);
+      }
+    });
     //
     // it('{ set colorpool image:filename.png', function() {
     //   const source = 'set colorpool image:filename.png';
