@@ -136,11 +136,22 @@ describe('Interpreter', function() {
         assert.equal(hsv[2], 1);
       }
     });
-    //
-    // it('{ set colorpool randomrgb', function() {
-    //   const source = 'set colorpool randomrgb';
-    // });
-    //
+    
+    it('{ set colorpool randomrgb', function() {
+      const source = 'set colorpool randomrgb\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        const color = object.objects[i].color;
+        const hex = color.substring(1, 7);
+        const rgb = utils.hex2rgb(hex);
+        assert.ok(rgb[0] >= 0 && rgb[0] <= 360);
+        assert.ok(rgb[1] >= 0 && rgb[1] <= 360);
+        assert.ok(rgb[2] >= 0 && rgb[2] <= 360);
+      }
+    });
+
     it('{ set colorpool greyscale', function() {
       const source = 'set colorpool greyscale\n100 * { color random } box';
       const ast = parser.parse(source);

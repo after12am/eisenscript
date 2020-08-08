@@ -32,5 +32,6 @@ module.exports = class Symbol {
   static get Alpha() { return 'alpha'; }
   static get ColorList() { return 'list'; }
   static get ColorRandomhue() { return 'randomhue'; }
+  static get ColorRandomrgb() { return 'randomrgb'; }
   static get ColorGreyscale() { return 'greyscale'; }
 }

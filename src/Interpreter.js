@@ -127,22 +127,30 @@ module.exports = class Interpreter {
 
   randomColor() {
     // if colorpool is set, choose from colorset
-    switch (this.colorpool) {
-      case Symbol.ColorList:
-        if (this.colorscheme.length > 0) {
-          const idx = Math.floor(this.mt.next() * this.colorpool.length);
-          return this.colorscheme[idx];
-        }
-        break;
-      case Symbol.ColorGreyscale:
-        // random r=g=b
-        const r = Math.floor(this.mt.next() * 0xff).toString(16);
-        return `#${r}${r}${r}`;
-      case Symbol.ColorRandomhue:
-        const rgb = utils.hsv2rgb(Math.floor(this.mt.next() * 360), 1, 1);
-        return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
+    if (this.colorpool === Symbol.ColorList) {
+      if (this.colorscheme.length > 0) {
+        const idx = Math.floor(this.mt.next() * this.colorpool.length);
+        return this.colorscheme[idx];
+      }
     }
-
+    else if (this.colorpool === Symbol.ColorGreyscale) {
+      // random r=g=b
+      const r = this.mt.next() * 255;
+      return `#${utils.rgb2hex(r, r, r)}`;
+    }
+    else if (this.colorpool === Symbol.ColorRandomhue) {
+      const h = Math.floor(this.mt.next() * 360);
+      const rgb = utils.hsv2rgb(h, 1, 1);
+      return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
+    }
+    else if (this.colorpool === Symbol.ColorRandomrgb) {
+      const rgb = [
+        this.mt.next() * 255,
+        this.mt.next() * 255,
+        this.mt.next() * 255
+      ];
+      return `#${utils.rgb2hex(rgb[0], rgb[1], rgb[2])}`;
+    }
     const rand = this.mt.next() * 0xffffff;
     const color = Math.floor(rand).toString(16);
     return `#${color}`;
@@ -246,7 +254,8 @@ module.exports = class Interpreter {
                 break;
               }
               if (statement.value === Symbol.ColorGreyscale
-               || statement.value === Symbol.ColorRandomhue) {
+               || statement.value === Symbol.ColorRandomhue
+               || statement.value === Symbol.ColorRandomrgb) {
                 that.colorpool = statement.value;
                 break;
               }
