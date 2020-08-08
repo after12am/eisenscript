@@ -30,4 +30,6 @@ module.exports = class Symbol {
   static get Brightness() { return 'brightness'; }
   static get Blend() { return 'blend'; }
   static get Alpha() { return 'alpha'; }
+  static get ColorList() { return 'list'; }
+  static get ColorGreyscale() { return 'greyscale'; }
 }

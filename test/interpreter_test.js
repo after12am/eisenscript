@@ -128,9 +128,17 @@ describe('Interpreter', function() {
     //   const source = 'set colorpool randomrgb';
     // });
     //
-    // it('{ set colorpool greyscale', function() {
-    //   const source = 'set colorpool greyscale';
-    // });
+    it('{ set colorpool greyscale', function() {
+      const source = 'set colorpool greyscale\n100 * { color random } box';
+      const ast = parser.parse(source);
+      const interpreter = new Interpreter();
+      const object = interpreter.generate(ast);
+      for (let i = 0; i < 100; i++) {
+        const color = object.objects[i].color;
+        const r = color.substring(1, 3);
+        assert.ok(color, `#${r}${r}${r}`);
+      }
+    });
     //
     // it('{ set colorpool image:filename.png', function() {
     //   const source = 'set colorpool image:filename.png';
