@@ -312,7 +312,8 @@ module.exports = class Interpreter {
     const expr = statement.exprs[index];
     if (expr) {
       this.pushState();
-      for (let i = 0; i < expr.left; i++) {
+      let iterations = (typeof expr.left === 'number') ? expr.left : +this.resolveVarname(expr.left);
+      for (let i = 0; i < iterations; i++) {
         if (this.terminated()) break;
         this.parseTransformStatement(expr.right);
         // if statement.exprs[index + 1] is undefined, it would break the transformation loops.

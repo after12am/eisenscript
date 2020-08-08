@@ -209,8 +209,9 @@ expressions
   ;
 
 expression
-  : object       { $$ = { type: 'expr', left:  1, right: $1 }; }
-  | n '*' object { $$ = { type: 'expr', left: $1, right: $3 }; }
+  : object            { $$ = { type: 'expr', left:  1, right: $1 }; }
+  | n '*' object      { $$ = { type: 'expr', left: $1, right: $3 }; }
+  | STRING '*' object { $$ = { type: 'expr', left: $1, right: $3 }; }
   ;
 
 object
