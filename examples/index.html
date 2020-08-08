@@ -64,13 +64,13 @@ $(function() {
 
     var compiler = new EISEN.Compiler();
     objectCode = compiler.compile($('#eisenscript').text());
+    console.log(JSON.stringify(objectCode));
     console.log('compile time:', (+new Date() - s) + 'ms');
 
     var s = +new Date();
     init(objectCode);
     render();
     console.log('render time:', (+new Date() - s) + 'ms');
-    // console.log(JSON.stringify(objectCode));
 
   } catch (e) {
     console.error(e.message);

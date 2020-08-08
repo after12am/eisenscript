@@ -109,8 +109,18 @@ module.exports = class Interpreter {
       v[0], v[1], v[2], 0,
       v[3], v[4], v[5], 0,
       v[6], v[7], v[8], 0,
-        0,    0,    0, 1
+        0,    0,    0,  1
     );
+    return this;
+  }
+
+  multiplyMatrices(v) {
+    this.curr.matrix.multiplyMatrices(this.curr.matrix, new Matrix4(
+      v[0], v[1], v[2], 0,
+      v[3], v[4], v[5], 0,
+      v[6], v[7], v[8], 0,
+        0,    0,    0,  1
+    ));
     return this;
   }
 
@@ -361,9 +371,9 @@ module.exports = class Interpreter {
       case Symbol.RotateX: this.rotateX(degToRad(r(p))); break;
       case Symbol.RotateY: this.rotateY(degToRad(r(p))); break;
       case Symbol.RotateZ: this.rotateZ(degToRad(r(p))); break;
-      case Symbol.FX: this.matrix([-1, 0, 0, 0, 1, 0, 0, 0, 1]); break;
-      case Symbol.FY: this.matrix([1, 0, 0, 0, -1, 0, 0, 0, 1]); break;
-      case Symbol.FZ: this.matrix([1, 0, 0, 0, 1, 0, 0, 0, -1]); break;
+      case Symbol.FX: this.multiplyMatrices([-1, 0, 0, 0, 1, 0, 0, 0, 1]); break;
+      case Symbol.FY: this.multiplyMatrices([1, 0, 0, 0, -1, 0, 0, 0, 1]); break;
+      case Symbol.FZ: this.multiplyMatrices([1, 0, 0, 0, 1, 0, 0, 0, -1]); break;
       case Symbol.Size:
         if (p.defined) {
           this.scale(+this.resolveVarname(v.x), +this.resolveVarname(v.y), +this.resolveVarname(v.z));
