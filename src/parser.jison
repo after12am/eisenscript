@@ -79,6 +79,7 @@
 "#define"                 return 'DEFINE';
 "#"[a-fA-F0-9]{6}         return 'COLOR6';
 "#"[a-fA-F0-9]{3}         return 'COLOR3';
+";"                       return 'COORD_DELIMITER'
 
 /lex
 
@@ -199,8 +200,9 @@ statements
   ;
 
 statement
-  : expressions primitive { $$ = { type: 'primitive', id: $2, exprs: $1 }; }
-  | expressions id        { $$ = { type: 'statement', id: $2, exprs: $1 }; }
+  : expressions primitive               { $$ = { type: 'primitive', id: $2, exprs: $1 }; }
+  | expressions TRIANGLE '[' coords ']' { $$ = { type: 'primitive', coords: $4, id: $2, exprs: $1 }; }
+  | expressions id                      { $$ = { type: 'statement', id: $2, exprs: $1 }; }
   ;
 
 expressions
@@ -216,6 +218,16 @@ expression
 
 object
   : '{' properties '}' { $$ = { type: 'object', properties: $2 }; }
+  ;
+
+coords
+  : coords COORD_DELIMITER coord { $$ = $1; $$.push($3); }
+  | coords coord { $$ = $1; $$.push($2); }
+  | { $$ = []; }
+  ;
+
+coord
+  : n ',' n ',' n    { $$ = [$1, $3, $5]; }
   ;
 
 properties

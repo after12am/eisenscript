@@ -1,4 +1,4 @@
-export default class Primitive {
+module.exports = class Primitive {
   static get Box() { return 'box'; }
   static get Grid() { return 'grid'; }
   static get Sphere() { return 'sphere'; }
