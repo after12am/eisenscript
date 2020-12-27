@@ -5,6 +5,7 @@ const utils = require('./utils');
 const MersenneTwister = require('./mt');
 const { degToRad, clamp } = require('./math');
 const csscolor = require('./csscolor');
+const Primitive = require('./Primitive');
 
 // module generate object code from ast
 module.exports = class Interpreter {
@@ -433,15 +434,26 @@ module.exports = class Interpreter {
     this.objectnum++;
     if (this.terminated()) return;
 
-    // primitive object
-    this.objects.push({
+    const object = {
       type: Symbol.Primitive,
       name: statement.id,
       matrix: this.curr.matrix.clone(),
       color: this.curr.hsv.toCSS(),
       opacity: this.curr.alpha,
       depth: this.depth
-    });
+    };
+
+    if (statement.id === Primitive.Triangle) {
+      if (statement.coords) {
+        if (statement.coords.length !== 3) {
+          throw new Error('The coordinates should be 3 points as follows: Triangle[0,0,0;1,0,0;0.5,0.5,0.5]');
+        }
+        object.coords = statement.coords;
+      }
+    }
+
+    // primitive object
+    this.objects.push(object);
   }
 
   // create background object code and stack it as intermediate code for renderer

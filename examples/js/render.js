@@ -43,6 +43,7 @@ function createGeometry(type) {
     case 'tube': console.warn("tube is not implemented yet"); return;
     case 'triangle':
       var geometry = new THREE.BufferGeometry();
+      // default position if not specified
       var  vertices = new Float32Array( [
         0.0,  .5, 0.0,
         -.5, -.5, 0.0,
@@ -146,6 +147,18 @@ function init(objectCode) {
         break;
       case 'primitive':
         const geometry = createGeometry(object.name);
+
+        // Used in the case of triangle primitive for now
+        if (object.coords) {
+          var c = object.coords;
+          var  vertices = new Float32Array([
+            c[0][0], c[0][1], c[0][2],
+            c[1][0], c[1][1], c[1][2],
+            c[2][0], c[2][1], c[2][2],
+          ]);
+          geometry.setAttribute( 'position', new THREE.BufferAttribute(vertices, 3));
+        }
+
         const matrix = new THREE.Matrix4();
         matrix.fromArray(object.matrix.elements)
         geometry.applyMatrix(matrix);
