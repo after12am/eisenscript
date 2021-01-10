@@ -1,6 +1,6 @@
 {
   "name": "eisenscript",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "scripts": {
     "start": "$(npm bin)/gulp serve",
     "test": "$(npm bin)/istanbul cover $(npm bin)/_mocha test -- --recursive",
