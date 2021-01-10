@@ -175,7 +175,11 @@ function init(objectCode) {
           });
 
           if (object.name === 'grid') {
-            meshMaterial.wireframe = true
+            meshMaterial.wireframe = true;
+          }
+
+          if (object.name === 'triangle') {
+            meshMaterial.side = THREE.DoubleSide;
           }
 
           if (object.name === 'line') {
