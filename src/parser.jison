@@ -227,7 +227,13 @@ coords
   ;
 
 coord
-  : n ',' n ',' n    { $$ = [$1, $3, $5]; }
+  : coord_point ',' coord_point ',' coord_point    { $$ = [$1, $3, $5]; }
+  ;
+
+coord_point
+  : n
+  | '+' n         { $$ =  $2; }
+  | '-' n         { $$ = -$2; }
   ;
 
 properties

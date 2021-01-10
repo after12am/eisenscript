@@ -1,8 +1,9 @@
 'use strict';
 
 const webpack = require('webpack');
+const version = require('./package.json').version;
 
-const copyright = `eisenscript v2.0.5
+const copyright = `eisenscript
 https://github.com/after12am/eisenscript
 (c)2013-2020 Satoshi Okami
 Released under the MIT license`;
