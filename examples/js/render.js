@@ -210,7 +210,8 @@ function init(objectCode) {
       emissive: 0x072534,
       transparent: true,
       opacity: 1,
-      wireframe: true
+      wireframe: true,
+      side: THREE.DoubleSide
     });
     group.add(new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries(geometries), defaultMaterial));
   }
