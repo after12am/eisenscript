@@ -212,6 +212,9 @@ module.exports = class Interpreter {
           }
       }
     }
+    if (csscolor[symbol]) {
+      return csscolor[symbol];
+    }
     throw new Error(`Invalid symbol found: ${symbol}`);
   }
 
